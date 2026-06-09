@@ -156,17 +156,18 @@
       inset: 0;
       background: linear-gradient(-89.99deg, #ffffff 3.85%, rgba(255,255,255,0) 12.98%, rgba(255,255,255,0) 87.02%, #ffffff 96.64%);
       pointer-events: none;
-      z-index: 2;
+      z-index: 1;
       border-radius: 12px;
     }
-    /* 하늘색 그라데이션 overlay — mix-blend-mode: multiply (Figma: from-white → #dcefff) */
+    /* 하늘색 그라데이션 overlay — z-index 2(lr 위)로 올려야 좌우 흰색에 잘리지 않음
+       mix-blend-mode:multiply → white×anything=anything, 코너도 sky-blue 정상 표시 */
     .banner-gradient-overlay {
       position: absolute;
       inset: 0;
       background: linear-gradient(to bottom, #ffffff 59.615%, #dcefff 100%);
       mix-blend-mode: multiply;
       pointer-events: none;
-      z-index: 1;
+      z-index: 2;
       border-radius: 12px;
     }
 
