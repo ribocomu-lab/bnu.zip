@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>밥약맵 - 로그인</title>
+  <meta name="description" content="Bab 밥 Navigation for U — 부산대 맛집·카페 길잡이" />
+  <meta property="og:title" content="Bab 밥 in PNU" />
+  <meta property="og:description" content="Bab 밥 Navigation for U — 부산대 맛집·카페 길잡이" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://pnueat-backend.onrender.com" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Bab 밥 in PNU" />
+  <meta name="twitter:description" content="Bab 밥 Navigation for U — 부산대 맛집·카페 길잡이" />
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #e8e8e8;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      font-family: 'Poppins', 'Apple SD Gothic Neo', sans-serif;
+    }
+
+    .phone {
+      width: 430px;
+      min-height: 932px;
+      background: linear-gradient(to bottom, #ffffff 75%, #c6e4ff 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 0 32px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ── 핀 아이콘 래퍼 (페이드인용) ── */
+    .logo-icon {
+      width: 72px;
+      height: 105px;
+      margin-top: 184px;
+      position: relative;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.6s ease forwards 0.1s;
+    }
+
+    /* 핀 이미지만 위아래로 부유 — Figma: 핀 top:0 → top:-9px, 600ms ease-in-out 루프 */
+    .logo-icon .pin-img {
+      position: absolute;
+      left: 0; right: 0; top: 0;
+      width: 100%;
+      aspect-ratio: 298/402;
+      object-fit: contain;
+      animation: pinFloat 1.2s ease-in-out infinite 0.7s;
+    }
+
+    /* 타원 그림자 — CSS 재현, 고정 */
+    .logo-icon .pin-shadow {
+      position: absolute;
+      top: 80%;
+      left: 8%;
+      right: 8%;
+      bottom: 2%;
+      background: radial-gradient(ellipse, rgba(0,0,0,0.18) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    @keyframes pinFloat {
+      0%   { transform: translateY(0px); }
+      50%  { transform: translateY(-9px); }
+      100% { transform: translateY(0px); }
+    }
+
+    /* ── BNU 타이틀 ── */
+    .logo-title {
+      font-family: 'Inter', 'Poppins', sans-serif;
+      font-size: 48px;
+      font-weight: 700;
+      letter-spacing: -1.92px;
+      margin-top: 30px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.6s ease forwards 0.2s;
+    }
+    .logo-title .blue { color: #005ba9; }
+    .logo-title .black { color: #000; }
+
+    /* ── 서브타이틀 ── */
+    .logo-sub {
+      font-size: 18px;
+      font-weight: 500;
+      color: #000;
+      letter-spacing: -0.72px;
+      text-align: center;
+      line-height: 1.7;
+      margin-top: 8px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.6s ease forwards 0.3s;
+    }
+    .logo-sub .blue { color: #005ba9; font-weight: 700; }
+
+    /* ── "Bab" 롤링 슬롯 (Figma Frame 8 재현) ── */
+    /*
+      clip content된 프레임 안에 "Bab" 텍스트와 밥 이모지가 수직으로 쌓여있고
+      위아래로 슬라이드되며 텍스트↔이모지 전환 (800ms delay, 500ms ease-out, 루프)
+    */
+    .bab-slot {
+      display: inline-block;
+      overflow: hidden;
+      height: 1.1em;          /* 한 줄 높이만 보이도록 클리핑 */
+      vertical-align: middle;
+      position: relative;
+      top: -0.05em;
+    }
+    .bab-slot-inner {
+      display: flex;
+      flex-direction: column;
+      animation: babRoll 2.6s ease-out infinite 0.8s;
+    }
+    .bab-slot-inner span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 1.1em;
+      line-height: 1.1;
+      white-space: nowrap;
+    }
+    .bab-slot-inner .bab-emoji img {
+      height: 1em;
+      width: auto;
+      vertical-align: middle;
+    }
+
+    /*
+      Figma 재현:
+        0~30%    → "Bab" 텍스트 보임 (정지)
+        30~50%   → 위로 슬라이드 (500ms ease-out = 약 19% 구간)
+        50~80%   → 밥 이모지 보임 (정지)
+        80~100%  → 다시 아래로 슬라이드 (리셋)
+    */
+    @keyframes babRoll {
+      0%   { transform: translateY(0); }
+      30%  { transform: translateY(0); }
+      50%  { transform: translateY(-1.1em); }
+      80%  { transform: translateY(-1.1em); }
+      95%  { transform: translateY(0); }
+      100% { transform: translateY(0); }
+    }
+
+    /* ── 소셜 로그인 구분선 ── */
+    .divider {
+      width: 320px;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      margin-top: 42px;
+      opacity: 0;
+      animation: fadeIn 0.5s ease forwards 0.45s;
+    }
+    .divider-line { flex: 1; height: 1px; background: #c1c1c1; }
+    .divider-text { font-size: 12px; color: #c1c1c1; letter-spacing: -0.48px; white-space: nowrap; }
+
+    /* ── Google 버튼 ── */
+    .google-btn {
+      width: 325px;
+      height: 48px;
+      border: 1px solid #cdcdcd;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: #fff;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: #191919;
+      letter-spacing: -0.15px;
+      box-shadow: 0 0 4px rgba(0,0,0,0.25);
+      margin-top: 16px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
+      opacity: 0;
+      animation: fadeIn 0.5s ease forwards 0.55s;
+    }
+    .google-btn:hover {
+      background: #f5f5f5;
+      border-color: #aaa;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .google-btn:active { background: #ececec; }
+
+    /* Ripple 효과 */
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.08);
+      transform: scale(0);
+      animation: ripple 0.5s linear;
+      pointer-events: none;
+    }
+    @keyframes ripple {
+      to { transform: scale(4); opacity: 0; }
+    }
+
+    .google-logo { width: 20px; height: 20px; flex-shrink: 0; object-fit: contain; }
+
+    /* ── 둘러보기 링크 ── */
+    .skip-btn {
+      font-family: 'Poppins', sans-serif;
+      font-size: 13px;
+      color: #828282;
+      letter-spacing: -0.52px;
+      cursor: pointer;
+      text-decoration: underline;
+      background: none;
+      border: none;
+      margin-top: 12px;
+      opacity: 0;
+      animation: fadeIn 0.5s ease forwards 0.65s;
+      transition: color 0.15s;
+    }
+    .skip-btn:hover { color: #555; }
+
+    /* ── 이용약관 ── */
+    .terms {
+      font-family: 'Poppins', sans-serif;
+      font-size: 11px;
+      color: #b2b2b2;
+      letter-spacing: -0.44px;
+      text-align: center;
+      line-height: 1.6;
+      margin-top: 42px;
+      opacity: 0;
+      animation: fadeIn 0.5s ease forwards 0.75s;
+    }
+
+    /* ── 카카오 버튼 ── */
+    .kakao-btn {
+      width: 325px;
+      height: 48px;
+      border: none;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: #FEE500;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: #191919;
+      letter-spacing: -0.15px;
+      box-shadow: 0 0 4px rgba(0,0,0,0.15);
+      margin-top: 12px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.15s, box-shadow 0.15s;
+      opacity: 0;
+      animation: fadeIn 0.5s ease forwards 0.62s;
+    }
+    .kakao-btn:hover { background: #F5DC00; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+    .kakao-btn:active { background: #EBCF00; }
+    .kakao-logo { width: 20px; height: 18px; flex-shrink: 0; }
+
+    /* ── 에러 메시지 ── */
+    .error-msg {
+      font-size: 13px;
+      color: #e74c3c;
+      text-align: center;
+      margin-top: 12px;
+      display: none;
+    }
+
+    /* ── 로딩 오버레이 ── */
+    .loading-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(255,255,255,0.75);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 12px;
+      font-size: 14px;
+      color: #555;
+    }
+    .loading-overlay.show { display: flex; }
+    .spinner {
+      width: 30px; height: 30px;
+      border: 3px solid #eee;
+      border-top-color: #005ba9;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── 공통 애니메이션 ── */
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="phone">
+
+    <!-- 핀 아이콘 (핀만 부유, 그림자는 고정) -->
+    <div class="logo-icon">
+      <!-- 타원 그림자 (CSS로 재현, 고정) -->
+      <div class="pin-shadow"></div>
+      <!-- 핀 이미지 (부유) -->
+      <img class="pin-img" src="/static/images/logo-pin.png" alt="밥약맵 아이콘" />
+    </div>
+
+    <!-- BNU 타이틀 -->
+    <div class="logo-title">
+      <span class="blue">B</span><span class="black">NU</span>
+    </div>
+
+    <!-- 서브타이틀 — "Bab" 롤링 슬롯 포함 -->
+    <div class="logo-sub" onclick="location.href='/static/home.html'" style="cursor:pointer">
+      <!-- 첫 번째 줄: "Bab[롤링슬롯] in PNU," -->
+      <div>
+        <span class="bab-slot">
+          <div class="bab-slot-inner">
+            <span class="bab-text">Bab</span>
+            <span class="bab-emoji"><img src="/static/images/bab-emoji.png" alt="밥" /></span>
+          </div>
+        </span>
+        &nbsp;in <span class="blue">PNU</span>,
+      </div>
+      <!-- 두 번째 줄: "Bab[롤링슬롯] Navigation for U" -->
+      <div>
+        <span class="bab-slot">
+          <div class="bab-slot-inner">
+            <span class="bab-text">Bab</span>
+            <span class="bab-emoji"><img src="/static/images/bab-emoji.png" alt="밥" /></span>
+          </div>
+        </span>
+        &nbsp;Navigation for U
+      </div>
+    </div>
+
+    <!-- 소셜 로그인 구분선 -->
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-text">소셜 로그인</div>
+      <div class="divider-line"></div>
+    </div>
+
+    <!-- Google 로그인 버튼 -->
+    <button class="google-btn" id="googleBtn">
+      <img class="google-logo" src="/static/images/google-logo.webp" alt="Google" />
+      Google로 로그인
+    </button>
+
+    <!-- 카카오 로그인 버튼 -->
+    <button class="kakao-btn" id="kakaoBtn">
+      <svg class="kakao-logo" viewBox="0 0 22 20" fill="none">
+        <path d="M11 0C4.925 0 0 3.867 0 8.636c0 3.03 1.988 5.695 4.987 7.22L3.71 20l5.09-3.396C9.578 16.73 10.281 16.8 11 16.8c6.075 0 11-3.867 11-8.636C22 3.867 17.075 0 11 0z" fill="#191919"/>
+      </svg>
+      카카오로 로그인
+    </button>
+
+    <!-- 둘러보기 -->
+    <button class="skip-btn" onclick="location.href='/'">로그인 없이 둘러보기</button>
+
+    <div class="error-msg" id="errorMsg">로그인에 실패했어요. 다시 시도해주세요.</div>
+
+    <!-- 이용약관 -->
+    <div class="terms">
+      로그인 시 서비스 이용약관 및<br>
+      개인정보 처리방침에 동의하는 것으로 간주됩니다.
+    </div>
+
+  </div>
+
+  <!-- Google Identity Services -->
+  <div id="g_id_onload"
+    data-client_id="292150912704-f9cli9v1a77bepo3ilv15n1tdv2ap2i5.apps.googleusercontent.com"
+    data-callback="handleGoogleLogin"
+    data-auto_prompt="false">
+  </div>
+
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="spinner"></div>
+    <div>로그인 중...</div>
+  </div>
+
+  <script src="/static/auth.js"></script>
+  <script>
+    const REDIRECT = new URLSearchParams(location.search).get('from') || '/';
+
+    function showLoading() { document.getElementById('loadingOverlay').classList.add('show'); }
+    function showError(msg) {
+      document.getElementById('loadingOverlay').classList.remove('show');
+      const el = document.getElementById('errorMsg');
+      el.textContent = msg || '로그인에 실패했어요. 다시 시도해주세요.';
+      el.style.display = 'block';
+    }
+
+    async function onLoginSuccess(token, user) {
+      localStorage.setItem('jwt', token);
+      localStorage.setItem('user', JSON.stringify(user));
+
+      const headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` };
+      const localBookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+      const localVisited = JSON.parse(localStorage.getItem('visited') || '[]');
+      const uploads = [];
+      if (localBookmarks.length > 0)
+        uploads.push(fetch('/api/auth/bookmarks', { method: 'POST', headers, body: JSON.stringify({ bookmarks: localBookmarks }) }));
+      if (localVisited.length > 0)
+        uploads.push(fetch('/api/auth/visited', { method: 'POST', headers, body: JSON.stringify({ visited: localVisited }) }));
+
+      await Promise.allSettled(uploads);
+      location.href = REDIRECT;
+    }
+
+    // ── 구글 로그인 ──
+    async function handleGoogleLogin(response) {
+      showLoading();
+      try {
+        const res = await fetch('/api/auth/google', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ token: response.credential }),
+        });
+        const data = await res.json();
+        if (data.token) await onLoginSuccess(data.token, data.user);
+        else showError();
+      } catch { showError(); }
+    }
+
+    // Ripple 효과
+    document.getElementById('googleBtn').addEventListener('click', function(e) {
+      const btn = this;
+      const circle = document.createElement('span');
+      const diameter = Math.max(btn.clientWidth, btn.clientHeight);
+      const radius = diameter / 2;
+      const rect = btn.getBoundingClientRect();
+      circle.style.cssText = `width:${diameter}px;height:${diameter}px;left:${e.clientX - rect.left - radius}px;top:${e.clientY - rect.top - radius}px;`;
+      circle.classList.add('ripple');
+      btn.querySelector('.ripple')?.remove();
+      btn.appendChild(circle);
+    });
+
+    document.getElementById('googleBtn').addEventListener('click', async () => {
+      showLoading();
+      try {
+        const res = await fetch('/api/auth/google/url');
+        const data = await res.json();
+        if (!data.url) { showError('구글 로그인 설정이 올바르지 않아요 (client_id 미설정).'); return; }
+        location.href = data.url;
+      } catch (e) { showError('구글 로그인 연결에 실패했어요: ' + e.message); }
+    });
+
+    // ── 카카오 로그인 (REST API 방식) ──
+    document.getElementById('kakaoBtn').addEventListener('click', async () => {
+      showLoading();
+      try {
+        const res = await fetch('/api/auth/kakao/url');
+        const { url } = await res.json();
+        window.location.href = url;
+      } catch {
+        showError('카카오 로그인 준비에 실패했어요.');
+      }
+    });
+
+    // 에러 감지
+    const _params = new URLSearchParams(location.search);
+    if (_params.get('kakao_error')) showError('카카오 로그인에 실패했어요. 다시 시도해주세요.');
+    if (_params.get('google_error')) showError('구글 로그인에 실패했어요. CLIENT_SECRET 설정을 확인해주세요.');
+  </script>
+
+</body>
+</html>

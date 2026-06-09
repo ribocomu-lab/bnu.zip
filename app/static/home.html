@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>밥약맵</title>
+  <meta name="description" content="Bab 밥 Navigation for U — 부산대 맛집·카페 길잡이" />
+  <meta property="og:title" content="Bab 밥 in PNU" />
+  <meta property="og:description" content="Bab 밥 Navigation for U — 부산대 맛집·카페 길잡이" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://pnueat-backend.onrender.com" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Bab 밥 in PNU" />
+  <meta name="twitter:description" content="Bab 밥 Navigation for U — 부산대 맛집·카페 길잡이" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #e8e8e8;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      font-family: 'Poppins', 'Apple SD Gothic Neo', sans-serif;
+    }
+
+    /* ── 전체 레이아웃 ── */
+    .phone {
+      width: 430px;
+      min-height: 100vh;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* ── 헤더 ── */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #fff;
+      padding: 20px 31px 0;
+    }
+    .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 16px;
+    }
+
+    /* BNU 로고 */
+    .logo-bnu {
+      font-family: 'Inter', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.96px;
+      line-height: 1;
+    }
+    .logo-bnu .blue { color: #005ba9; }
+
+    /* 헤더 서브타이틀 — Bab 롤링 슬롯 (login과 동일, 크기만 축소) */
+    .header-sub {
+      font-family: 'Poppins', sans-serif;
+      font-size: 11.52px;
+      font-weight: 500;
+      color: #000;
+      letter-spacing: -0.46px;
+      text-align: center;
+      line-height: 1.6;
+    }
+    .header-sub .blue { color: #005ba9; font-weight: 700; }
+
+    .bab-slot {
+      display: inline-block;
+      overflow: hidden;
+      height: 1.1em;
+      vertical-align: middle;
+      position: relative;
+      top: -0.05em;
+    }
+    .bab-slot-inner {
+      display: flex;
+      flex-direction: column;
+      animation: babRoll 2.6s ease-out infinite 0.8s;
+    }
+    .bab-slot-inner span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 1.1em;
+      line-height: 1.1;
+      white-space: nowrap;
+    }
+    .bab-slot-inner .bab-emoji img {
+      height: 0.9em;
+      width: auto;
+      vertical-align: middle;
+    }
+    @keyframes babRoll {
+      0%   { transform: translateY(0); }
+      30%  { transform: translateY(0); }
+      50%  { transform: translateY(-1.1em); }
+      80%  { transform: translateY(-1.1em); }
+      95%  { transform: translateY(0); }
+      100% { transform: translateY(0); }
+    }
+
+    /* 계정 아이콘 */
+    .account-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #e8e8e8;
+      cursor: pointer;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      font-size: 14px;
+    }
+    .account-icon img { width: 100%; height: 100%; object-fit: cover; }
+
+    .header-divider {
+      height: 1px;
+      background: #e8e8e8;
+      margin: 0 -31px;
+    }
+
+    /* ── 스크롤 영역 ── */
+    .scroll-content {
+      flex: 1;
+      overflow-y: auto;
+      padding-bottom: 90px; /* 하단 네비 높이만큼 */
+      padding-top: 0;
+      scrollbar-width: none;
+    }
+    .scroll-content::-webkit-scrollbar { display: none; }
+
+    /* ── 배너 카드 ── */
+    .banner-card {
+      margin: 16px 31px 18px;
+      border: 1px solid #dcdcdc;
+      border-radius: 12px;
+      height: 178px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      background: #fff;
+    }
+    /* 좌우 흰색 페이드 (Figma Rectangle 6) */
+    .banner-lr-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(-89.99deg, #ffffff 3.85%, rgba(255,255,255,0) 12.98%, rgba(255,255,255,0) 87.02%, #ffffff 96.64%);
+      pointer-events: none;
+      z-index: 2;
+      border-radius: 12px;
+    }
+    /* 하늘색 그라데이션 overlay — mix-blend-mode: multiply */
+    .banner-gradient-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(255,255,255,0) 59.615%, #dcefff 100%);
+      mix-blend-mode: multiply;
+      pointer-events: none;
+      z-index: 1;
+      border-radius: 12px;
+    }
+
+    /* 음식 이미지 캐러셀 — 실측 여백 기반 per-image margin, 모든 gap ≈ 4px */
+    .food-carousel {
+      position: absolute;
+      top: 2px;
+      left: 0;
+      height: 106px;
+      width: calc(542px * 2);
+      display: flex;
+      animation: foodScroll 10s linear infinite;
+    }
+    .food-carousel-set {
+      display: flex;
+      align-items: flex-end;
+      gap: 0;
+      width: 542px;
+      flex-shrink: 0;
+      height: 106px;
+      padding: 0;
+    }
+    .food-carousel-set img {
+      width: 120px;
+      height: 106px;
+      object-fit: contain;
+      flex-shrink: 0;
+      display: block;
+      mix-blend-mode: multiply;
+      margin-left: 0; /* food1(찌개) 기준 — 세트 경계 gap도 이 값으로 맞춤 */
+    }
+    .food-carousel-set img:nth-child(2) { margin-left: -27px; } /* 스시 */
+    .food-carousel-set img:nth-child(3) { margin-left: -28px; } /* 딤섬 */
+    .food-carousel-set img:nth-child(4) { margin-left: -25px; } /* 양식 */
+    .food-carousel-set img:nth-child(5) { margin-left: -30px; } /* 치킨 */
+    .food-carousel-set img:nth-child(6) { margin-left: -36px; } /* 박스(아시아) */
+
+    @keyframes foodScroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-542px); }
+    }
+
+    /* 좌우 페이드 제거 — 상하 그라데이션만 사용 */
+
+    /* 배너 텍스트 영역 */
+    .banner-text {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 0 17px 16px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      z-index: 3;
+    }
+    .banner-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: #000;
+      letter-spacing: -0.8px;
+      margin-bottom: 5px;
+    }
+    .banner-sub {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      font-weight: 500;
+      color: #5888b2;
+      letter-spacing: -0.4px;
+    }
+    .banner-arrow {
+      width: 46px;
+      height: 46px;
+      background: #fff;
+      border-radius: 50%;
+      border: 1px solid #e8e8e8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+    .banner-arrow svg { width: 18px; height: 18px; color: #333; }
+
+    /* ── 통계 바 ── */
+    .stats-bar {
+      margin: 0 31px 16px;
+      background: #f4f4f4;
+      border: 1px solid #dcdcdc;
+      border-radius: 12px;
+      height: 48px;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .stats-bar span {
+      font-family: 'Poppins', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      color: #191919;
+      letter-spacing: -0.12px;
+    }
+    .stats-bar .count {
+      font-size: 16px;
+      font-weight: 700;
+      color: #005ba9;
+      letter-spacing: -0.16px;
+    }
+
+    /* ── 섹션 공통 ── */
+    .section { padding: 0 31px; }
+    .divider-line {
+      height: 1px;
+      background: #e8e8e8;
+      margin: 0 31px 0 31px;
+      flex-shrink: 0;
+    }
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 21px 0 8px;
+    }
+    .section-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #191919;
+      letter-spacing: -0.14px;
+    }
+    .section-more {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      color: #5888b2;
+      letter-spacing: -0.48px;
+      cursor: pointer;
+    }
+
+    /* ── 카테고리 그리드 ── */
+    .cat-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 19px 28px;
+      padding-bottom: 8px;
+    }
+    .cat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 7.2px;
+      cursor: pointer;
+    }
+    .cat-item:active { opacity: 0.7; }
+    .cat-circle {
+      width: 70.2px;
+      height: 70.2px;
+      background: #f4f4f4;
+      border: 1.08px solid #dcdcdc;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .cat-circle img {
+      width: 58px;
+      height: 58px;
+      object-fit: contain;
+      display: block;
+      mix-blend-mode: multiply; /* 흰색 배경 투명 처리 */
+    }
+    .cat-name {
+      font-family: 'Inter', sans-serif;
+      font-size: 10.8px;
+      font-weight: 500;
+      color: #000;
+      text-align: center;
+      letter-spacing: -0.43px;
+    }
+
+    /* ── 가로 스크롤 카드 (밥집/카페) ── */
+    .card-scroll {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      padding-left: 33px;
+      padding-right: 0;
+      scrollbar-width: none;
+    }
+    .card-scroll::-webkit-scrollbar { display: none; }
+
+    .rest-card {
+      flex-shrink: 0;
+      width: 141px;
+      height: 160px;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      background: #e8e8e8;
+    }
+    .rest-card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .rest-card-gradient {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(255,255,255,0) 24%, rgba(0,0,0,0.7) 56%);
+    }
+    .rest-card-info {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      right: 10px;
+    }
+    .rest-card-name {
+      font-family: 'Poppins', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.12px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 2px;
+    }
+    .rest-card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .rest-card-cat {
+      font-family: 'Poppins', sans-serif;
+      font-size: 10px;
+      font-weight: 500;
+      color: #5888b2;
+      letter-spacing: -0.1px;
+    }
+    .rest-card-dist {
+      font-family: 'Poppins', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      color: #ffbe0c;
+      letter-spacing: -0.1px;
+    }
+
+    /* 스켈레톤 로딩 */
+    .skeleton {
+      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.2s infinite;
+      border-radius: 12px;
+    }
+    @keyframes shimmer {
+      0%   { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* ── 하단 네비 (고정) ── */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      width: 430px;
+      height: 73px;
+      background: #fff;
+      border-top: 1px solid #eee;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 0 3px rgba(0,0,0,0.25);
+      z-index: 200;
+    }
+    .nav-item {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      cursor: pointer;
+    }
+    .nav-item img, .nav-icon-svg {
+      width: 26px;
+      height: 26px;
+      object-fit: contain;
+    }
+    .nav-icon-svg { fill: none; }
+    .nav-item.active .nav-icon-svg path { stroke: #005ba9; }
+    .nav-icon-svg path { stroke: #bbb; stroke-width: 2; }
+  </style>
+</head>
+<body>
+<div class="phone">
+
+  <!-- ── 헤더 ── -->
+  <div class="header">
+    <div class="header-top">
+      <!-- BNU 로고 -->
+      <div class="logo-bnu"><span class="blue">B</span>NU</div>
+
+      <!-- 서브타이틀 (Bab 롤링) -->
+      <div class="header-sub" onclick="location.href='/static/home.html'" style="cursor:pointer">
+        <div>
+          <span class="bab-slot">
+            <div class="bab-slot-inner">
+              <span>Bab</span>
+              <span class="bab-emoji"><img src="/static/images/bab-emoji.png" alt="밥" /></span>
+            </div>
+          </span>
+          &nbsp;in <span class="blue">PNU</span>,
+        </div>
+        <div>
+          <span class="bab-slot">
+            <div class="bab-slot-inner">
+              <span>Bab</span>
+              <span class="bab-emoji"><img src="/static/images/bab-emoji.png" alt="밥" /></span>
+            </div>
+          </span>
+          &nbsp;Navigation for U
+        </div>
+      </div>
+
+      <!-- 계정 아이콘 -->
+      <div class="account-icon" id="authArea">👤</div>
+    </div>
+    <div class="header-divider"></div>
+  </div>
+
+  <!-- ── 스크롤 영역 ── -->
+  <div class="scroll-content">
+
+    <!-- 배너 카드 -->
+    <div class="banner-card" onclick="location.href='/recommend'">
+      <!-- 음식 이미지 캐러셀 -->
+      <div class="food-carousel" id="foodCarousel">
+        <!-- 세트 1 -->
+        <div class="food-carousel-set">
+          <img src="/static/images/banner-food-1.png" alt="" />
+          <img src="/static/images/banner-food-2.png" alt="" />
+          <img src="/static/images/banner-food-3.png" alt="" />
+          <img src="/static/images/banner-food-4.png" alt="" />
+          <img src="/static/images/banner-food-5.png" alt="" />
+          <img src="/static/images/banner-food-6.png" alt="" />
+        </div>
+        <!-- 세트 2 (루프용 복사본) -->
+        <div class="food-carousel-set">
+          <img src="/static/images/banner-food-1.png" alt="" />
+          <img src="/static/images/banner-food-2.png" alt="" />
+          <img src="/static/images/banner-food-3.png" alt="" />
+          <img src="/static/images/banner-food-4.png" alt="" />
+          <img src="/static/images/banner-food-5.png" alt="" />
+          <img src="/static/images/banner-food-6.png" alt="" />
+        </div>
+      </div>
+
+      <!-- 좌우 흰색 페이드 (Figma Rectangle 6) -->
+      <div class="banner-lr-overlay"></div>
+      <!-- 하늘색 그라데이션 (multiply, 상→하) -->
+      <div class="banner-gradient-overlay"></div>
+
+      <!-- 텍스트 -->
+      <div class="banner-text">
+        <div>
+          <div class="banner-title">오늘 뭐 먹지?</div>
+          <div class="banner-sub">밥약 메뉴! 이젠 맞춤 추천 받자</div>
+        </div>
+        <div class="banner-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- 통계 바 -->
+    <div class="stats-bar">
+      <span>부산대학교 정문 기준</span>
+      <span class="count" id="totalCount">0</span>
+      <span>개 식당을 찾았어요!</span>
+    </div>
+
+    <!-- 카테고리 -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title">카테고리</div>
+        <div class="section-more" onclick="location.href='/search'">전체보기 ►</div>
+      </div>
+      <div class="divider-line" style="margin: 0 0 18px;"></div>
+      <div class="cat-grid" id="catGrid">
+        <div class="cat-item" onclick="location.href='/search?cat=한식'">
+          <div class="cat-circle"><img src="/static/images/cat-한식.png" alt="한식"></div>
+          <div class="cat-name">한식</div>
+        </div>
+<div class="cat-item" onclick="location.href='/search?cat=중식'">
+          <div class="cat-circle"><img src="/static/images/cat-중식.png" alt="중식"></div>
+          <div class="cat-name">중식</div>
+        </div>
+        <div class="cat-item" onclick="location.href='/search?cat=일식'">
+          <div class="cat-circle"><img src="/static/images/cat-일식.png" alt="일식"></div>
+          <div class="cat-name">일식</div>
+        </div>
+        <div class="cat-item" onclick="location.href='/search?cat=양식'">
+          <div class="cat-circle"><img src="/static/images/cat-양식.png" alt="양식"></div>
+          <div class="cat-name">양식</div>
+        </div>
+        <div class="cat-item" onclick="location.href='/search?cat=아시아'">
+          <div class="cat-circle"><img src="/static/images/cat-아시아.png" alt="아시아"></div>
+          <div class="cat-name">아시아</div>
+        </div>
+        <div class="cat-item" onclick="location.href='/search?cat=분식'">
+          <div class="cat-circle"><img src="/static/images/cat-분식.png" alt="분식"></div>
+          <div class="cat-name">분식</div>
+        </div>
+        <div class="cat-item" onclick="location.href='/search?cat=패스트푸드'">
+          <div class="cat-circle"><img src="/static/images/cat-패스트푸드.png" alt="패스트푸드"></div>
+          <div class="cat-name">패스트푸드</div>
+        </div>
+        <div class="cat-item" onclick="location.href='/search?type=cafe'">
+          <div class="cat-circle"><img src="/static/images/cat-카페.png" alt="카페"></div>
+          <div class="cat-name">카페</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 가까운 밥.zip -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title">가까운 밥.zip</div>
+        <div class="section-more" onclick="location.href='/search?type=food'">전체보기 ►</div>
+      </div>
+      <div class="divider-line" style="margin: 0 0 18px;"></div>
+    </div>
+    <div class="card-scroll" id="nearFood">
+      <div class="rest-card skeleton"></div>
+      <div class="rest-card skeleton"></div>
+      <div class="rest-card skeleton"></div>
+    </div>
+    <div style="height:17px;"></div>
+
+    <!-- 가까운 커피.zip -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title">가까운 커피.zip</div>
+        <div class="section-more" onclick="location.href='/search?type=cafe'">전체보기 ►</div>
+      </div>
+      <div class="divider-line" style="margin: 0 0 18px;"></div>
+    </div>
+    <div class="card-scroll" id="nearCafe">
+      <div class="rest-card skeleton"></div>
+      <div class="rest-card skeleton"></div>
+      <div class="rest-card skeleton"></div>
+    </div>
+    <div style="height:17px;"></div>
+
+  </div><!-- end scroll-content -->
+
+  <!-- ── 하단 네비 (고정) ── -->
+  <nav class="bottom-nav">
+    <div class="nav-item active">
+      <!-- 홈 -->
+      <svg class="nav-icon-svg" viewBox="0 0 24 24" fill="none">
+        <path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z" stroke="#005ba9" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M9 21V12h6v9" stroke="#005ba9" stroke-width="2" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="nav-item" onclick="location.href='/search'">
+      <!-- 탐색 -->
+      <svg class="nav-icon-svg" viewBox="0 0 24 24" fill="none">
+        <circle cx="11" cy="11" r="7" stroke="#bbb" stroke-width="2"/>
+        <path d="M16.5 16.5L21 21" stroke="#bbb" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="nav-item" onclick="location.href='/recommend'">
+      <!-- 추천 -->
+      <svg class="nav-icon-svg" viewBox="0 0 24 24" fill="none">
+        <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6L12 2z" stroke="#bbb" stroke-width="1.8" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="nav-item" onclick="location.href='/mylist'">
+      <!-- 내 목록 -->
+      <svg class="nav-icon-svg" viewBox="0 0 24 24" fill="none">
+        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke="#bbb" stroke-width="1.8" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </nav>
+
+</div>
+
+<script src="/static/auth.js"></script>
+<script>
+  // 카테고리 이미지 매핑 (images/ 폴더에 넣어두면 됨)
+  const catImages = {
+    '한식':     '/static/images/cat-한식.png',
+    '중식':     '/static/images/cat-중식.png',
+    '일식':     '/static/images/cat-일식.png',
+    '양식':     '/static/images/cat-양식.png',
+    '아시아':   '/static/images/cat-아시아.png',
+    '분식':     '/static/images/cat-분식.png',
+    '패스트푸드':'/static/images/cat-패스트푸드.png',
+    '카페':     '/static/images/cat-카페.png',
+  };
+  const catEmoji = {
+    '돈까스·회':'🍱','한식':'🍚','치킨':'🍗','피자·버거':'🍔',
+    '분식':'🥢','중식':'🥡','일식':'🍣','양식':'🍝',
+    '고기·구이':'🥩','카페·디저트':'☕','패스트푸드':'🍔','아시아':'🍜','기타':'🍽'
+  };
+
+  let foodData = [], cafeData = [];
+
+  function openDetail(item) {
+    sessionStorage.setItem('detailItem', JSON.stringify(item));
+    location.href = '/detail';
+  }
+
+  function makePlaceholderCard() {
+    return `<div class="rest-card" style="background:#f0f0f0;display:flex;align-items:center;justify-content:center;color:#ccc;font-size:28px;">🍽</div>`;
+  }
+
+  function makeRestCard(item, idx, arr) {
+    const name = item['이름'] || '-';
+    const cat  = item['대분류'] || item['카테고리'] || '';
+    const dist = item['거리(m)'] && item['거리(m)'] !== '-' ? item['거리(m)'] + 'm' : '';
+    // 이미지: API에서 사진 URL이 있으면 사용, 없으면 카테고리 이모지 플레이스홀더
+    const imgSrc = item['사진'] || '';
+    const imgHtml = imgSrc
+      ? `<img class="rest-card-img" src="${imgSrc}" alt="${name}" onerror="this.style.display='none'" />`
+      : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:36px;color:#ccc;">${catEmoji[cat]||'🍽'}</div>`;
+
+    return `
+      <div class="rest-card" onclick="openDetail(${arr}[${idx}])">
+        ${imgHtml}
+        <div class="rest-card-gradient"></div>
+        <div class="rest-card-info">
+          <div class="rest-card-name">${name}</div>
+          <div class="rest-card-meta">
+            <span class="rest-card-cat">${cat}</span>
+            <span class="rest-card-dist">${dist}</span>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  async function load() {
+    const [food, cafe] = await Promise.all([
+      fetch('/api/food').then(r => r.json()),
+      fetch('/api/cafe').then(r => r.json()),
+    ]);
+    foodData = food.map(i => ({ ...i, _type: 'food' }));
+    cafeData = cafe.map(i => ({ ...i, _type: 'cafe' }));
+
+    // 통계
+    document.getElementById('totalCount').textContent = food.length + cafe.length;
+
+    // 카테고리 그리드는 정적 HTML 사용 (id=catGrid)
+
+    // 가까운 밥집 (top 7)
+    document.getElementById('nearFood').innerHTML =
+      foodData.slice(0, 7).map((item, idx) => makeRestCard(item, idx, 'foodData')).join('');
+
+    // 가까운 카페 (top 7)
+    document.getElementById('nearCafe').innerHTML =
+      cafeData.slice(0, 7).map((item, idx) => makeRestCard(item, idx, 'cafeData')).join('');
+  }
+
+  // 로그인 콜백 처리 (카카오/구글 공통)
+  (async function() {
+    const params = new URLSearchParams(location.search);
+    const kt = params.get('_kt');
+    const ku = params.get('_ku');
+    if (kt && ku) {
+      try {
+        localStorage.setItem('jwt', kt);
+        localStorage.setItem('user', ku);
+        history.replaceState({}, '', '/');
+
+        // 서버 데이터로 덮어쓰기 (계정별 독립)
+        const headers = { 'Authorization': `Bearer ${kt}` };
+        const [serverBM, serverVI] = await Promise.all([
+          fetch('/api/auth/bookmarks', { headers }).then(r => r.ok ? r.json() : []),
+          fetch('/api/auth/visited',   { headers }).then(r => r.ok ? r.json() : []),
+        ]);
+        localStorage.setItem('bookmarks', JSON.stringify(serverBM));
+        localStorage.setItem('visited',   JSON.stringify(serverVI));
+      } catch {}
+    }
+
+    load();
+    if (typeof renderUserBadge === 'function') renderUserBadge('authArea');
+    if (typeof syncBookmarks === 'function') syncBookmarks();
+  })();
+</script>
+</body>
+</html>

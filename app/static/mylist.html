@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>밥약맵 - 내 목록</title>
+  <meta name="description" content="Bab 밥 Navigation for U — 부산대 맛집·카페 길잡이" />
+  <meta property="og:title" content="Bab 밥 in PNU" />
+  <meta property="og:description" content="Bab 밥 Navigation for U — 부산대 맛집·카페 길잡이" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://pnueat-backend.onrender.com" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Bab 밥 in PNU" />
+  <meta name="twitter:description" content="Bab 밥 Navigation for U — 부산대 맛집·카페 길잡이" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+    }
+    .phone {
+      width: 390px;
+      height: 844px;
+      background: #fff;
+      border: 1px solid #bbb;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* 헤더 */
+    .header {
+      padding: 16px 16px 0;
+      border-bottom: 1px solid #ddd;
+      flex-shrink: 0;
+    }
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .header-title { font-size: 17px; font-weight: 700; color: #111; }
+
+    /* 메인 탭 */
+    .tab-row { display: flex; }
+    .tab {
+      flex: 1;
+      padding: 10px 0;
+      text-align: center;
+      font-size: 14px;
+      color: #aaa;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+    }
+    .tab.active { color: #111; font-weight: 700; border-bottom-color: #111; }
+
+    /* 요약 바 */
+    .summary-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 16px;
+      border-bottom: 1px solid #eee;
+      flex-shrink: 0;
+    }
+    .summary-count { font-size: 12px; color: #888; }
+    .summary-count span { color: #111; font-weight: 700; }
+    .sort-row { display: flex; gap: 6px; }
+    .sort-btn {
+      font-size: 11px;
+      color: #888;
+      padding: 4px 8px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+    .sort-btn.active { border-color: #111; background: #111; color: #fff; font-weight: 600; }
+
+    /* 컬렉션 칩 */
+    .collection-section {
+      padding: 10px 16px;
+      border-bottom: 1px solid #eee;
+      flex-shrink: 0;
+    }
+    .collection-label { font-size: 11px; color: #aaa; margin-bottom: 8px; letter-spacing: 0.5px; }
+    .collection-scroll {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      padding-right: 4px;
+    }
+    .collection-scroll::-webkit-scrollbar { display: none; }
+    .col-chip {
+      flex-shrink: 0;
+      padding: 6px 14px;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      font-size: 12px;
+      color: #555;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+    .col-chip.active { border-color: #111; background: #111; color: #fff; font-weight: 600; }
+
+    /* 리스트 */
+    .list-scroll { flex: 1; overflow-y: auto; min-height: 0; }
+
+    .restaurant-card {
+      display: flex;
+      gap: 12px;
+      padding: 14px 16px;
+      border-bottom: 1px solid #eee;
+    }
+    .card-thumb {
+      width: 64px;
+      height: 64px;
+      background: #f4f4f4;
+      border-radius: 10px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+    }
+    .card-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+    .card-name { font-size: 15px; font-weight: 700; color: #111; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .card-meta { display: flex; gap: 5px; align-items: center; flex-wrap: wrap; }
+    .tag { font-size: 11px; color: #555; background: #f2f2f2; border-radius: 4px; padding: 2px 6px; }
+    .tag.cafe { background: #fef3e2; color: #e67e22; }
+    .tag.price { background: #f0f7ff; color: #1a73e8; }
+    .card-addr { font-size: 12px; color: #888; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .card-bottom { display: flex; justify-content: space-between; align-items: center; }
+    .card-dist { font-size: 11px; color: #34a853; font-weight: 600; }
+    .action-btn {
+      width: 28px; height: 28px;
+      background: #f4f4f4;
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .action-btn:active { background: #e8e8e8; }
+
+    /* 빈 상태 */
+    .empty-state {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 60px 20px;
+    }
+    .empty-icon { font-size: 48px; }
+    .empty-text { font-size: 14px; color: #aaa; text-align: center; line-height: 1.6; }
+    .empty-btn {
+      margin-top: 8px;
+      padding: 10px 24px;
+      background: #111;
+      color: #fff;
+      border: none;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* 하단 네비 */
+    .bottom-nav {
+      display: flex;
+      border-top: 1px solid #ddd;
+      background: #fff;
+      padding: 8px 0 16px;
+      flex-shrink: 0;
+    }
+    .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; }
+    .nav-icon { font-size: 20px; color: #ccc; }
+    .nav-item.active .nav-icon { color: #111; }
+    .nav-label { font-size: 10px; color: #aaa; }
+    .nav-item.active .nav-label { color: #111; font-weight: 700; }
+  </style>
+</head>
+<body>
+  <div class="phone">
+
+    <div class="header">
+      <div class="header-top">
+        <div class="header-title">🔖 내 목록</div>
+        <div style="position:relative" id="authArea"></div>
+      </div>
+      <div class="tab-row">
+        <div class="tab active" onclick="switchMainTab('saved')">저장한 곳</div>
+        <div class="tab" onclick="switchMainTab('visited')">가본 곳</div>
+      </div>
+    </div>
+
+    <div class="summary-bar">
+      <div class="summary-count">총 <span id="countBadge">0</span>개 저장됨</div>
+      <div class="sort-row">
+        <div class="sort-btn active" onclick="setSort('recent')">최근 저장순</div>
+        <div class="sort-btn" onclick="setSort('distance')">거리순</div>
+      </div>
+    </div>
+
+    <div class="collection-section">
+      <div class="collection-label">컬렉션</div>
+      <div class="collection-scroll" id="collectionScroll"></div>
+    </div>
+
+    <div class="list-scroll" id="listScroll"></div>
+
+    <div class="bottom-nav">
+      <div class="nav-item" onclick="location.href='/'">
+        <div class="nav-icon">🏠</div><div class="nav-label">홈</div>
+      </div>
+      <div class="nav-item" onclick="location.href='/search'">
+        <div class="nav-icon">🔍</div><div class="nav-label">탐색</div>
+      </div>
+      <div class="nav-item" onclick="location.href='/recommend'">
+        <div class="nav-icon">✨</div><div class="nav-label">추천</div>
+      </div>
+      <div class="nav-item active">
+        <div class="nav-icon">🔖</div><div class="nav-label">내 목록</div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="/static/auth.js"></script>
+  <script>
+    const catEmoji = {
+      '돈까스·회':'🍱','한식':'🍚','치킨':'🍗','피자·버거':'🍔',
+      '분식':'🥢','중식':'🥡','일식':'🍣','양식':'🍝',
+      '고기·구이':'🥩','카페·디저트':'☕','기타':'🍽'
+    };
+
+    let allItems = [];
+    let bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+    let visited = JSON.parse(localStorage.getItem('visited') || '[]');
+    let mainTab = 'saved';
+    let currentSort = 'recent';
+    let currentCol = 'all';
+
+    async function load() {
+      const [food, cafe] = await Promise.all([
+        fetch('/api/food').then(r => r.json()),
+        fetch('/api/cafe').then(r => r.json()),
+      ]);
+      allItems = [
+        ...food.map(i => ({ ...i, _type: 'food' })),
+        ...cafe.map(i => ({ ...i, _type: 'cafe' })),
+      ];
+      render();
+    }
+
+    function switchMainTab(tab) {
+      mainTab = tab;
+      currentCol = 'all';
+      document.querySelectorAll('.tab').forEach((t, i) => {
+        t.classList.toggle('active', ['saved','visited'][i] === tab);
+      });
+      render();
+    }
+
+    function setSort(sort) {
+      currentSort = sort;
+      document.querySelectorAll('.sort-btn').forEach((b, i) => {
+        b.classList.toggle('active', ['recent','distance'][i] === sort);
+      });
+      render();
+    }
+
+    function setCollection(col) {
+      currentCol = col;
+      render();
+    }
+
+    function getSaved() {
+      return allItems.filter(i => bookmarks.includes(i['이름']));
+    }
+
+    function renderCollections(saved) {
+      const foodCount = saved.filter(i => i._type === 'food').length;
+      const cafeCount = saved.filter(i => i._type === 'cafe').length;
+      const chips = [
+        { key: 'all',  label: `전체 (${saved.length})` },
+        { key: 'food', label: `밥집 (${foodCount})` },
+        { key: 'cafe', label: `카페 (${cafeCount})` },
+      ];
+      document.getElementById('collectionScroll').innerHTML = chips.map(c => `
+        <div class="col-chip ${currentCol === c.key ? 'active' : ''}"
+             onclick="setCollection('${c.key}')">${c.label}</div>
+      `).join('');
+    }
+
+    function removeBookmark(name) {
+      bookmarks = bookmarks.filter(b => b !== name);
+      localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+      pushBookmarks(bookmarks);
+      render();
+    }
+
+    function removeVisited(name) {
+      visited = visited.filter(v => v !== name);
+      localStorage.setItem('visited', JSON.stringify(visited));
+      render();
+    }
+
+    function getList() {
+      const names = mainTab === 'visited' ? visited : bookmarks;
+      return allItems.filter(i => names.includes(i['이름']));
+    }
+
+    function render() {
+      let items = getList();
+      const label = mainTab === 'visited' ? '가본 곳' : '저장한 곳';
+      const emptyIcon = mainTab === 'visited' ? '✅' : '🔖';
+      const emptyText = mainTab === 'visited'
+        ? '가본 식당이 없어요<br>상세 페이지에서 ✅를 눌러 추가하세요'
+        : '저장한 식당이 없어요<br>탐색에서 🤍를 눌러 저장해보세요';
+
+      document.getElementById('countBadge').textContent = items.length;
+      renderCollections(items);
+
+      if (currentCol === 'food') items = items.filter(i => i._type === 'food');
+      if (currentCol === 'cafe') items = items.filter(i => i._type === 'cafe');
+
+      if (currentSort === 'distance') {
+        items = [...items].sort((a, b) => {
+          const da = a['거리(m)'] === '-' ? 9999 : parseInt(a['거리(m)']);
+          const db = b['거리(m)'] === '-' ? 9999 : parseInt(b['거리(m)']);
+          return da - db;
+        });
+      }
+
+      if (items.length === 0) {
+        document.getElementById('listScroll').innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">${emptyIcon}</div>
+            <div class="empty-text">${emptyText}</div>
+            <button class="empty-btn" onclick="location.href='/search'">식당 탐색하기</button>
+          </div>`;
+        return;
+      }
+
+      window._mylistItems = items;
+      document.getElementById('listScroll').innerHTML = items.map((item, idx) => {
+
+        const isCafe = item._type === 'cafe';
+        const emoji = isCafe ? '☕' : (catEmoji[item['대분류']] || '🍽');
+        const dist = item['거리(m)'] !== '-' ? `🚶 ${item['도보시간']} · ${item['거리(m)']}m` : '';
+        const price = item['가격'] ? parseInt(item['가격']).toLocaleString() + '원' : '';
+        const photo = item['사진'] || (item['사진목록'] && item['사진목록'][0]);
+        const thumbHtml = photo
+          ? `<img src="${photo}" style="width:100%;height:100%;object-fit:cover;border-radius:10px;" loading="lazy" onerror="this.parentElement.innerHTML='${emoji}';">`
+          : emoji;
+        return `
+          <div class="restaurant-card" data-idx="${idx}">
+            <div class="card-thumb" style="${photo ? 'background:#eee;overflow:hidden;padding:0;' : ''}">${thumbHtml}</div>
+            <div class="card-info">
+              <div class="card-name">${item['이름']}</div>
+              <div class="card-meta">
+                <div class="tag ${isCafe ? 'cafe' : ''}">${item['대분류'] || item['카테고리']}</div>
+                ${price ? `<div class="tag price">${price}</div>` : ''}
+                ${item['별점'] != null ? `<div class="tag" style="color:#f59e0b;background:#fffbeb">★ ${item['별점']}</div>` : ''}
+              </div>
+              <div class="card-addr">📍 ${item['주소'] || '-'}</div>
+              <div class="card-bottom">
+                <div class="card-dist">${dist}</div>
+                <div style="display:flex;gap:4px">
+                  ${mainTab === 'saved' ? `<div class="action-btn move-btn" data-idx="${idx}" title="가본 곳으로 이동">✅</div>` : `<div class="action-btn save-btn" data-idx="${idx}" title="저장한 곳으로 이동">🔖</div>`}
+                  <div class="action-btn remove-btn" data-idx="${idx}">🗑️</div>
+                </div>
+              </div>
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    function moveToVisited(name) {
+      if (!visited.includes(name)) {
+        visited.push(name);
+        localStorage.setItem('visited', JSON.stringify(visited));
+        pushVisited(visited);
+      }
+      removeBookmark(name);
+    }
+
+    function moveToSaved(name) {
+      if (!bookmarks.includes(name)) {
+        bookmarks.push(name);
+        localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+        pushBookmarks(bookmarks);
+      }
+      removeVisited(name);
+    }
+
+    document.getElementById('listScroll').addEventListener('click', e => {
+      const moveBtn = e.target.closest('.move-btn');
+      if (moveBtn) {
+        const item = window._mylistItems?.[parseInt(moveBtn.dataset.idx)];
+        if (item) moveToVisited(item['이름']);
+        return;
+      }
+      const saveBtn = e.target.closest('.save-btn');
+      if (saveBtn) {
+        const item = window._mylistItems?.[parseInt(saveBtn.dataset.idx)];
+        if (item) moveToSaved(item['이름']);
+        return;
+      }
+      const removeBtn = e.target.closest('.remove-btn');
+      if (removeBtn) {
+        const item = window._mylistItems?.[parseInt(removeBtn.dataset.idx)];
+        if (item) {
+          if (mainTab === 'visited') removeVisited(item['이름']);
+          else removeBookmark(item['이름']);
+        }
+        return;
+      }
+      const card = e.target.closest('.restaurant-card');
+      if (card) {
+        const item = window._mylistItems?.[parseInt(card.dataset.idx)];
+        if (item) { sessionStorage.setItem('detailItem', JSON.stringify(item)); location.href = '/detail'; }
+      }
+    });
+
+    load();
+    renderUserBadge('authArea');
+    Promise.all([syncBookmarks(), syncVisited()]).then(() => {
+      bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+      visited = JSON.parse(localStorage.getItem('visited') || '[]');
+      render();
+    });
+  </script>
+</body>
+</html>

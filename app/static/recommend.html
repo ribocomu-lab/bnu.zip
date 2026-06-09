@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>밥약맵 - 맞춤 추천</title>
+  <meta name="description" content="Bab 밥 Navigation for U — 부산대 맛집·카페 길잡이" />
+  <meta property="og:title" content="Bab 밥 in PNU" />
+  <meta property="og:description" content="Bab 밥 Navigation for U — 부산대 맛집·카페 길잡이" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://pnueat-backend.onrender.com" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Bab 밥 in PNU" />
+  <meta name="twitter:description" content="Bab 밥 Navigation for U — 부산대 맛집·카페 길잡이" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #e8e8e8;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      font-family: 'Inter', 'Apple SD Gothic Neo', sans-serif;
+    }
+
+    /* ── 전체 레이아웃 ── */
+    .phone {
+      width: 430px;
+      min-height: 100vh;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* ── 헤더 ── */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #fff;
+      padding: 20px 31px 0;
+    }
+    .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 16px;
+    }
+    .logo-bnu {
+      font-family: 'Inter', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.96px;
+    }
+    .logo-bnu .blue { color: #005ba9; }
+    .header-sub {
+      font-family: 'Poppins', sans-serif;
+      font-size: 11.52px;
+      font-weight: 500;
+      color: #000;
+      letter-spacing: -0.46px;
+      text-align: center;
+      line-height: 1.6;
+    }
+    .header-sub .blue { color: #005ba9; font-weight: 700; }
+    .bab-slot {
+      display: inline-block;
+      overflow: hidden;
+      height: 1.1em;
+      vertical-align: middle;
+      position: relative;
+      top: -0.05em;
+    }
+    .bab-slot-inner {
+      display: flex;
+      flex-direction: column;
+      animation: babRoll 2.6s ease-out infinite 0.8s;
+    }
+    .bab-slot-inner span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 1.1em;
+      line-height: 1.1;
+      white-space: nowrap;
+    }
+    .bab-slot-inner .bab-emoji img {
+      height: 0.9em;
+      width: auto;
+      vertical-align: middle;
+    }
+    @keyframes babRoll {
+      0%   { transform: translateY(0); }
+      30%  { transform: translateY(0); }
+      50%  { transform: translateY(-1.1em); }
+      80%  { transform: translateY(-1.1em); }
+      95%  { transform: translateY(0); }
+      100% { transform: translateY(0); }
+    }
+    .account-icon {
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      background: #e8e8e8;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: #888; font-size: 14px;
+    }
+    .header-divider { height: 1px; background: #e8e8e8; margin: 0 -31px; }
+
+    /* ── 스크롤 영역 ── */
+    .scroll-content {
+      flex: 1;
+      overflow-y: auto;
+      padding-bottom: 73px; /* 네비 높이만큼만 */
+      scrollbar-width: none;
+    }
+    .scroll-content::-webkit-scrollbar { display: none; }
+
+    /* ── 통합 카드 (안내 + 스텝) ── */
+    .info-step-card {
+      margin: 1px 31px 0;
+      border: 1px solid #dcdcdc;
+      border-radius: 12px;
+      padding: 15px 22px 50px 12px;
+      background: linear-gradient(to bottom, #fff 46%, #ddf0ff 115%);
+    }
+    /* 안내 영역 */
+    .info-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .info-icon {
+      width: 30px; height: 40px;
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .info-icon img {
+      width: 100%; height: 100%;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+    }
+    .info-text-title {
+      font-size: 14px; font-weight: 700;
+      color: #005ba9; letter-spacing: -0.56px;
+      margin-bottom: 5px;
+    }
+    .info-text-sub {
+      font-size: 10px; font-weight: 500;
+      color: #5888b2; letter-spacing: -0.4px;
+    }
+
+    /* 스텝 인디케이터 */
+    .stepper-wrap {
+      position: relative;
+      padding: 0 4px;
+    }
+    .stepper-line {
+      position: absolute;
+      top: 15px;
+      left: 20px;
+      right: 20px;
+      height: 1px;
+      background: #b8d8f0;
+      z-index: 0;
+    }
+    .stepper {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      position: relative;
+      z-index: 1;
+    }
+    .step-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      width: 33px;
+    }
+    .step-circle {
+      width: 31px; height: 31px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12.8px; font-weight: 700;
+      letter-spacing: -0.51px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .step-circle.inactive { background: #ddf0ff; color: #5888b2; }
+    .step-circle.active   { background: #ffbe0c; color: #fff; }
+    .step-circle.done     { background: #ffbe0c; color: #fff; }
+    .step-label {
+      font-size: 8px; font-weight: 500;
+      color: #5888b2; letter-spacing: -0.32px;
+      text-align: center;
+    }
+    .step-label.active { font-weight: 700; color: #935300; }
+    .step-label.done   { color: #935300; }
+
+    /* ── 콘텐츠 카드 (흰색 그림자 박스) ── */
+    .content-card {
+      margin: -25px -8px 0;
+      background: #fff;
+      box-shadow: 0 0 6px rgba(0,0,0,0.25);
+      padding: 36px 39px 32px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── 페이드업 애니메이션 — .entering 클래스 있을 때만 재생 ── */
+    @keyframes fadeUpIn {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .entering .q-title        { animation: fadeUpIn 0.4s ease both 0.00s; }
+    .entering .q-subtitle     { animation: fadeUpIn 0.4s ease both 0.05s; }
+
+    .entering .choice-card              { animation: fadeUpIn 0.4s ease both; }
+    .entering .choice-card:nth-child(1) { animation-delay: 0.08s; }
+    .entering .choice-card:nth-child(2) { animation-delay: 0.14s; }
+    .entering .choice-card:nth-child(3) { animation-delay: 0.20s; }
+    .entering .choice-card:nth-child(4) { animation-delay: 0.26s; }
+
+    .entering .chip-section-title { animation: fadeUpIn 0.4s ease both 0.32s; }
+
+    .entering .chip              { animation: fadeUpIn 0.35s ease both; }
+    .entering .chip:nth-child(1) { animation-delay: 0.38s; }
+    .entering .chip:nth-child(2) { animation-delay: 0.43s; }
+    .entering .chip:nth-child(3) { animation-delay: 0.48s; }
+    .entering .chip:nth-child(4) { animation-delay: 0.53s; }
+
+    .entering .check-item               { animation: fadeUpIn 0.35s ease both; }
+    .entering .check-item:nth-child(1)  { animation-delay: 0.08s; }
+    .entering .check-item:nth-child(2)  { animation-delay: 0.12s; }
+    .entering .check-item:nth-child(3)  { animation-delay: 0.16s; }
+    .entering .check-item:nth-child(4)  { animation-delay: 0.20s; }
+    .entering .check-item:nth-child(5)  { animation-delay: 0.24s; }
+    .entering .check-item:nth-child(6)  { animation-delay: 0.28s; }
+    .entering .check-item:nth-child(7)  { animation-delay: 0.32s; }
+    .entering .check-item:nth-child(8)  { animation-delay: 0.36s; }
+    .entering .check-item:nth-child(9)  { animation-delay: 0.40s; }
+    .entering .check-item:nth-child(10) { animation-delay: 0.44s; }
+
+    .entering .summary-box  { animation: fadeUpIn 0.4s ease both 0.48s; }
+
+    .entering .result-card              { animation: fadeUpIn 0.4s ease both; }
+    .entering .result-card:nth-child(3) { animation-delay: 0.10s; }
+    .entering .result-card:nth-child(4) { animation-delay: 0.20s; }
+    .entering .result-card:nth-child(5) { animation-delay: 0.30s; }
+
+    .entering .bottom-btn-area { animation: fadeUpIn 0.4s ease both 0.30s; }
+
+    /* ── 질문 제목 ── */
+    .q-title {
+      font-size: 16px; font-weight: 700;
+      color: #000; letter-spacing: -0.64px;
+      text-align: center;
+      margin-bottom: 23px;
+    }
+    .q-subtitle {
+      font-size: 12px; color: #888;
+      text-align: center;
+      margin-top: -20px;
+      margin-bottom: 20px;
+    }
+
+    /* ── 선택 카드 2x2 ── */
+    .choice-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 13px;
+      margin-bottom: 54px;
+    }
+    .choice-card {
+      border: 1px solid #cdcdcd;
+      border-radius: 12px;
+      height: 119px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 13px;
+      cursor: pointer;
+      background: #fff;
+      transition: border-color 0.15s, background 0.15s;
+      position: relative;
+      overflow: hidden;
+    }
+    .choice-card:active { opacity: 0.85; }
+    .choice-card.selected {
+      border: 2px solid #ffbe0c;
+      background: linear-gradient(to bottom, #fff 40%, #fff9e6 100%);
+    }
+    .choice-img-slot {
+      width: 42px; height: 42px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .choice-img-slot img {
+      width: 100%; height: 100%;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+    }
+    .choice-img-empty {
+      width: 42px; height: 42px;
+      background: #f0f0f0;
+      border-radius: 8px;
+    }
+    .choice-text { display: flex; flex-direction: column; align-items: center; gap: 4px; width: 89px; }
+    .choice-label {
+      font-size: 14px; font-weight: 700;
+      color: #000; letter-spacing: -0.56px;
+      text-align: center; width: 100%;
+    }
+    .choice-card.selected .choice-label { color: #935300; }
+    .choice-sub {
+      font-size: 10px; font-weight: 500;
+      color: #5888b2; letter-spacing: -0.4px;
+      text-align: center; width: 100%;
+    }
+
+    /* ── 거리/예산 칩 ── */
+    .chip-section-title {
+      font-size: 16px; font-weight: 700;
+      color: #000; letter-spacing: -0.64px;
+      text-align: center;
+      margin-bottom: 23px;
+    }
+    .chip-row {
+      display: flex; gap: 8px; flex-wrap: wrap;
+      justify-content: flex-start;
+    }
+    .chip {
+      padding: 8px 15px;
+      border: 1px solid #cdcdcd;
+      border-radius: 22px;
+      height: 34px;
+      font-size: 14px; font-weight: 500;
+      color: #000; letter-spacing: -0.56px;
+      cursor: pointer;
+      background: #fff;
+      white-space: nowrap;
+      transition: border-color 0.15s, background 0.15s, color 0.15s;
+      display: flex; align-items: center;
+    }
+    .chip:active { opacity: 0.8; }
+    .chip.selected {
+      border-color: #ffbe0c;
+      background: #ffbe0c;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    /* ── 요약 박스 ── */
+    .summary-box {
+      background: #f4f8ff;
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-top: 28px;
+    }
+    .summary-label { font-size: 10px; color: #5888b2; margin-bottom: 5px; font-weight: 500; }
+    .summary-text { font-size: 13px; color: #333; font-weight: 600; }
+
+    /* ── 카테고리 체크 그리드 ── */
+    .check-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    .check-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 12px;
+      border: 1px solid #cdcdcd;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .check-item:active { opacity: 0.8; }
+    .check-item.checked { border-color: #ffbe0c; background: #fff9e6; }
+    .checkbox {
+      width: 18px; height: 18px;
+      border-radius: 4px;
+      border: 1.5px solid #cdcdcd;
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; color: #fff;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .check-item.checked .checkbox { background: #ffbe0c; border-color: #ffbe0c; }
+    .check-text { font-size: 13px; color: #555; }
+    .check-item.checked .check-text { color: #935300; font-weight: 700; }
+
+    /* ── 결과 카드 ── */
+    .result-header {
+      font-size: 14px; font-weight: 700;
+      color: #191919; letter-spacing: -0.14px;
+      margin-bottom: 4px;
+    }
+    .result-summary-text {
+      font-size: 11px; color: #5888b2;
+      margin-bottom: 16px;
+    }
+    .result-card {
+      border: 1px solid #dcdcdc;
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      gap: 12px;
+      margin-bottom: 10px;
+      background: #fff;
+    }
+    .result-rank {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: #ffbe0c;
+      color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700;
+      flex-shrink: 0; margin-top: 2px;
+    }
+    .result-rank.silver { background: #dbe8f3; color: #5888b2; }
+    .result-rank.bronze { background: #ddf0ff; color: #005ba9; }
+    .result-info { flex: 1; min-width: 0; }
+    .result-name {
+      font-size: 15px; font-weight: 700;
+      color: #191919;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      margin-bottom: 4px;
+    }
+    .result-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 6px; }
+    .result-tag {
+      font-size: 11px;
+      background: #ddf0ff; color: #5888b2;
+      padding: 2px 8px; border-radius: 20px;
+      font-weight: 500;
+    }
+    .result-row {
+      display: flex; justify-content: space-between;
+      align-items: center; font-size: 12px; margin-top: 3px;
+    }
+    .result-dist { color: #005ba9; font-weight: 600; }
+    .result-score { color: #ffbe0c; font-weight: 700; font-size: 13px; }
+    .result-price { color: #888; }
+    .score-breakdown { display: flex; flex-direction: column; gap: 5px; }
+    .mini-score-row { display: flex; align-items: center; gap: 6px; }
+    .mini-score-label { font-size: 11px; color: #888; width: 22px; flex-shrink: 0; }
+    .mini-score-track {
+      flex: 1; height: 5px;
+      background: #ddf0ff; border-radius: 3px; overflow: hidden;
+    }
+    .mini-score-fill { height: 100%; border-radius: 3px; transition: width 0.5s ease; }
+    .mini-score-val { font-size: 11px; color: #555; font-weight: 600; width: 22px; text-align: right; flex-shrink: 0; }
+
+    /* ── 빈 결과 ── */
+    .empty-state { text-align: center; padding: 48px 20px; }
+    .empty-icon { font-size: 40px; margin-bottom: 12px; }
+    .empty-text { font-size: 14px; color: #aaa; line-height: 1.6; }
+
+    /* ── 세트 카드 ── */
+    .set-card {
+      border: 1.5px solid #dcdcdc;
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 16px;
+      background: #fafafa;
+    }
+    .set-label {
+      display: inline-block;
+      font-size: 11px; font-weight: 700;
+      padding: 3px 12px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+      letter-spacing: -0.3px;
+    }
+    .set-connector {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 10px 0;
+    }
+    .set-connector-line { flex: 1; height: 1px; background: #e0e0e0; }
+    .set-connector-label { font-size: 11px; color: #888; white-space: nowrap; }
+    .cafe-card {
+      background: #fff8f0;
+      border: 1px solid #ffe0c0;
+      border-radius: 10px;
+      padding: 12px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .cafe-card-info { flex: 1; min-width: 0; }
+    .cafe-card-name {
+      font-size: 14px; font-weight: 700; color: #111;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      margin-bottom: 4px;
+    }
+    .cafe-card-dist { font-size: 12px; color: #e65100; font-weight: 600; }
+    .cafe-card-sub  { font-size: 11px; color: #aaa; margin-top: 2px; }
+
+    /* ── 다시 시작 버튼 ── */
+    .restart-btn {
+      width: 100%; height: 56px;
+      background: #dbe8f3; border: none;
+      border-radius: 12px;
+      font-family: 'Inter', sans-serif;
+      font-size: 16px; font-weight: 700;
+      color: #005ba9; cursor: pointer;
+      letter-spacing: -0.64px;
+      transition: background 0.15s;
+    }
+    .restart-btn:active { background: #c5e4f8; }
+
+    /* ── 하단 버튼 (콘텐츠 카드 안, 인라인) ── */
+    .bottom-btn-area {
+      display: flex;
+      gap: 8px;
+      margin-top: 31px;
+    }
+    /* 결과 화면 버튼 묶음 */
+    .result-btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .result-btn-group .btn-next {
+      flex: none;
+      width: 100%;
+      height: 56px;
+    }
+    .btn-prev {
+      width: 48px; height: 56px;
+      border: 1px solid #cdcdcd;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      font-size: 18px; color: #5888b2;
+      flex-shrink: 0;
+      background: #fff;
+      transition: background 0.15s;
+    }
+    .btn-prev:active { background: #f0f0f0; }
+    .btn-next {
+      flex: 1; height: 56px;
+      border: none; border-radius: 12px;
+      font-family: 'Inter', sans-serif;
+      font-size: 16px; font-weight: 700;
+      letter-spacing: -0.64px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-next.ready    { background: #ffbe0c; color: #000; }
+    .btn-next.notready { background: #dbe8f3; color: #000; cursor: not-allowed; }
+    .btn-next.ready:active { opacity: 0.85; }
+
+    /* ── 하단 네비 (고정) ── */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      width: 430px;
+      height: 73px;
+      background: #fff;
+      border-top: 1px solid #eee;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 0 3px rgba(0,0,0,0.25);
+      z-index: 200;
+    }
+    .nav-item {
+      flex: 1; display: flex;
+      align-items: center; justify-content: center;
+      height: 100%; cursor: pointer;
+    }
+    .nav-icon-svg { width: 26px; height: 26px; fill: none; }
+    .nav-icon-svg path, .nav-icon-svg circle { stroke: #bbb; stroke-width: 2; }
+    .nav-item.active .nav-icon-svg path,
+    .nav-item.active .nav-icon-svg circle { stroke: #005ba9; }
+  </style>
+</head>
+<body>
+<div class="phone">
+
+  <!-- ── 헤더 ── -->
+  <div class="header">
+    <div class="header-top">
+      <div class="logo-bnu"><span class="blue">B</span>NU</div>
+      <div class="header-sub" onclick="location.href='/static/home.html'" style="cursor:pointer">
+        <div>
+          <span class="bab-slot">
+            <div class="bab-slot-inner">
+              <span>Bab</span>
+              <span class="bab-emoji"><img src="/static/images/bab-emoji.png" alt="밥" /></span>
+            </div>
+          </span>
+          &nbsp;in <span class="blue">PNU</span>,
+        </div>
+        <div>
+          <span class="bab-slot">
+            <div class="bab-slot-inner">
+              <span>Bab</span>
+              <span class="bab-emoji"><img src="/static/images/bab-emoji.png" alt="밥" /></span>
+            </div>
+          </span>
+          &nbsp;Navigation for U
+        </div>
+      </div>
+      <div class="account-icon" id="authArea">👤</div>
+    </div>
+    <div class="header-divider"></div>
+  </div>
+
+  <!-- ── 스크롤 영역 ── -->
+  <div class="scroll-content">
+
+    <!-- 안내 카드 + 스텝 통합 카드 -->
+    <div class="info-step-card">
+      <div class="info-row">
+        <div class="info-icon">
+          <img src="/static/images/logo-pin.png" alt="밥약맵 아이콘" style="mix-blend-mode:multiply">
+        </div>
+        <div>
+          <div class="info-text-title">밥약 장소 맞춤 추천</div>
+          <div class="info-text-sub">몇 가지 질문으로 딱 맞는 식당을 찾아드려요</div>
+        </div>
+      </div>
+      <div class="stepper-wrap">
+        <div class="stepper-line"></div>
+        <div class="stepper" id="stepBar"></div>
+      </div>
+    </div>
+
+    <!-- 콘텐츠 카드 (버튼 포함) -->
+    <div class="content-card">
+      <div id="questionSection"></div>
+      <div class="bottom-btn-area" id="bottomBtns"></div>
+    </div>
+
+  </div><!-- end scroll-content -->
+
+  <!-- 하단 네비 -->
+  <nav class="bottom-nav">
+    <div class="nav-item" onclick="location.href='/'">
+      <svg class="nav-icon-svg" viewBox="0 0 24 24" fill="none">
+        <path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z" stroke-linejoin="round"/>
+        <path d="M9 21V12h6v9" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="nav-item" onclick="location.href='/search'">
+      <svg class="nav-icon-svg" viewBox="0 0 24 24" fill="none">
+        <circle cx="11" cy="11" r="7"/>
+        <path d="M16.5 16.5L21 21" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="nav-item active">
+      <svg class="nav-icon-svg" viewBox="0 0 24 24" fill="none">
+        <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6L12 2z" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="nav-item" onclick="location.href='/mylist'">
+      <svg class="nav-icon-svg" viewBox="0 0 24 24" fill="none">
+        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </nav>
+
+</div>
+
+<script src="/static/auth.js"></script>
+<script>
+  /* ── 이미지 맵 ── */
+  const SIT_IMGS = {
+    '선후배 1:1': '/static/images/rec-sit-1v1.png',
+    '선후배 1:2': '/static/images/rec-sit-1v2.png',
+    '선후배 2:2': '/static/images/rec-sit-2v2.png',
+    '단체모임':   '/static/images/rec-sit-group.png',
+  };
+  const BUDGET_IMGS = {
+    7000:  '/static/images/rec-budget-7k.png',
+    10000: '/static/images/rec-budget-10k.png',
+    15000: '/static/images/rec-budget-15k.png',
+    99999: '/static/images/rec-budget-any.png',
+  };
+
+  /* ── 이미지 슬롯 헬퍼 ── */
+  function imgSlot(src, alt) {
+    return `<div class="choice-img-slot">
+      <img src="${src}" alt="${alt}"
+           onerror="this.parentNode.innerHTML='<div class=\'choice-img-empty\'></div>'"
+           style="mix-blend-mode:multiply">
+    </div>`;
+  }
+
+  const CAT_IMGS = {
+    '한식':      '/static/images/cat-한식.png',
+    '중식':      '/static/images/cat-중식.png',
+    '일식':      '/static/images/cat-일식.png',
+    '양식':      '/static/images/cat-양식.png',
+    '아시아':    '/static/images/cat-아시아.png',
+    '분식':      '/static/images/cat-분식.png',
+    '패스트푸드':'/static/images/cat-패스트푸드.png',
+  };
+  const CAFE_IMG = '/static/images/cat-카페.png';
+
+  const CAT_EMOJI = {
+    '한식':'🍚','고기':'🥩','중식':'🥡','일식':'🍣','양식':'🍝',
+    '아시아':'🍜','분식':'🥢','패스트푸드':'🍔','치킨':'🍗','기타':'🍽'
+  };
+  const CATS = ['한식','고기','중식','일식','양식','아시아','분식','패스트푸드','치킨'];
+  const STEP_LABELS = ['상황','예산','음식','결과'];
+
+  const state = {
+    step: 1,
+    situation: null,
+    maxDist: null,
+    maxBudget: null,
+    categories: [],
+    foodData: [],
+    cafeData: [],
+  };
+
+  /* ── 두 좌표 사이 거리(m) ── */
+  function haversineM(lat1, lng1, lat2, lng2) {
+    const R = 6371000;
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLng = (lng2 - lng1) * Math.PI / 180;
+    const a = Math.sin(dLat/2)**2 +
+      Math.cos(lat1 * Math.PI/180) * Math.cos(lat2 * Math.PI/180) * Math.sin(dLng/2)**2;
+    return Math.round(2 * R * Math.asin(Math.sqrt(a)));
+  }
+
+  function walkMin(m) {
+    const mins = Math.ceil(m * 1.3 / 67);
+    return mins < 1 ? '1분 이내' : `약 ${mins}분`;
+  }
+
+  /* ── 식당과 가장 가까운 카페 ── */
+  function findNearestCafe(restaurant) {
+    const cafes = state.cafeData;
+    if (!cafes.length) return null;
+    if (restaurant.lat && restaurant.lng) {
+      let best = null, bestDist = Infinity;
+      for (const cafe of cafes) {
+        if (!cafe.lat || !cafe.lng) continue;
+        const d = haversineM(restaurant.lat, restaurant.lng, cafe.lat, cafe.lng);
+        if (d < bestDist) { bestDist = d; best = { ...cafe, _distFromRest: d }; }
+      }
+      if (best) return best;
+    }
+    // fallback: PNU 기준 거리가 비슷한 카페
+    const rDist = parseInt(restaurant['거리(m)']) || 500;
+    return cafes.reduce((best, cafe) => {
+      const d1 = Math.abs((parseInt(cafe['거리(m)']) || 999) - rDist);
+      const d2 = Math.abs((parseInt(best['거리(m)']) || 999) - rDist);
+      return d1 < d2 ? cafe : best;
+    });
+  }
+
+  // 1. 처음 로딩 시에도 애니메이션이 뜨도록 기본값을 true로 변경
+  let _stepChanged = true; 
+
+  function triggerEnter() {
+    const card = document.querySelector('.content-card');
+    if (!card) return;
+    
+    // 기존에 예약된 타이머가 있다면 취소
+    if (card.enterTimeout) clearTimeout(card.enterTimeout);
+
+    card.classList.remove('entering');
+    void card.offsetWidth; // reflow → 애니메이션 재시작
+    card.classList.add('entering');
+
+    // 2. 애니메이션이 끝날 시간(약 1초) 뒤에 entering 클래스 제거
+    // 이렇게 해야 이후 옵션을 선택해서 안의 내용이 다시 그려져도 애니메이션이 발동하지 않음
+    card.enterTimeout = setTimeout(() => {
+      card.classList.remove('entering');
+    }, 1000);
+  }
+
+  /* ── 스텝 바 ── */
+  function renderStepBar() {
+    document.getElementById('stepBar').innerHTML = STEP_LABELS.map((label, i) => {
+      const n = i + 1;
+      const done   = n < state.step;
+      const active = n === state.step;
+      const cls = done ? 'done' : active ? 'active' : 'inactive';
+      return `
+        <div class="step-item">
+          <div class="step-circle ${cls}">${done ? '✓' : n}</div>
+          <div class="step-label ${cls}">${label}</div>
+        </div>`;
+    }).join('');
+  }
+
+  /* ── 요약 텍스트 ── */
+  function summaryText() {
+    const distMap  = {400:'5분 이내', 800:'10분 이내', 1200:'15분 이내', 99999:'거리 무관'};
+    const budgetMap= {7000:'7천원 이내', 10000:'1만원 이내', 15000:'1.5만원 이내', 99999:'예산 무관'};
+    return [
+      state.situation,
+      state.maxDist   != null ? distMap[state.maxDist]   : null,
+      state.maxBudget != null ? budgetMap[state.maxBudget]: null,
+    ].filter(Boolean).join(' · ') || '-';
+  }
+
+  /* ── 스텝 1: 상황 ── */
+  function renderStep1() {
+    const sits = [
+      {label:'선후배 1:1', sub:'둘이서'},
+      {label:'선후배 1:2', sub:'셋이서'},
+      {label:'선후배 2:2', sub:'넷이서'},
+      {label:'단체모임',   sub:'다같이'},
+    ];
+    const dists = [
+      {label:'5분 이내',  val:400},
+      {label:'10분 이내', val:800},
+      {label:'15분 이내', val:1200},
+      {label:'상관 없음', val:99999},
+    ];
+    return `
+      <div class="q-title">오늘 누구랑 먹나요?</div>
+      <div class="choice-grid">
+        ${sits.map(s => `
+          <div class="choice-card ${state.situation === s.label ? 'selected' : ''}"
+               onclick="pick('situation','${s.label}')">
+            ${imgSlot(SIT_IMGS[s.label], s.label)}
+            <div class="choice-text">
+              <div class="choice-label">${s.label}</div>
+              <div class="choice-sub">${s.sub}</div>
+            </div>
+          </div>`).join('')}
+      </div>
+      <div class="chip-section-title">얼마나 걸어갈 수 있나요?</div>
+      <div class="chip-row">
+        ${dists.map(d => `
+          <div class="chip ${state.maxDist === d.val ? 'selected' : ''}"
+               onclick="pick('maxDist',${d.val})">${d.label}</div>`).join('')}
+      </div>`;
+  }
+
+  /* ── 스텝 2: 예산 ── */
+  function renderStep2() {
+    const budgets = [
+      {label:'7천원 이내',   sub:'가성비 최우선',    val:7000},
+      {label:'1만원 이내',   sub:'적당한 한 끼',     val:10000},
+      {label:'1.5만원 이내', sub:'조금 여유 있게',   val:15000},
+      {label:'상관없음',     sub:'맛이 최우선',      val:99999},
+    ];
+    return `
+      <div class="q-title">1인당 예산은요?</div>
+      <div class="choice-grid">
+        ${budgets.map(b => `
+          <div class="choice-card ${state.maxBudget === b.val ? 'selected' : ''}"
+               onclick="pick('maxBudget',${b.val})">
+            ${imgSlot(BUDGET_IMGS[b.val], b.label)}
+            <div class="choice-text">
+              <div class="choice-label">${b.label}</div>
+              <div class="choice-sub">${b.sub}</div>
+            </div>
+          </div>`).join('')}
+      </div>
+      <div class="summary-box">
+        <div class="summary-label">앞서 선택한 내용</div>
+        <div class="summary-text">${summaryText()}</div>
+      </div>`;
+  }
+
+  /* ── 스텝 3: 음식 종류 ── */
+  function renderStep3() {
+    return `
+      <div class="q-title">어떤 음식이 당기나요?</div>
+      <div class="q-subtitle">여러 개 선택 가능 · 선택 안 하면 전체 포함</div>
+      <div class="check-grid">
+        ${CATS.map(cat => {
+          const on = state.categories.includes(cat);
+          return `
+            <div class="check-item ${on ? 'checked' : ''}" onclick="toggleCat('${cat}')">
+              <div class="checkbox">${on ? '✓' : ''}</div>
+              <div class="check-text">${CAT_EMOJI[cat] || ''} ${cat}</div>
+            </div>`;
+        }).join('')}
+      </div>
+      <div class="summary-box">
+        <div class="summary-label">앞서 선택한 내용</div>
+        <div class="summary-text">${summaryText()}</div>
+      </div>`;
+  }
+
+  /* ── 점수 계산 ── */
+  function calcScore(item) {
+    const dist  = parseInt(item['거리(m)']);
+    const distScore  = isNaN(dist)  ? 0.5 : Math.max(0, 1 - dist / 1000);
+    const price = parseInt(item['가격']);
+    const priceScore = isNaN(price) ? 0.5 : Math.max(0, 1 - price / 10000);
+    const rating= item['별점'];
+    const ratingScore= rating != null ? Math.max(0, (rating - 2.5) / 2.5) : 0.5;
+    const reviews = item['리뷰수'];
+    const trust  = reviews != null ? Math.min(reviews / 100, 1) : 0.3;
+    const total  = (distScore*0.35)+(priceScore*0.25)+(ratingScore*0.25)+(trust*0.15);
+    return { total, distScore, priceScore, ratingScore, trust };
+  }
+
+  /* ── 스텝 4: 결과 (식당 2개 + 가장 가까운 카페 세트) ── */
+  function renderStep4() {
+    let items = [...state.foodData];
+    if (state.maxDist && state.maxDist < 99999)
+      items = items.filter(i => { const d = parseInt(i['거리(m)']); return !isNaN(d) && d <= state.maxDist; });
+    if (state.maxBudget && state.maxBudget < 99999)
+      items = items.filter(i => { const p = parseInt(i['가격']); return isNaN(p) || p <= state.maxBudget; });
+    if (state.categories.length > 0)
+      items = items.filter(i => state.categories.includes(i['대분류']));
+
+    items.forEach(i => { i._s = calcScore(i); });
+    items.sort((a, b) => b._s.total - a._s.total);
+    const top = items.slice(0, 2);
+
+    if (top.length === 0) {
+      return `
+        <div class="empty-state">
+          <div class="empty-icon">😅</div>
+          <div class="empty-text">조건에 맞는 식당이 없어요<br>조건을 바꿔보세요</div>
+        </div>
+        <div class="result-btn-group">
+          <button class="restart-btn" onclick="restart()">조건 다시 설정하기</button>
+        </div>`;
+    }
+
+    const rankLabels = ['1순위 세트 🥇', '2순위 세트 🥈'];
+    const rankColors = ['#ffbe0c', '#dbe8f3'];
+    const rankTextColors = ['#000', '#5888b2'];
+
+    window._recSets = top.map((food, i) => ({ food, cafe: findNearestCafe(food) }));
+
+    const sets = top.map((food, i) => {
+      const distStr  = food['거리(m)'] && food['거리(m)'] !== '-' ? `🚶 ${food['도보시간']} · ${food['거리(m)']}m` : '-';
+      const price    = parseInt(food['가격']);
+      const priceStr = !isNaN(price) ? price.toLocaleString() + '원' : '';
+      const ratingStr= food['별점'] != null ? `★ ${food['별점']}` : '';
+
+      const cafe = findNearestCafe(food);
+      let cafeDistStr = '';
+      if (cafe) {
+        cafeDistStr = cafe._distFromRest != null
+          ? `식당에서 ${cafe._distFromRest}m · ${walkMin(cafe._distFromRest)}`
+          : `부산대에서 ${cafe['거리(m)']}m`;
+      }
+
+      return `
+        <div class="set-card">
+          <div class="set-label" style="background:${rankColors[i]};color:${rankTextColors[i]}">${rankLabels[i]}</div>
+
+          <!-- 식당 -->
+          <div style="display:flex;gap:12px;align-items:center;cursor:pointer" onclick="openDetailFromRec('food',${i})"  >
+            <div style="width:64px;height:64px;border-radius:12px;background:#f4f4f4;border:1px solid #eee;flex-shrink:0;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+              ${food['사진']
+                ? `<img src="${food['사진']}" style="width:64px;height:64px;object-fit:cover;border-radius:12px" onerror="this.outerHTML='<span style=\\'font-size:28px;\\'>${CAT_EMOJI[food['대분류']]||'🍽'}</span>'">`
+                : `<span style="font-size:28px">${CAT_EMOJI[food['대분류']]||'🍽'}</span>`}
+            </div>
+            <div style="flex:1;min-width:0">
+              <div class="result-name">${food['이름']}</div>
+              <div class="result-tags" style="margin:4px 0"><span class="result-tag">${food['대분류'] || food['카테고리']}</span></div>
+              <div style="font-size:12px;color:#005ba9;font-weight:600">${distStr}</div>
+              <div style="font-size:11px;color:#888;margin-top:2px">${[priceStr, ratingStr].filter(Boolean).join(' · ')}</div>
+            </div>
+          </div>
+
+          <div class="set-connector">
+            <div class="set-connector-line"></div>
+            <div class="set-connector-label">☕ 가장 가까운 카페</div>
+            <div class="set-connector-line"></div>
+          </div>
+
+          <!-- 카페 -->
+          ${cafe ? `
+          <div style="display:flex;gap:12px;align-items:center;background:#fff8f0;border:1px solid #ffe0c0;border-radius:10px;padding:10px 12px;cursor:pointer" onclick="openDetailFromRec('cafe',${i})"  >
+            <div style="width:52px;height:52px;border-radius:10px;background:#fff3e0;border:1px solid #ffe0c0;flex-shrink:0;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+              ${cafe['사진']
+                ? `<img src="${cafe['사진']}" style="width:52px;height:52px;object-fit:cover;border-radius:10px" onerror="this.outerHTML='<span style=\\'font-size:24px;\\'>☕</span>'">`
+                : `<span style="font-size:24px">☕</span>`}
+            </div>
+            <div style="flex:1;min-width:0">
+              <div class="cafe-card-name">${cafe['이름']}</div>
+              <div class="cafe-card-dist">${cafeDistStr}</div>
+              <div class="cafe-card-sub">${cafe['카테고리'] || '카페'}</div>
+            </div>
+          </div>` : `<div style="color:#aaa;font-size:13px;text-align:center;padding:8px">주변 카페 정보 없음</div>`}
+        </div>`;
+    }).join('');
+
+    return `
+      <div class="result-header">추천 결과</div>
+      <div class="result-summary-text">${summaryText()}</div>
+      ${sets}
+      <div class="result-btn-group">
+        <button class="restart-btn" onclick="restart()">조건 바꿔서 다시 추천받기</button>
+      </div>`;
+  }
+
+  /* ── 렌더 ── */
+  function render() {
+    const card = document.querySelector('.content-card');
+    
+    // 3. 만약 애니메이션 중(1초 이내)에 사용자가 클릭을 했다면,
+    // 화면이 갱신되면서 애니메이션이 재발동하는 것을 막기 위해 강제로 클래스 제거
+    if (!_stepChanged && card) {
+      card.classList.remove('entering');
+      if (card.enterTimeout) clearTimeout(card.enterTimeout);
+    }
+
+    renderStepBar();
+    const sec = document.getElementById('questionSection');
+    if      (state.step === 1) sec.innerHTML = renderStep1();
+    else if (state.step === 2) sec.innerHTML = renderStep2();
+    else if (state.step === 3) sec.innerHTML = renderStep3();
+    else                       sec.innerHTML = renderStep4();
+    renderBtns();
+
+    // 스텝 전환 시에만 애니메이션 실행
+    if (_stepChanged) {
+      triggerEnter();
+      _stepChanged = false;
+    }
+  }
+
+  function renderBtns() {
+    const area = document.getElementById('bottomBtns');
+    if (state.step === 4) {
+      // 결과 화면: restart-btn 아래 노란 버튼 추가
+      const group = document.querySelector('.result-btn-group');
+      if (group) {
+        group.insertAdjacentHTML('beforeend',
+          `<button class="btn-next ready" onclick="restart()">처음부터 다시</button>`);
+      }
+      area.innerHTML = '';
+      return;
+    }
+    const ok   = canNext();
+    const prev = state.step > 1
+      ? `<div class="btn-prev" onclick="prevStep()">←</div>` : '';
+    const label= state.step === 3 ? '결과 보기' : '다음 단계';
+    area.innerHTML = `${prev}<button class="btn-next ${ok ? 'ready' : 'notready'}"
+      onclick="${ok ? 'nextStep()' : ''}">${label}</button>`;
+  }
+
+  function canNext() {
+    if (state.step === 1) return state.situation !== null && state.maxDist !== null;
+    if (state.step === 2) return state.maxBudget !== null;
+    return true;
+  }
+
+  function pick(key, val) {
+    state[key] = val;
+    // 선택만 변경 — 애니메이션 없이 재렌더
+    render();
+  }
+
+  function toggleCat(cat) {
+    const idx = state.categories.indexOf(cat);
+    if (idx === -1) state.categories.push(cat);
+    else state.categories.splice(idx, 1);
+    // 선택만 변경 — 애니메이션 없이 재렌더
+    render();
+  }
+
+  function nextStep() {
+    if (!canNext()) return;
+    state.step++;
+    _stepChanged = true; // 스텝 전환 → 애니메이션 재생
+    document.getElementById('questionSection').scrollTop = 0;
+    render();
+  }
+
+  function prevStep() {
+    if (state.step > 1) {
+      state.step--;
+      _stepChanged = true; // 스텝 전환 → 애니메이션 재생
+      render();
+    }
+  }
+
+  function restart() {
+    Object.assign(state, {step:1, situation:null, maxDist:null, maxBudget:null, categories:[]});
+    _stepChanged = true; // 스텝 전환 → 애니메이션 재생
+    render();
+  }
+
+  function openDetailFromRec(type, idx) {
+    const set = window._recSets?.[idx];
+    if (!set) return;
+    const item = type === 'food' ? set.food : set.cafe;
+    if (!item) return;
+    sessionStorage.setItem('detailItem', JSON.stringify({ ...item, _type: type }));
+    location.href = '/detail';
+  }
+
+  async function init() {
+    try {
+      const [food, cafe] = await Promise.all([
+        fetch('/api/food').then(r => r.json()),
+        fetch('/api/cafe').then(r => r.json()),
+      ]);
+      state.foodData = food;
+      state.cafeData = cafe;
+    } catch {}
+    render();
+  }
+
+  init();
+  if (typeof renderUserBadge === 'function') renderUserBadge('authArea');
+  if (typeof syncBookmarks   === 'function') syncBookmarks();
+</script>
+</body>
+</html>

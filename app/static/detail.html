@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bab 밥 in PNU</title>
+  <meta name="description" content="Bab 밥 Navigation for U — 부산대 맛집·카페 길잡이" />
+  <meta property="og:title" content="Bab 밥 in PNU" />
+  <meta property="og:description" content="Bab 밥 Navigation for U — 부산대 맛집·카페 길잡이" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://pnueat-backend.onrender.com" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Bab 밥 in PNU" />
+  <meta name="twitter:description" content="Bab 밥 Navigation for U — 부산대 맛집·카페 길잡이" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+    }
+    .phone {
+      width: 390px;
+      height: 844px;
+      background: #fff;
+      border: 1px solid #bbb;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* 사진 갤러리 */
+    .photo-strip {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      padding: 10px 16px;
+      background: #fff;
+      flex-shrink: 0;
+    }
+    .photo-strip::-webkit-scrollbar { display: none; }
+    .photo-strip-item {
+      flex-shrink: 0;
+      width: 90px; height: 70px;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #f0f0f0;
+      cursor: pointer;
+    }
+    .photo-strip-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+
+    /* 사진 전체화면 뷰어 */
+    .photo-viewer {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.92);
+      z-index: 400;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .photo-viewer.open { display: flex; }
+    .photo-viewer img {
+      max-width: 100%; max-height: 80vh;
+      object-fit: contain;
+      border-radius: 4px;
+    }
+    .photo-viewer-close {
+      position: absolute;
+      top: 16px; right: 16px;
+      background: rgba(255,255,255,0.15);
+      border: none; color: #fff;
+      font-size: 22px; width: 40px; height: 40px;
+      border-radius: 20px; cursor: pointer;
+    }
+    .photo-viewer-nav {
+      display: flex; gap: 24px; margin-top: 16px;
+    }
+    .photo-viewer-nav button {
+      background: rgba(255,255,255,0.15);
+      border: none; color: #fff;
+      font-size: 18px; width: 44px; height: 44px;
+      border-radius: 22px; cursor: pointer;
+    }
+    .photo-viewer-counter {
+      color: rgba(255,255,255,0.6);
+      font-size: 13px; margin-top: 8px;
+    }
+
+    /* 히어로 */
+    .hero {
+      width: 100%;
+      height: 220px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      font-size: 72px;
+      overflow: hidden;
+    }
+    .hero-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.35);
+      z-index: 1;
+    }
+    .hero-back, .hero-save { z-index: 3; }
+    #heroEmoji { z-index: 2; position: relative; }
+    .hero-back {
+      position: absolute;
+      top: 16px; left: 16px;
+      width: 34px; height: 34px;
+      background: rgba(0,0,0,0.35);
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hero-save {
+      position: absolute;
+      top: 16px; right: 16px;
+      width: 34px; height: 34px;
+      background: rgba(0,0,0,0.35);
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* 스크롤 영역 */
+    .scroll-body { flex: 1; overflow-y: auto; min-height: 0; transform: translateZ(0); }
+
+    /* 기본 정보 */
+    .info-section {
+      padding: 16px 16px 14px;
+      border-bottom: 1px solid #eee;
+    }
+    .rest-name { font-size: 20px; font-weight: 700; color: #111; margin-bottom: 4px; }
+    .cat-badge {
+      display: inline-block;
+      font-size: 11px; color: #555;
+      background: #f2f2f2;
+      border-radius: 4px;
+      padding: 3px 8px;
+      margin-bottom: 12px;
+    }
+    .tags-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+    .tag {
+      font-size: 11px; color: #555;
+      background: #f2f2f2;
+      border-radius: 12px;
+      padding: 4px 10px;
+    }
+    .tag.dark { background: #222; color: #fff; }
+    .tag.green { background: #f0faf3; color: #34a853; }
+    .tag.blue { background: #f0f7ff; color: #1a73e8; }
+    .tag.yellow { background: #fffbeb; color: #f59e0b; }
+    .info-row {
+      display: flex; align-items: center;
+      gap: 10px; margin-bottom: 8px;
+    }
+    .info-icon { font-size: 14px; flex-shrink: 0; width: 18px; text-align: center; }
+    .info-text { font-size: 13px; color: #444; }
+    .info-text.light { color: #888; }
+
+    /* 섹션 공통 */
+    .section { padding: 14px 16px; border-bottom: 1px solid #eee; }
+    .section-title { font-size: 14px; font-weight: 700; color: #111; margin-bottom: 10px; }
+
+    /* 에브리타임 */
+    .review-placeholder {
+      background: #f8f8f8;
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+      font-size: 14px;
+      color: #aaa;
+    }
+
+    /* 지도 */
+    #detailMap {
+      width: 100%;
+      height: 140px;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #eee;
+    }
+
+    /* 비슷한 식당 */
+    .similar-scroll {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 2px;
+    }
+    .similar-scroll::-webkit-scrollbar { display: none; }
+    .similar-card {
+      flex-shrink: 0;
+      width: 100px;
+      cursor: pointer;
+    }
+    .similar-card:active { opacity: 0.7; }
+    .similar-thumb {
+      width: 100px; height: 76px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px;
+      margin-bottom: 6px;
+    }
+    .similar-name { font-size: 12px; font-weight: 600; color: #111; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .similar-dist { font-size: 11px; color: #aaa; }
+
+    /* 하단 CTA */
+    .bottom-cta {
+      padding: 12px 16px 20px;
+      display: flex;
+      gap: 8px;
+      border-top: 1px solid #ddd;
+      background: #fff;
+      flex-shrink: 0;
+    }
+    .cta-secondary {
+      flex: 1; height: 46px;
+      border: 1.5px solid #ccc;
+      border-radius: 10px;
+      background: #fff;
+      font-size: 13px; color: #555;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 4px;
+    }
+    .cta-secondary:active { background: #f8f8f8; }
+    .cta-primary {
+      flex: 2; height: 46px;
+      background: #111; border: none;
+      border-radius: 10px;
+      font-size: 14px; font-weight: 700; color: #fff;
+      cursor: pointer;
+    }
+    .cta-primary:active { opacity: 0.8; }
+
+    /* 토스트 */
+    .toast {
+      position: fixed;
+      bottom: 100px;
+      left: 50%; transform: translateX(-50%);
+      background: #111; color: #fff;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-size: 13px; font-weight: 600;
+      z-index: 300;
+      opacity: 0;
+      transition: opacity 0.2s;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    .toast.show { opacity: 1; }
+
+    /* 저장 모달 */
+    .save-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 200;
+      justify-content: center;
+      align-items: flex-end;
+    }
+    .save-overlay.open { display: flex; }
+    .save-sheet {
+      width: 390px;
+      background: #fff;
+      border-radius: 16px 16px 0 0;
+      padding: 20px 20px 32px;
+      animation: slideUp 0.22s ease;
+    }
+    @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+    .sheet-handle { width: 36px; height: 4px; background: #ddd; border-radius: 2px; margin: 0 auto 16px; }
+    .sheet-title { font-size: 15px; font-weight: 700; color: #111; margin-bottom: 14px; text-align: center; }
+    .save-option {
+      width: 100%; height: 50px;
+      border: 1.5px solid #eee;
+      border-radius: 10px;
+      background: #fff;
+      font-size: 14px; color: #333;
+      cursor: pointer;
+      display: flex; align-items: center; gap: 10px;
+      padding: 0 16px;
+      margin-bottom: 8px;
+    }
+    .save-option:active { background: #f8f8f8; }
+    .save-option.active { border-color: #111; background: #f5f5f5; font-weight: 700; }
+    .save-option.cancel { color: #aaa; border-color: #f0f0f0; margin-top: 4px; }
+
+    /* 길찾기 모달 */
+    .nav-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 200;
+      justify-content: center;
+      align-items: flex-end;
+    }
+    .nav-overlay.open { display: flex; }
+    .nav-sheet {
+      width: 390px;
+      background: #fff;
+      border-radius: 16px 16px 0 0;
+      padding: 20px 20px 32px;
+      animation: slideUp 0.22s ease;
+    }
+    .nav-option {
+      width: 100%; height: 52px;
+      border: 1.5px solid #eee;
+      border-radius: 12px;
+      background: #fff;
+      font-size: 14px; color: #222;
+      cursor: pointer;
+      display: flex; align-items: center; gap: 12px;
+      padding: 0 18px;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+    .nav-option:active { background: #f8f8f8; }
+    .nav-option.cancel { color: #aaa; border-color: #f0f0f0; margin-top: 4px; font-weight: 400; }
+    .nav-icon-img { width: 22px; height: 22px; border-radius: 6px; object-fit: contain; }
+  </style>
+</head>
+<body>
+  <div class="phone">
+
+    <div class="hero" id="hero">
+      <button class="hero-back" onclick="history.back()">←</button>
+      <div id="heroEmoji">🍽</div>
+      <button class="hero-save" id="heroSaveBtn" onclick="toggleBookmark()">🤍</button>
+    </div>
+
+    <!-- 사진 스트립 (스크립트에서 동적 생성) -->
+    <div class="photo-strip" id="photoStrip" style="display:none"></div>
+
+    <div class="scroll-body">
+
+      <div class="info-section">
+        <div class="rest-name" id="restName">-</div>
+        <div class="cat-badge" id="catBadge"></div>
+        <div class="tags-row" id="tagsRow"></div>
+        <div id="infoRows"></div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">에브리타임 후기 요약</div>
+        <div class="review-placeholder">🛠 준비 중입니다</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">위치</div>
+        <div id="detailMap"></div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">비슷한 식당</div>
+        <div class="similar-scroll" id="similarScroll">
+          <div style="font-size:13px;color:#aaa">불러오는 중...</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">☕ 가까운 카페</div>
+        <div class="similar-scroll" id="nearbyCafeScroll">
+          <div style="font-size:13px;color:#aaa">불러오는 중...</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="bottom-cta">
+      <button class="cta-secondary" onclick="shareItem()">📤 공유</button>
+      <button class="cta-primary" onclick="navigate()">길찾기</button>
+    </div>
+
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <!-- 사진 전체화면 뷰어 -->
+  <div class="photo-viewer" id="photoViewer" onclick="closeViewer()">
+    <button class="photo-viewer-close" onclick="closeViewer()">✕</button>
+    <img id="viewerImg" src="" onclick="event.stopPropagation()" />
+    <div class="photo-viewer-nav" onclick="event.stopPropagation()">
+      <button onclick="viewerPrev()">‹</button>
+      <button onclick="viewerNext()">›</button>
+    </div>
+    <div class="photo-viewer-counter" id="viewerCounter"></div>
+  </div>
+
+  <!-- 길찾기 모달 -->
+  <div class="nav-overlay" id="navOverlay" onclick="closeNavModal()">
+    <div class="nav-sheet" onclick="event.stopPropagation()">
+      <div class="sheet-handle"></div>
+      <div class="sheet-title">지도 앱 선택</div>
+      <button class="nav-option" onclick="openKakaoMap()">
+        <span style="font-size:20px">🟡</span> 카카오맵으로 길찾기
+      </button>
+      <button class="nav-option" onclick="openNaverMap()">
+        <span style="font-size:20px">🟢</span> 네이버맵으로 길찾기
+      </button>
+      <button class="nav-option" onclick="openGoogleMap()">
+        <span style="font-size:20px">🔵</span> 구글맵으로 길찾기
+      </button>
+      <button class="nav-option cancel" onclick="closeNavModal()">닫기</button>
+    </div>
+  </div>
+
+  <!-- 저장 모달 -->
+  <div class="save-overlay" id="saveOverlay" onclick="closeSaveModal()">
+    <div class="save-sheet" onclick="event.stopPropagation()">
+      <div class="sheet-handle"></div>
+      <div class="sheet-title">어떤 목록에 추가할까요?</div>
+      <button class="save-option" id="optSaved" onclick="toggleList('saved')">🔖 저장한 곳</button>
+      <button class="save-option" id="optVisited" onclick="toggleList('visited')">✅ 가본 곳</button>
+      <button class="save-option cancel" onclick="closeSaveModal()">닫기</button>
+    </div>
+  </div>
+
+  <script src="/static/auth.js"></script>
+  <script>
+    const CAT_EMOJI = {
+      '한식':'🍚','일식':'🍣','중식':'🥡','양식':'🍝','치킨':'🍗',
+      '피자·버거':'🍔','분식':'🥢','고기·구이':'🥩','돈까스·회':'🍱',
+      '카페·디저트':'☕','기타':'🍽'
+    };
+    const HERO_COLORS = {
+      '한식':'#2d5a27,#4a8f3f','일식':'#1a3a6b,#2d5fa3','중식':'#8b2e00,#c4511a',
+      '양식':'#4a2080,#7c3aed','치킨':'#b45309,#d97706','피자·버거':'#c2410c,#ea580c',
+      '분식':'#be185d,#db2777','고기·구이':'#7f1d1d,#b91c1c','돈까스·회':'#164e63,#0e7490',
+      '카페·디저트':'#78350f,#92400e','기타':'#374151,#6b7280'
+    };
+    const PNU = { lat: 35.2323, lng: 129.0876 };
+
+    let item = null;
+    let bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+    let visited = JSON.parse(localStorage.getItem('visited') || '[]');
+    let viewerPhotos = [], viewerIdx = 0;
+
+    function isBookmarked() { return item && bookmarks.includes(item['이름']); }
+    function isVisited() { return item && visited.includes(item['이름']); }
+
+    /* ── 아이템 로드 ── */
+    function loadItem() {
+      try {
+        item = JSON.parse(sessionStorage.getItem('detailItem'));
+      } catch {}
+      if (!item) { history.back(); return; }
+      renderDetail();
+      loadSimilar();
+      loadNearbyCafes();
+      loadMap();
+    }
+
+    /* ── 상세 렌더 ── */
+    function renderDetail() {
+      const cat = item['대분류'] || item['카테고리'] || '';
+      const emoji = cat === '카페·디저트' || item._type === 'cafe' ? '☕' : (CAT_EMOJI[cat] || '🍽');
+      const colors = (HERO_COLORS[cat] || '374151,6b7280').split(',');
+      const hero = document.getElementById('hero');
+
+      // 기존 사진/오버레이 제거
+      hero.querySelectorAll('.hero-photo, .hero-overlay').forEach(el => el.remove());
+
+      if (item['사진']) {
+        const img = document.createElement('img');
+        img.className = 'hero-photo';
+        img.src = item['사진'];
+        img.onerror = () => {
+          img.remove();
+          hero.querySelector('.hero-overlay')?.remove();
+          hero.style.background = `linear-gradient(135deg, #${colors[0]}, #${colors[1]})`;
+        };
+        const overlay = document.createElement('div');
+        overlay.className = 'hero-overlay';
+        hero.insertBefore(overlay, hero.firstChild);
+        hero.insertBefore(img, hero.firstChild);
+        hero.style.background = '';
+        document.getElementById('heroEmoji').style.display = 'none';
+      } else {
+        hero.style.background = `linear-gradient(135deg, #${colors[0]}, #${colors[1]})`;
+        document.getElementById('heroEmoji').style.display = '';
+        document.getElementById('heroEmoji').textContent = emoji;
+      }
+      document.getElementById('restName').textContent = item['이름'];
+      document.getElementById('catBadge').textContent = cat + (item['카테고리'] && item['카테고리'] !== cat ? ' · ' + item['카테고리'] : '');
+
+      // 태그
+      const tags = [];
+      if (item['도보시간'] && item['도보시간'] !== '-')
+        tags.push(`<span class="tag green">🚶 ${item['도보시간']}</span>`);
+      if (item['거리(m)'] && item['거리(m)'] !== '-')
+        tags.push(`<span class="tag">${item['거리(m)']}m</span>`);
+      if (item['가격'])
+        tags.push(`<span class="tag blue">💳 ${parseInt(item['가격']).toLocaleString()}원</span>`);
+      if (item['별점'] != null)
+        tags.push(`<span class="tag yellow">★ ${item['별점']} (${item['리뷰수'] ?? 0}개)</span>`);
+      document.getElementById('tagsRow').innerHTML = tags.join('');
+
+      // 정보 행
+      const rows = [];
+      if (item['주소']) rows.push(`<div class="info-row"><div class="info-icon">📍</div><div class="info-text">${item['주소']}</div></div>`);
+      if (item['전화번호']) rows.push(`<div class="info-row"><div class="info-icon">📞</div><a class="info-text" href="tel:${item['전화번호']}" style="color:#1a73e8;text-decoration:none">${item['전화번호']}</a></div>`);
+      if (item['운영시간']?.length) {
+        const today = [6,0,1,2,3,4,5][new Date().getDay()]; // 월=0 기준
+        const todayText = item['운영시간'][today] || '';
+        const timeShort = todayText.replace(/^[^:]+:\s*/, '');
+        rows.push(`<div class="info-row"><div class="info-icon">🕐</div><div class="info-text">오늘 ${timeShort}</div></div>`);
+      }
+      document.getElementById('infoRows').innerHTML = rows.join('');
+
+      // 사진 갤러리
+      renderPhotoStrip();
+
+      updateSaveIcon();
+    }
+
+    function renderPhotoStrip() {
+      const photos = item['사진목록'];
+      const strip = document.getElementById('photoStrip');
+      if (!photos || photos.length < 2) { strip.style.display = 'none'; return; }
+      viewerPhotos = photos;
+      strip.style.display = 'flex';
+      strip.innerHTML = photos.map((url, i) => `
+        <div class="photo-strip-item" onclick="openViewer(${i})">
+          <img src="${url}" onerror="this.parentElement.style.display='none'" />
+        </div>`).join('');
+    }
+
+    /* ── 사진 전체화면 뷰어 ── */
+    function openViewer(idx) {
+      viewerIdx = idx;
+      document.getElementById('photoViewer').classList.add('open');
+      updateViewer();
+    }
+    function closeViewer() {
+      document.getElementById('photoViewer').classList.remove('open');
+    }
+    function updateViewer() {
+      document.getElementById('viewerImg').src = viewerPhotos[viewerIdx];
+      document.getElementById('viewerCounter').textContent = `${viewerIdx + 1} / ${viewerPhotos.length}`;
+    }
+    function viewerPrev() { viewerIdx = (viewerIdx - 1 + viewerPhotos.length) % viewerPhotos.length; updateViewer(); }
+    function viewerNext() { viewerIdx = (viewerIdx + 1) % viewerPhotos.length; updateViewer(); }
+
+    function updateSaveIcon() {
+      document.getElementById('heroSaveBtn').textContent = isBookmarked() ? '🔖' : '🤍';
+    }
+
+    /* ── 하트 직접 북마크 토글 ── */
+    function toggleBookmark() {
+      if (!item) return;
+      const name = item['이름'];
+      const current = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+      const idx = current.indexOf(name);
+      if (idx === -1) {
+        current.push(name);
+        showToast('저장한 곳에 추가됐어요 🔖');
+      } else {
+        current.splice(idx, 1);
+        showToast('저장한 곳에서 삭제됐어요');
+      }
+      bookmarks = current;
+      localStorage.setItem('bookmarks', JSON.stringify(current));
+      pushBookmarks(current);
+      updateSaveIcon();
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2000);
+    }
+
+    function toggleList(type) {
+      if (!item) return;
+      const name = item['이름'];
+      if (type === 'saved') {
+        const current = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+        const i = current.indexOf(name);
+        if (i === -1) { current.push(name); showToast('저장한 곳에 추가됐어요 🔖'); }
+        else { current.splice(i, 1); showToast('저장한 곳에서 삭제됐어요'); }
+        bookmarks = current;
+        localStorage.setItem('bookmarks', JSON.stringify(current));
+        pushBookmarks(current);
+      } else {
+        const current = JSON.parse(localStorage.getItem('visited') || '[]');
+        const i = current.indexOf(name);
+        if (i === -1) { current.push(name); showToast('가본 곳에 추가됐어요 ✅'); }
+        else { current.splice(i, 1); showToast('가본 곳에서 삭제됐어요'); }
+        visited = current;
+        localStorage.setItem('visited', JSON.stringify(current));
+        pushVisited(current);
+      }
+      updateSaveIcon();
+      closeSaveModal();
+    }
+
+    /* ── 길찾기 ── */
+    function navigate() {
+      document.getElementById('navOverlay').classList.add('open');
+    }
+    function closeNavModal() {
+      document.getElementById('navOverlay').classList.remove('open');
+    }
+    function openKakaoMap() {
+      closeNavModal();
+      const lat = item.lat, lng = item.lng, name = item['이름'];
+      if (lat && lng) {
+        window.open(`https://map.kakao.com/link/to/${encodeURIComponent(name)},${lat},${lng}`);
+      } else {
+        window.open(`https://map.kakao.com/?q=${encodeURIComponent(name + ' 부산대')}`);
+      }
+    }
+    function openNaverMap() {
+      closeNavModal();
+      const lat = item.lat, lng = item.lng, name = item['이름'];
+      if (lat && lng) {
+        window.open(`https://map.naver.com/v5/search/${encodeURIComponent(name)}`);
+      } else {
+        window.open(`https://map.naver.com/v5/search/${encodeURIComponent(name + ' 부산대')}`);
+      }
+    }
+    function openGoogleMap() {
+      closeNavModal();
+      const lat = item.lat, lng = item.lng, name = item['이름'];
+      if (lat && lng) {
+        window.open(`https://www.google.com/maps/search/?api=1&query=${lat},${lng}`);
+      } else {
+        window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(name + ' 부산 금정구')}`);
+      }
+    }
+
+    /* ── 공유 ── */
+    function shareItem() {
+      const title = 'Bab 밥 in PNU';
+      const text = `${item['이름']} — Bab 밥 Navigation for U`;
+      if (navigator.share) {
+        navigator.share({ title, text, url: location.href }).catch(() => {});
+      } else {
+        navigator.clipboard?.writeText(`${text}\n${location.href}`).then(() => showToast('링크가 복사됐어요!'));
+      }
+    }
+
+    /* ── 비슷한 식당 ── */
+    async function loadSimilar() {
+      try {
+        const [food, cafe] = await Promise.all([
+          fetch('/api/food').then(r => r.json()),
+          fetch('/api/cafe').then(r => r.json()),
+        ]);
+        const cat = item['대분류'];
+        const all = [...food.map(i=>({...i,_type:'food'})), ...cafe.map(i=>({...i,_type:'cafe'}))];
+        const similar = all
+          .filter(i => i['이름'] !== item['이름'] && i['대분류'] === cat)
+          .sort((a,b) => {
+            const da = parseInt(a['거리(m)']) || 9999;
+            const db = parseInt(b['거리(m)']) || 9999;
+            return da - db;
+          })
+          .slice(0, 6);
+
+        if (similar.length === 0) {
+          document.getElementById('similarScroll').innerHTML = '<div style="font-size:13px;color:#aaa">비슷한 식당이 없어요</div>';
+          return;
+        }
+
+        document.getElementById('similarScroll').innerHTML = similar.map(s => {
+          const em = CAT_EMOJI[s['대분류']] || (s._type === 'cafe' ? '☕' : '🍽');
+          const colors = (HERO_COLORS[s['대분류']] || '374151,6b7280').split(',');
+          const dist = s['거리(m)'] && s['거리(m)'] !== '-' ? s['도보시간'] : '';
+          const thumbContent = s['사진']
+            ? `<img src="${s['사진']}" style="width:100%;height:100%;object-fit:cover;border-radius:8px" onerror="this.style.display='none'">`
+            : em;
+          const thumbBg = s['사진'] ? '#f4f4f4' : `linear-gradient(135deg,#${colors[0]},#${colors[1]})`;
+          return `
+            <div class="similar-card" onclick="openSimilar(${JSON.stringify(s).replace(/"/g,'&quot;')})">
+              <div class="similar-thumb" style="background:${thumbBg}">${thumbContent}</div>
+              <div class="similar-name">${s['이름']}</div>
+              <div class="similar-dist">${dist}</div>
+            </div>`;
+        }).join('');
+      } catch {}
+    }
+
+    function openSimilar(s) {
+      sessionStorage.setItem('detailItem', JSON.stringify(s));
+      location.reload();
+    }
+
+    /* ── 가까운 카페 ── */
+    async function loadNearbyCafes() {
+      try {
+        const cafes = await fetch('/api/cafe').then(r => r.json());
+        let sorted;
+        if (item.lat && item.lng) {
+          sorted = cafes
+            .filter(c => c.lat && c.lng)
+            .map(c => ({ ...c, _d: Math.hypot(c.lat - item.lat, c.lng - item.lng) }))
+            .sort((a, b) => a._d - b._d)
+            .slice(0, 6);
+        } else {
+          const rDist = parseInt(item['거리(m)']) || 500;
+          sorted = [...cafes]
+            .sort((a, b) => Math.abs((parseInt(a['거리(m)'])||999) - rDist) - Math.abs((parseInt(b['거리(m)'])||999) - rDist))
+            .slice(0, 6);
+        }
+
+        if (!sorted.length) {
+          document.getElementById('nearbyCafeScroll').innerHTML = '<div style="font-size:13px;color:#aaa">주변 카페 정보 없음</div>';
+          return;
+        }
+
+        document.getElementById('nearbyCafeScroll').innerHTML = sorted.map(c => {
+          const dist = c['거리(m)'] && c['거리(m)'] !== '-' ? c['도보시간'] : '';
+          const imgHtml = c['사진']
+            ? `<img src="${c['사진']}" style="width:100%;height:100%;object-fit:cover;border-radius:8px" onerror="this.outerHTML='☕'">`
+            : '☕';
+          return `
+            <div class="similar-card" onclick="openSimilar(${JSON.stringify({...c,_type:'cafe'}).replace(/"/g,'&quot;')})">
+              <div class="similar-thumb" style="background:#fff3e0;font-size:28px">${imgHtml}</div>
+              <div class="similar-name">${c['이름']}</div>
+              <div class="similar-dist">${dist}</div>
+            </div>`;
+        }).join('');
+      } catch {}
+    }
+
+    /* ── 지도 ── */
+    function loadLeaflet() {
+      return new Promise(resolve => {
+        if (window.L) { resolve(); return; }
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+        document.head.appendChild(link);
+        const s = document.createElement('script');
+        s.onload = resolve;
+        s.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+        document.head.appendChild(s);
+      });
+    }
+
+    async function loadMap() {
+      const mapDiv = document.getElementById('detailMap');
+
+      const hasCoord = item.lat && item.lng &&
+        !(Math.abs(item.lat - PNU.lat) < 0.0001 && Math.abs(item.lng - PNU.lng) < 0.0001);
+
+      if (!hasCoord) {
+        mapDiv.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#aaa;font-size:13px">위치 정보 없음</div>';
+        return;
+      }
+
+      await loadLeaflet();
+
+      const map = L.map(mapDiv, { zoomControl: true, attributionControl: false })
+        .setView([item.lat, item.lng], 16);
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map);
+
+      const redDot = L.divIcon({
+        html: '<div style="background:#ea4335;width:14px;height:14px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,0.4)"></div>',
+        iconSize: [14, 14], iconAnchor: [7, 7], className: '',
+      });
+      const blackDot = L.divIcon({
+        html: '<div style="background:#111;width:10px;height:10px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,0.4)"></div>',
+        iconSize: [10, 10], iconAnchor: [5, 5], className: '',
+      });
+
+      L.marker([item.lat, item.lng], { icon: redDot })
+        .bindPopup(`<b style="font-size:12px">${item['이름']}</b>`)
+        .addTo(map);
+
+      const sameLoc = Math.abs(item.lat - PNU.lat) < 0.001 && Math.abs(item.lng - PNU.lng) < 0.001;
+      if (!sameLoc) {
+        L.marker([PNU.lat, PNU.lng], { icon: blackDot })
+          .bindPopup('<span style="font-size:11px">부산대 정문</span>')
+          .addTo(map);
+      }
+    }
+
+    loadItem();
+    Promise.all([syncBookmarks(), syncVisited()]).then(() => {
+      bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+      visited = JSON.parse(localStorage.getItem('visited') || '[]');
+      updateSaveIcon();
+    });
+  </script>
+</body>
+</html>

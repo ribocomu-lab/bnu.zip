@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>부산대 맛집·카페 🍚☕</title>
+  <meta name="description" content="Bab 밥 Navigation for U — 부산대 맛집·카페 길잡이" />
+  <meta property="og:title" content="Bab 밥 in PNU" />
+  <meta property="og:description" content="Bab 밥 Navigation for U — 부산대 맛집·카페 길잡이" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://pnueat-backend.onrender.com" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Bab 밥 in PNU" />
+  <meta name="twitter:description" content="Bab 밥 Navigation for U — 부산대 맛집·카페 길잡이" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Apple SD Gothic Neo', sans-serif; background: #f5f5f5; color: #333; }
+
+    header {
+      background: #1a73e8; color: white;
+      padding: 20px; text-align: center;
+    }
+    header h1 { font-size: 22px; }
+    header p { font-size: 13px; margin-top: 4px; opacity: 0.85; }
+
+    .tabs {
+      display: flex; background: white;
+      border-bottom: 2px solid #e0e0e0;
+    }
+    .tab {
+      flex: 1; padding: 14px; text-align: center;
+      cursor: pointer; font-size: 15px; font-weight: bold; color: #888;
+    }
+    .tab.active { color: #1a73e8; border-bottom: 3px solid #1a73e8; }
+
+    .controls {
+      display: flex; gap: 8px; padding: 12px 16px;
+      background: white; border-bottom: 1px solid #eee; flex-wrap: wrap;
+    }
+    .controls select, .controls button {
+      padding: 7px 14px; border: 1px solid #ddd;
+      border-radius: 20px; font-size: 13px; cursor: pointer;
+    }
+    .controls button {
+      background: #1a73e8; color: white; border: none;
+    }
+    .recommend-btn {
+      background: #ff6b35 !important;
+    }
+
+    .list { padding: 12px 16px; }
+
+    .card {
+      background: white; border-radius: 10px;
+      padding: 14px 16px; margin-bottom: 10px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+      display: flex; gap: 12px; align-items: flex-start;
+    }
+    .card-thumb {
+      width: 72px; height: 72px; border-radius: 8px;
+      object-fit: cover; flex-shrink: 0;
+      background: #f0f0f0;
+    }
+    .card-body { flex: 1; min-width: 0; }
+    .card-name { font-size: 16px; font-weight: bold; margin-bottom: 4px; }
+    .card-meta { font-size: 12px; color: #888; margin-top: 4px; }
+    .badge {
+      display: inline-block; padding: 2px 8px;
+      border-radius: 10px; font-size: 11px;
+      background: #e8f0fe; color: #1a73e8; margin-right: 4px;
+    }
+    .walk { color: #34a853; font-weight: bold; }
+
+    .recommend-box {
+      display: none; background: #fff8f0;
+      border: 2px solid #ff6b35; border-radius: 12px;
+      padding: 16px; margin: 12px 16px;
+    }
+    .recommend-box h3 { color: #ff6b35; margin-bottom: 10px; }
+    .recommend-box .card { box-shadow: none; border: 1px solid #ffd0b0; }
+
+    .loading { text-align: center; padding: 40px; color: #888; }
+    .count { font-size: 12px; color: #888; padding: 0 16px 4px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🍚 부산대 맛집·카페 지도 ☕</h1>
+  <p>부산대학교 주변 1km 이내 · 도보시간은 직선거리 기준 예상값입니다</p>
+</header>
+
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('food')">🍽 밥집</div>
+  <div class="tab" onclick="switchTab('cafe')">☕ 카페</div>
+</div>
+
+<div class="controls">
+  <select id="sortSelect" onchange="render()">
+    <option value="거리순">거리순</option>
+    <option value="카테고리별">카테고리별</option>
+  </select>
+  <select id="categorySelect" onchange="render()">
+    <option value="">전체 카테고리</option>
+  </select>
+  <button class="recommend-btn" onclick="getRecommend()">🎲 오늘 뭐 먹지?</button>
+</div>
+
+<div class="recommend-box" id="recommendBox">
+  <h3>🎲 오늘의 추천!</h3>
+  <div id="recommendContent"></div>
+</div>
+
+<div class="count" id="countText"></div>
+<div class="list" id="list"><div class="loading">불러오는 중...</div></div>
+
+<script>
+  let currentTab = 'food';
+  let foodData = [];
+  let cafeData = [];
+
+  async function loadAll() {
+    const [food, cafe] = await Promise.all([
+      fetch('/api/food').then(r => r.json()),
+      fetch('/api/cafe').then(r => r.json())
+    ]);
+    foodData = food;
+    cafeData = cafe;
+    updateCategories();
+    render();
+  }
+
+  function switchTab(tab) {
+    currentTab = tab;
+    document.querySelectorAll('.tab').forEach((t, i) => {
+      t.classList.toggle('active', (i === 0 && tab === 'food') || (i === 1 && tab === 'cafe'));
+    });
+    document.getElementById('categorySelect').value = '';
+    updateCategories();
+    render();
+  }
+
+  function updateCategories() {
+    const data = currentTab === 'food' ? foodData : cafeData;
+    const cats = [...new Set(data.map(d => d['대분류']).filter(Boolean))].sort();
+    const sel = document.getElementById('categorySelect');
+    sel.innerHTML = '<option value="">전체 카테고리</option>';
+    cats.forEach(c => sel.innerHTML += `<option value="${c}">${c}</option>`);
+  }
+
+  function render() {
+    const data = currentTab === 'food' ? foodData : cafeData;
+    const sort = document.getElementById('sortSelect').value;
+    const cat = document.getElementById('categorySelect').value;
+
+    let items = cat ? data.filter(d => d['대분류'] === cat) : [...data];
+
+    if (sort === '거리순') {
+      items.sort((a, b) => {
+        const da = a['거리(m)'] === '-' ? 9999 : parseInt(a['거리(m)']);
+        const db = b['거리(m)'] === '-' ? 9999 : parseInt(b['거리(m)']);
+        return da - db;
+      });
+    } else {
+      items.sort((a, b) => (a['대분류'] || '').localeCompare(b['대분류'] || ''));
+    }
+
+    document.getElementById('countText').textContent = `총 ${items.length}개`;
+    document.getElementById('list').innerHTML = items.map(item => `
+      <div class="card">
+        ${item['사진'] ? `<img class="card-thumb" src="${item['사진']}" alt="${item['이름']}" loading="lazy" onerror="this.style.display='none'">` : ''}
+        <div class="card-body">
+          <div class="card-name">${item['이름']}</div>
+          <div class="card-meta">
+            <span class="badge">${item['대분류'] || item['카테고리']}</span>
+            ${item['거리(m)'] !== '-' ? `<span style="color:#888">${item['거리(m)']}m</span> · ` : ''}${item['도보시간'] !== '-' ? `<span class="walk">🚶 ${item['도보시간']} (직선거리 기준)</span>` : ''}
+            <span style="margin-left:6px">${item['출처']}</span>
+          </div>
+          <div class="card-meta" style="margin-top:6px">📍 ${item['주소'] || '-'}</div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  async function getRecommend() {
+    const res = await fetch('/api/recommend');
+    const data = await res.json();
+    const box = document.getElementById('recommendBox');
+    const content = document.getElementById('recommendContent');
+    box.style.display = 'block';
+    content.innerHTML = `
+      <div class="card">
+        <div class="card-name">🍽 ${data['밥집']?.['이름'] || '-'}</div>
+        <div class="card-meta">📍 ${data['밥집']?.['주소'] || ''}</div>
+        <div class="card-meta"><span class="walk">🚶 ${data['밥집']?.['도보시간'] || '-'}</span></div>
+      </div>
+      <div class="card">
+        <div class="card-name">☕ ${data['카페']?.['이름'] || '-'}</div>
+        <div class="card-meta">📍 ${data['카페']?.['주소'] || ''}</div>
+        <div class="card-meta"><span class="walk">🚶 ${data['카페']?.['도보시간'] || '-'}</span></div>
+      </div>
+    `;
+    box.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  loadAll();
+</script>
+</body>
+</html>
