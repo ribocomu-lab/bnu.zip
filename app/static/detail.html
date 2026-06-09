@@ -188,15 +188,68 @@
     .section { padding: 14px 16px; border-bottom: 1px solid #eee; }
     .section-title { font-size: 14px; font-weight: 700; color: #111; margin-bottom: 10px; }
 
-    /* 에브리타임 */
-    .review-placeholder {
-      background: #f8f8f8;
-      border-radius: 8px;
-      padding: 20px;
-      text-align: center;
-      font-size: 14px;
-      color: #aaa;
+    /* ── 에브리타임 위젯 ── */
+    .et-notice {
+      background: #fff8e6; border: 1px solid #ffe08a;
+      border-radius: 8px; padding: 9px 11px;
+      font-size: 11px; color: #7a5c00; line-height: 1.5;
+      margin-bottom: 11px;
     }
+    .et-input {
+      display: flex; align-items: center;
+      background: #fff; border: 1px solid #e0e0e0;
+      border-radius: 8px; padding: 9px 12px;
+      margin-bottom: 8px; gap: 8px;
+    }
+    .et-input:focus-within { border-color: #1a73e8; }
+    .et-input label { font-size: 11px; font-weight: 600; color: #888; width: 38px; flex-shrink: 0; }
+    .et-input input { flex: 1; border: none; outline: none; font-size: 13px; background: transparent; }
+    .et-btn-login {
+      width: 100%; height: 42px; background: #e8232a;
+      border: none; border-radius: 8px; color: #fff;
+      font-size: 13px; font-weight: 700; cursor: pointer;
+    }
+    .et-btn-login:disabled { background: #ccc; cursor: not-allowed; }
+    .et-logged-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 8px 11px; background: #f0faf0;
+      border: 1px solid #b8ddb8; border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    .et-logged-info { font-size: 12px; font-weight: 600; color: #2a7a2a; }
+    .et-btn-sm { font-size: 11px; color: #888; background: none; border: none; cursor: pointer; text-decoration: underline; margin-left: 8px; }
+    .et-btn-refresh { font-size: 11px; color: #1a73e8; background: none; border: none; cursor: pointer; font-weight: 600; }
+    .et-loading { text-align: center; padding: 20px; color: #aaa; font-size: 13px; }
+    .et-spinner {
+      display: inline-block; width: 18px; height: 18px;
+      border: 2px solid #eee; border-top-color: #e8232a;
+      border-radius: 50%; animation: etSpin 0.7s linear infinite;
+      vertical-align: middle; margin-right: 6px;
+    }
+    @keyframes etSpin { to { transform: rotate(360deg); } }
+    .et-summary {
+      background: #f4f8ff; border-radius: 8px;
+      padding: 11px 13px; font-size: 12px;
+      color: #1a4a7a; line-height: 1.65;
+      margin-bottom: 10px; white-space: pre-line; font-weight: 600;
+    }
+    .et-bar { display: flex; height: 8px; border-radius: 4px; overflow: hidden; gap: 1px; margin-bottom: 5px; }
+    .et-bar-pos { background: #34a853; }
+    .et-bar-neu { background: #ddd; }
+    .et-bar-neg { background: #ea4335; }
+    .et-bar-legend { display: flex; gap: 10px; font-size: 10px; color: #888; margin-bottom: 10px; }
+    .et-bar-legend span { display: flex; align-items: center; gap: 3px; }
+    .et-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; }
+    .et-kw { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 10px; }
+    .et-kw-tag { background: #f0f4ff; color: #1a73e8; font-size: 11px; border-radius: 20px; padding: 3px 9px; font-weight: 600; }
+    .et-review {
+      background: #fafafa; border-left: 3px solid #e8232a;
+      border-radius: 0 6px 6px 0; padding: 8px 10px;
+      font-size: 12px; color: #333; line-height: 1.65;
+      margin-bottom: 6px;
+    }
+    .et-error { background: #fff5f5; border: 1px solid #ffd0d0; border-radius: 8px; padding: 11px; font-size: 12px; color: #c00; line-height: 1.5; }
+    .et-empty { text-align: center; padding: 20px; font-size: 12px; color: #aaa; line-height: 1.6; }
 
     /* 지도 */
     #detailMap {
@@ -372,7 +425,62 @@
 
       <div class="section">
         <div class="section-title">에브리타임 후기 요약</div>
-        <div class="review-placeholder">🛠 준비 중입니다</div>
+
+        <!-- 인증 전 -->
+        <div id="etAuth">
+          <div class="et-notice">⚠️ 아이디·비밀번호는 서버에 저장되지 않으며, 현재 세션(1시간)에만 사용됩니다.</div>
+          <div class="et-input">
+            <label>아이디</label>
+            <input id="etId" type="text" placeholder="에브리타임 아이디" autocomplete="username" />
+          </div>
+          <div class="et-input">
+            <label>비밀번호</label>
+            <input id="etPw" type="password" placeholder="비밀번호" autocomplete="current-password"
+              onkeydown="if(event.key==='Enter')etLogin()" />
+          </div>
+          <button class="et-btn-login" id="etBtnLogin" onclick="etLogin()">
+            에브리타임 인증 후 후기 불러오기
+          </button>
+        </div>
+
+        <!-- 로그인 완료 바 -->
+        <div id="etLoggedBar" class="et-logged-bar" style="display:none">
+          <span class="et-logged-info" id="etUserLabel">● 연결됨</span>
+          <div>
+            <button class="et-btn-refresh" onclick="etLoad()">새로고침</button>
+            <button class="et-btn-sm" onclick="etLogout()">로그아웃</button>
+          </div>
+        </div>
+
+        <!-- 로딩 -->
+        <div id="etLoading" style="display:none">
+          <div class="et-loading"><span class="et-spinner"></span>에브리타임에서 후기 검색 중…</div>
+        </div>
+
+        <!-- 결과 -->
+        <div id="etResult" style="display:none">
+          <div class="et-summary" id="etSummary"></div>
+          <div class="et-bar">
+            <div class="et-bar-pos" id="etBarPos" style="width:0%"></div>
+            <div class="et-bar-neu" id="etBarNeu" style="width:0%"></div>
+            <div class="et-bar-neg" id="etBarNeg" style="width:0%"></div>
+          </div>
+          <div class="et-bar-legend">
+            <span><i class="et-dot" style="background:#34a853"></i><span id="etLegPos">긍정 0</span></span>
+            <span><i class="et-dot" style="background:#ddd"></i><span id="etLegNeu">중립 0</span></span>
+            <span><i class="et-dot" style="background:#ea4335"></i><span id="etLegNeg">부정 0</span></span>
+          </div>
+          <div class="et-kw" id="etKw"></div>
+          <div id="etRevList"></div>
+        </div>
+
+        <!-- 에러 -->
+        <div id="etError" class="et-error" style="display:none"></div>
+
+        <!-- 빈 결과 -->
+        <div id="etEmpty" class="et-empty" style="display:none">
+          검색 결과가 없어요.<br>후기가 없거나 에브리타임 서버 상태에 따라 달라질 수 있어요.
+        </div>
       </div>
 
       <div class="section">
@@ -478,6 +586,7 @@
       loadSimilar();
       loadNearbyCafes();
       loadMap();
+      etInit();
     }
 
     /* ── 상세 렌더 ── */
@@ -807,6 +916,114 @@
           .bindPopup('<span style="font-size:11px">부산대 정문</span>')
           .addTo(map);
       }
+    }
+
+    /* ── 에브리타임 위젯 ── */
+    const ET_KEY = 'et_token';
+    const ET_IDS = ['etAuth','etLoggedBar','etLoading','etResult','etError','etEmpty'];
+
+    function etShow(visible) {
+      ET_IDS.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        if (!visible.includes(id)) { el.style.display = 'none'; return; }
+        el.style.display = (id === 'etLoggedBar') ? 'flex' : 'block';
+      });
+    }
+
+    async function etInit() {
+      const token = sessionStorage.getItem(ET_KEY);
+      if (!token) { etShow(['etAuth']); return; }
+      try {
+        const res = await fetch(`/api/everytime/check?token=${token}`);
+        if (res.ok) {
+          const d = await res.json();
+          document.getElementById('etUserLabel').textContent = `● ${d.user_id} 연결됨`;
+          etShow(['etLoggedBar','etLoading']);
+          etLoad();
+        } else {
+          sessionStorage.removeItem(ET_KEY);
+          etShow(['etAuth']);
+        }
+      } catch { etShow(['etAuth']); }
+    }
+
+    async function etLogin() {
+      const id = document.getElementById('etId').value.trim();
+      const pw = document.getElementById('etPw').value;
+      if (!id || !pw) { alert('아이디와 비밀번호를 모두 입력해주세요.'); return; }
+      const btn = document.getElementById('etBtnLogin');
+      btn.disabled = true; btn.textContent = '로그인 중…';
+      try {
+        const res = await fetch('/api/everytime/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id, password: pw }),
+        });
+        const data = await res.json();
+        if (!res.ok) { alert(data.detail || '로그인 실패. 아이디·비밀번호를 확인해주세요.'); return; }
+        sessionStorage.setItem(ET_KEY, data.token);
+        document.getElementById('etUserLabel').textContent = `● ${id} 연결됨`;
+        etShow(['etLoggedBar','etLoading']);
+        etLoad();
+      } catch { alert('네트워크 오류가 발생했어요.'); }
+      finally { btn.disabled = false; btn.textContent = '에브리타임 인증 후 후기 불러오기'; }
+    }
+
+    async function etLoad() {
+      if (!item) return;
+      const token = sessionStorage.getItem(ET_KEY);
+      if (!token) { etShow(['etAuth']); return; }
+      etShow(['etLoggedBar','etLoading']);
+      try {
+        const name = item['이름'];
+        const res = await fetch(
+          `/api/everytime/reviews?token=${encodeURIComponent(token)}&restaurant=${encodeURIComponent(name)}`
+        );
+        const data = await res.json();
+        if (!res.ok) {
+          etShow(['etLoggedBar','etError']);
+          document.getElementById('etError').textContent = '⚠️ ' + (data.detail || '오류가 발생했어요.');
+          return;
+        }
+        if (!data.count && !(data.reviews && data.reviews.length)) {
+          etShow(['etLoggedBar','etEmpty']); return;
+        }
+        etRender(data);
+        etShow(['etLoggedBar','etResult']);
+      } catch {
+        etShow(['etLoggedBar','etError']);
+        document.getElementById('etError').textContent = '⚠️ 네트워크 오류가 발생했어요.';
+      }
+    }
+
+    function etRender(d) {
+      document.getElementById('etSummary').textContent = d.summary || '';
+      const { positive: p = 0, negative: n = 0, neutral: neu = 0 } = d.sentiment || {};
+      const tot = (p + n + neu) || 1;
+      document.getElementById('etBarPos').style.width = `${(p/tot*100).toFixed(1)}%`;
+      document.getElementById('etBarNeu').style.width = `${(neu/tot*100).toFixed(1)}%`;
+      document.getElementById('etBarNeg').style.width = `${(n/tot*100).toFixed(1)}%`;
+      document.getElementById('etLegPos').textContent = `긍정 ${p}`;
+      document.getElementById('etLegNeu').textContent = `중립 ${neu}`;
+      document.getElementById('etLegNeg').textContent = `부정 ${n}`;
+      document.getElementById('etKw').innerHTML = (d.keywords || []).slice(0,8)
+        .map(k => `<span class="et-kw-tag">#${k.word} <span style="opacity:.6;font-size:10px">${k.count}</span></span>`)
+        .join('');
+      document.getElementById('etRevList').innerHTML = (d.reviews || [])
+        .map(r => `<div class="et-review">${r.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>`)
+        .join('');
+    }
+
+    async function etLogout() {
+      const token = sessionStorage.getItem(ET_KEY);
+      if (token) {
+        try { await fetch(`/api/everytime/session?token=${token}`, { method: 'DELETE' }); } catch {}
+        sessionStorage.removeItem(ET_KEY);
+      }
+      document.getElementById('etId').value = '';
+      document.getElementById('etPw').value = '';
+      etShow(['etAuth']);
     }
 
     loadItem();

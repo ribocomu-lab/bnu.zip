@@ -5,6 +5,7 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from app.api.routes import router
 from app.api.auth import router as auth_router
+from app.api.everytime import router as everytime_router
 
 app = FastAPI(title="PNUeat API", version="1.0.0")
 
@@ -17,6 +18,7 @@ app.add_middleware(
 
 app.include_router(router)
 app.include_router(auth_router)
+app.include_router(everytime_router)
 
 STATIC_DIR = os.path.join(os.path.dirname(__file__), "static")
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
@@ -50,6 +52,11 @@ def login_page():
 @app.get("/detail")
 def detail_page():
     return FileResponse(os.path.join(STATIC_DIR, "detail.html"))
+
+
+@app.get("/everytime")
+def everytime_page():
+    return FileResponse(os.path.join(STATIC_DIR, "everytime.html"))
 
 
 @app.get("/health")

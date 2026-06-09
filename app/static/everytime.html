@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>에브리타임 후기</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #e8e8e8;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+      font-family: 'Inter', 'Apple SD Gothic Neo', sans-serif;
+    }
+    .phone {
+      width: 430px;
+      min-height: 100vh;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── 헤더 ── */
+    .header {
+      position: sticky; top: 0; z-index: 100;
+      background: #fff;
+      padding: 20px 31px 0;
+    }
+    .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 16px;
+    }
+    .logo-bnu {
+      font-family: 'Inter', sans-serif;
+      font-size: 24px; font-weight: 700;
+      letter-spacing: -0.96px;
+    }
+    .logo-bnu .blue { color: #005ba9; }
+    .back-btn {
+      font-size: 13px; color: #5888b2;
+      cursor: pointer; letter-spacing: -0.3px;
+      text-decoration: none;
+    }
+    .header-divider { height: 1px; background: #e8e8e8; margin: 0 -31px; }
+
+    /* ── 스크롤 영역 ── */
+    .content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 24px 40px;
+      scrollbar-width: none;
+    }
+    .content::-webkit-scrollbar { display: none; }
+
+    /* ── 식당 이름 타이틀 ── */
+    .restaurant-title {
+      font-size: 20px; font-weight: 700;
+      color: #191919; letter-spacing: -0.6px;
+      margin-bottom: 4px;
+    }
+    .restaurant-sub {
+      font-size: 12px; color: #888;
+      margin-bottom: 20px;
+    }
+    .restaurant-sub span { color: #005ba9; font-weight: 600; }
+
+    /* ── 인증 카드 ── */
+    .auth-card {
+      background: linear-gradient(135deg, #f0f7ff 0%, #e8f4fd 100%);
+      border: 1px solid #c5dff5;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .auth-card-header {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 14px;
+    }
+    .auth-logo {
+      width: 32px; height: 32px;
+      background: #e8232a;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 13px; font-weight: 800;
+      letter-spacing: -0.5px; flex-shrink: 0;
+    }
+    .auth-title {
+      font-size: 15px; font-weight: 700;
+      color: #191919; letter-spacing: -0.4px;
+    }
+    .auth-desc {
+      font-size: 11px; color: #666;
+      letter-spacing: -0.2px;
+    }
+    .auth-notice {
+      background: #fff8e6;
+      border: 1px solid #ffe08a;
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 11px; color: #7a5c00;
+      line-height: 1.5;
+      margin-bottom: 14px;
+    }
+    .auth-notice strong { color: #5c4000; }
+    .input-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+    .input-row {
+      display: flex; align-items: center; gap: 8px;
+      background: #fff;
+      border: 1px solid #dcdcdc;
+      border-radius: 10px;
+      padding: 10px 14px;
+    }
+    .input-row:focus-within { border-color: #005ba9; }
+    .input-label {
+      font-size: 11px; font-weight: 600;
+      color: #888; width: 38px; flex-shrink: 0;
+      letter-spacing: -0.2px;
+    }
+    .input-row input {
+      flex: 1; border: none; outline: none;
+      font-size: 14px; color: #191919;
+      font-family: 'Inter', sans-serif;
+      background: transparent;
+    }
+    .btn-login {
+      width: 100%; height: 44px;
+      background: #005ba9; color: #fff;
+      border: none; border-radius: 10px;
+      font-size: 14px; font-weight: 700;
+      cursor: pointer; letter-spacing: -0.3px;
+      transition: background 0.15s;
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+    }
+    .btn-login:hover { background: #0047a3; }
+    .btn-login:disabled { background: #b8c8d8; cursor: not-allowed; }
+    .btn-login .spinner {
+      width: 16px; height: 16px;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+
+    /* ── 로그인 완료 배지 ── */
+    .logged-in-badge {
+      display: flex; align-items: center; justify-content: space-between;
+      background: #f0f9f0; border: 1px solid #b8ddb8;
+      border-radius: 10px; padding: 10px 14px;
+      margin-bottom: 16px;
+    }
+    .logged-in-badge .left { display: flex; align-items: center; gap: 8px; }
+    .badge-dot { width: 8px; height: 8px; border-radius: 50%; background: #3ab03a; }
+    .badge-text { font-size: 13px; font-weight: 600; color: #2a7a2a; }
+    .btn-logout {
+      font-size: 11px; color: #888; cursor: pointer;
+      background: none; border: none; text-decoration: underline;
+    }
+
+    /* ── 검색 바 ── */
+    .search-bar {
+      display: flex; gap: 8px; margin-bottom: 20px;
+    }
+    .search-input {
+      flex: 1; height: 40px;
+      border: 1px solid #dcdcdc; border-radius: 10px;
+      padding: 0 14px; font-size: 14px;
+      font-family: 'Inter', sans-serif; outline: none;
+      color: #191919;
+    }
+    .search-input:focus { border-color: #005ba9; }
+    .btn-search {
+      height: 40px; padding: 0 16px;
+      background: #005ba9; color: #fff;
+      border: none; border-radius: 10px;
+      font-size: 13px; font-weight: 700;
+      cursor: pointer; white-space: nowrap;
+      transition: background 0.15s;
+    }
+    .btn-search:hover { background: #0047a3; }
+    .btn-search:disabled { background: #b8c8d8; cursor: not-allowed; }
+
+    /* ── 로딩 ── */
+    .loading-state {
+      text-align: center; padding: 40px 0;
+      color: #888; font-size: 13px;
+    }
+    .loading-state .big-spinner {
+      width: 32px; height: 32px;
+      border: 3px solid #eee; border-top-color: #005ba9;
+      border-radius: 50%; animation: spin 0.7s linear infinite;
+      margin: 0 auto 12px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── 결과 카드 ── */
+    .result-section { display: none; }
+    .result-section.visible { display: block; }
+
+    .summary-box {
+      background: #f4f8ff; border: 1px solid #c8ddf8;
+      border-radius: 12px; padding: 14px 16px;
+      margin-bottom: 16px;
+    }
+    .summary-text {
+      font-size: 13px; font-weight: 600;
+      color: #1a4a7a; line-height: 1.6;
+      letter-spacing: -0.3px;
+      white-space: pre-line;
+    }
+
+    /* 감정 바 */
+    .sentiment-bar-wrap { margin-bottom: 16px; }
+    .sentiment-label {
+      font-size: 11px; font-weight: 600;
+      color: #888; letter-spacing: -0.2px;
+      margin-bottom: 6px;
+    }
+    .sentiment-bar {
+      display: flex; height: 10px;
+      border-radius: 6px; overflow: hidden;
+      gap: 2px;
+    }
+    .bar-pos { background: #3ab03a; border-radius: 6px 0 0 6px; }
+    .bar-neg { background: #e8232a; border-radius: 0 6px 6px 0; }
+    .bar-neu { background: #ddd; }
+    .sentiment-legend {
+      display: flex; gap: 12px; margin-top: 6px;
+    }
+    .legend-item {
+      display: flex; align-items: center; gap: 4px;
+      font-size: 10px; color: #888;
+    }
+    .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+    /* 키워드 태그 */
+    .keywords-wrap { margin-bottom: 16px; }
+    .section-title {
+      font-size: 12px; font-weight: 700;
+      color: #555; letter-spacing: -0.3px;
+      margin-bottom: 8px;
+    }
+    .keyword-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag {
+      background: #eef4ff; color: #005ba9;
+      border-radius: 20px; padding: 4px 10px;
+      font-size: 12px; font-weight: 600;
+      letter-spacing: -0.3px;
+    }
+    .tag .count { font-size: 10px; color: #7aa8d0; margin-left: 2px; }
+
+    /* 대표 후기 */
+    .reviews-wrap { margin-bottom: 16px; }
+    .review-item {
+      background: #fafafa; border: 1px solid #eee;
+      border-radius: 10px; padding: 12px 14px;
+      margin-bottom: 8px;
+      font-size: 13px; color: #333;
+      line-height: 1.6; letter-spacing: -0.2px;
+      position: relative;
+    }
+    .review-item::before {
+      content: '"';
+      font-size: 24px; color: #dce8f8;
+      position: absolute; top: 4px; left: 8px;
+      font-family: Georgia, serif; line-height: 1;
+    }
+    .review-item .text { padding-left: 12px; }
+
+    /* 통계 뱃지 */
+    .count-badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      background: #eef4ff; border-radius: 20px;
+      padding: 4px 10px; font-size: 11px;
+      color: #005ba9; font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    /* 에러 상태 */
+    .error-state {
+      background: #fff5f5; border: 1px solid #ffd0d0;
+      border-radius: 12px; padding: 16px;
+      font-size: 13px; color: #c00;
+      line-height: 1.6;
+    }
+
+    /* 빈 상태 */
+    .empty-state {
+      text-align: center; padding: 32px 0;
+      color: #aaa; font-size: 13px; line-height: 1.7;
+    }
+    .empty-state .icon { font-size: 36px; margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+<div class="phone">
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-top">
+      <div class="logo-bnu"><span class="blue">B</span>NU</div>
+      <a class="back-btn" onclick="history.back()">← 뒤로</a>
+    </div>
+    <div class="header-divider"></div>
+  </div>
+
+  <!-- 컨텐츠 -->
+  <div class="content">
+
+    <!-- 식당 타이틀 -->
+    <div class="restaurant-title" id="restaurantTitle">에브리타임 후기</div>
+    <div class="restaurant-sub" id="restaurantSub">
+      에브리타임 부산대 게시판에서 찾은 <span id="restNameSpan">식당</span> 관련 후기를 요약해드려요
+    </div>
+
+    <!-- 인증 카드 (로그인 전) -->
+    <div class="auth-card" id="authCard">
+      <div class="auth-card-header">
+        <div class="auth-logo">ET</div>
+        <div>
+          <div class="auth-title">에브리타임 인증</div>
+          <div class="auth-desc">부산대 계정으로 로그인하면 실제 후기를 볼 수 있어요</div>
+        </div>
+      </div>
+      <div class="auth-notice">
+        <strong>⚠️ 개인정보 안내</strong><br>
+        입력한 아이디·비밀번호는 서버에 저장되지 않으며,
+        이번 세션(1시간)에만 사용 후 즉시 폐기됩니다.
+      </div>
+      <div class="input-group">
+        <div class="input-row">
+          <span class="input-label">아이디</span>
+          <input id="etId" type="text" placeholder="에브리타임 아이디" autocomplete="username" />
+        </div>
+        <div class="input-row">
+          <span class="input-label">비밀번호</span>
+          <input id="etPw" type="password" placeholder="비밀번호" autocomplete="current-password" />
+        </div>
+      </div>
+      <button class="btn-login" id="btnLogin" onclick="doLogin()">
+        에브리타임으로 인증하기
+      </button>
+    </div>
+
+    <!-- 로그인 완료 배지 (로그인 후) -->
+    <div class="logged-in-badge" id="loggedBadge" style="display:none">
+      <div class="left">
+        <div class="badge-dot"></div>
+        <div class="badge-text" id="loggedUserId">연결됨</div>
+      </div>
+      <button class="btn-logout" onclick="doLogout()">로그아웃</button>
+    </div>
+
+    <!-- 검색 바 (로그인 후) -->
+    <div class="search-bar" id="searchBar" style="display:none">
+      <input class="search-input" id="searchInput" type="text"
+        placeholder="식당 이름을 입력하세요"
+        onkeydown="if(event.key==='Enter') doSearch()" />
+      <button class="btn-search" id="btnSearch" onclick="doSearch()">검색</button>
+    </div>
+
+    <!-- 로딩 -->
+    <div class="loading-state" id="loadingState" style="display:none">
+      <div class="big-spinner"></div>
+      에브리타임에서 후기를 찾는 중이에요…
+    </div>
+
+    <!-- 결과 -->
+    <div class="result-section" id="resultSection">
+
+      <!-- 요약 -->
+      <div class="summary-box">
+        <div class="summary-text" id="summaryText"></div>
+      </div>
+
+      <!-- 통계 -->
+      <div class="count-badge">
+        <span>📋</span>
+        <span id="countText">0개 게시글 분석</span>
+      </div>
+
+      <div class="sentiment-bar-wrap">
+        <div class="sentiment-label">감정 분포</div>
+        <div class="sentiment-bar" id="sentimentBar">
+          <div class="bar-pos" id="barPos" style="width:0%"></div>
+          <div class="bar-neu" id="barNeu" style="width:0%"></div>
+          <div class="bar-neg" id="barNeg" style="width:0%"></div>
+        </div>
+        <div class="sentiment-legend">
+          <div class="legend-item"><div class="legend-dot" style="background:#3ab03a"></div><span id="posLegend">긍정 0</span></div>
+          <div class="legend-item"><div class="legend-dot" style="background:#ddd"></div><span id="neuLegend">중립 0</span></div>
+          <div class="legend-item"><div class="legend-dot" style="background:#e8232a"></div><span id="negLegend">부정 0</span></div>
+        </div>
+      </div>
+
+      <!-- 키워드 -->
+      <div class="keywords-wrap" id="keywordsWrap">
+        <div class="section-title">주요 키워드</div>
+        <div class="keyword-tags" id="keywordTags"></div>
+      </div>
+
+      <!-- 대표 후기 -->
+      <div class="reviews-wrap" id="reviewsWrap">
+        <div class="section-title">대표 후기</div>
+        <div id="reviewsList"></div>
+      </div>
+
+    </div>
+
+    <!-- 에러 -->
+    <div class="error-state" id="errorState" style="display:none"></div>
+
+    <!-- 빈 상태 -->
+    <div class="empty-state" id="emptyState" style="display:none">
+      <div class="icon">🔍</div>
+      검색 결과가 없어요.<br>
+      다른 식당 이름으로 시도해보세요.
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const SESSION_KEY = 'et_token';
+  const RESTAURANT_KEY = 'et_restaurant';
+
+  // ── 초기화 ────────────────────────────────────────────────
+  (function init() {
+    // URL 파라미터에서 식당 이름 가져오기
+    const params = new URLSearchParams(location.search);
+    const name = params.get('name') || params.get('restaurant') || '';
+
+    if (name) {
+      document.getElementById('restaurantTitle').textContent = name + ' 에브리타임 후기';
+      document.getElementById('restNameSpan').textContent = name;
+      document.getElementById('searchInput').value = name;
+    }
+
+    // 기존 세션 확인
+    const token = sessionStorage.getItem(SESSION_KEY);
+    if (token) {
+      checkSession(token).then(valid => {
+        if (valid && name) {
+          doSearch();
+        }
+      });
+    }
+  })();
+
+  // ── 세션 확인 ─────────────────────────────────────────────
+  async function checkSession(token) {
+    try {
+      const res = await fetch(`/api/everytime/check?token=${token}`);
+      if (res.ok) {
+        const data = await res.json();
+        showLoggedIn(data.user_id, token);
+        return true;
+      }
+    } catch {}
+    sessionStorage.removeItem(SESSION_KEY);
+    return false;
+  }
+
+  // ── 로그인 ────────────────────────────────────────────────
+  async function doLogin() {
+    const id = document.getElementById('etId').value.trim();
+    const pw = document.getElementById('etPw').value;
+    if (!id || !pw) {
+      alert('아이디와 비밀번호를 모두 입력해주세요.');
+      return;
+    }
+
+    const btn = document.getElementById('btnLogin');
+    btn.disabled = true;
+    btn.innerHTML = '<div class="spinner"></div> 로그인 중…';
+
+    try {
+      const res = await fetch('/api/everytime/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, password: pw }),
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data.detail || '로그인에 실패했어요.');
+        return;
+      }
+
+      sessionStorage.setItem(SESSION_KEY, data.token);
+      showLoggedIn(id, data.token);
+
+      // 식당 이름이 있으면 바로 검색
+      const name = document.getElementById('searchInput').value.trim();
+      if (name) doSearch();
+
+    } catch (e) {
+      alert('네트워크 오류가 발생했어요. 다시 시도해주세요.');
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = '에브리타임으로 인증하기';
+    }
+  }
+
+  // ── UI: 로그인 완료 상태 ──────────────────────────────────
+  function showLoggedIn(userId, token) {
+    document.getElementById('authCard').style.display = 'none';
+    document.getElementById('loggedBadge').style.display = 'flex';
+    document.getElementById('loggedUserId').textContent = `${userId} 연결됨`;
+    document.getElementById('searchBar').style.display = 'flex';
+    sessionStorage.setItem(SESSION_KEY, token);
+  }
+
+  // ── 로그아웃 ──────────────────────────────────────────────
+  async function doLogout() {
+    const token = sessionStorage.getItem(SESSION_KEY);
+    if (token) {
+      try { await fetch(`/api/everytime/session?token=${token}`, { method: 'DELETE' }); }
+      catch {}
+      sessionStorage.removeItem(SESSION_KEY);
+    }
+    location.reload();
+  }
+
+  // ── 검색 ──────────────────────────────────────────────────
+  async function doSearch() {
+    const token = sessionStorage.getItem(SESSION_KEY);
+    if (!token) { alert('먼저 에브리타임 인증이 필요해요.'); return; }
+
+    const name = document.getElementById('searchInput').value.trim();
+    if (!name) { alert('식당 이름을 입력해주세요.'); return; }
+
+    // UI 상태 초기화
+    ['resultSection', 'errorState', 'emptyState'].forEach(id => {
+      const el = document.getElementById(id);
+      el.style.display = 'none';
+      el.classList.remove('visible');
+    });
+
+    document.getElementById('loadingState').style.display = 'block';
+    document.getElementById('btnSearch').disabled = true;
+    document.getElementById('restaurantTitle').textContent = name + ' 에브리타임 후기';
+    document.getElementById('restNameSpan').textContent = name;
+
+    try {
+      const res = await fetch(
+        `/api/everytime/reviews?token=${encodeURIComponent(token)}&restaurant=${encodeURIComponent(name)}`
+      );
+      const data = await res.json();
+      document.getElementById('loadingState').style.display = 'none';
+
+      if (!res.ok) {
+        showError(data.detail || '오류가 발생했어요.');
+        return;
+      }
+
+      if (data.count === 0 && data.reviews?.length === 0) {
+        document.getElementById('emptyState').style.display = 'block';
+        return;
+      }
+
+      renderResult(data);
+
+    } catch (e) {
+      document.getElementById('loadingState').style.display = 'none';
+      showError('네트워크 오류가 발생했어요. 다시 시도해주세요.');
+    } finally {
+      document.getElementById('btnSearch').disabled = false;
+    }
+  }
+
+  // ── 결과 렌더링 ───────────────────────────────────────────
+  function renderResult(data) {
+    // 요약
+    document.getElementById('summaryText').textContent = data.summary || '';
+
+    // 게시글 수
+    document.getElementById('countText').textContent =
+      `${data.count}개 게시글 · ${data.text_count || 0}개 댓글 분석`;
+
+    // 감정 바
+    const { positive: p = 0, negative: n = 0, neutral: neu = 0 } = data.sentiment || {};
+    const total = p + n + neu || 1;
+    document.getElementById('barPos').style.width = `${(p / total * 100).toFixed(1)}%`;
+    document.getElementById('barNeu').style.width = `${(neu / total * 100).toFixed(1)}%`;
+    document.getElementById('barNeg').style.width = `${(n / total * 100).toFixed(1)}%`;
+    document.getElementById('posLegend').textContent = `긍정 ${p}`;
+    document.getElementById('neuLegend').textContent = `중립 ${neu}`;
+    document.getElementById('negLegend').textContent = `부정 ${n}`;
+
+    // 키워드
+    const kwWrap = document.getElementById('keywordsWrap');
+    const kwTags = document.getElementById('keywordTags');
+    if (data.keywords?.length) {
+      kwTags.innerHTML = data.keywords.map(k =>
+        `<span class="tag">#${k.word}<span class="count">${k.count}</span></span>`
+      ).join('');
+      kwWrap.style.display = 'block';
+    } else {
+      kwWrap.style.display = 'none';
+    }
+
+    // 대표 후기
+    const rvWrap = document.getElementById('reviewsWrap');
+    const rvList = document.getElementById('reviewsList');
+    if (data.reviews?.length) {
+      rvList.innerHTML = data.reviews.map(r =>
+        `<div class="review-item"><div class="text">${escHtml(r)}</div></div>`
+      ).join('');
+      rvWrap.style.display = 'block';
+    } else {
+      rvWrap.style.display = 'none';
+    }
+
+    const sec = document.getElementById('resultSection');
+    sec.style.display = 'block';
+    sec.classList.add('visible');
+  }
+
+  function showError(msg) {
+    const el = document.getElementById('errorState');
+    el.textContent = '⚠️ ' + msg;
+    el.style.display = 'block';
+  }
+
+  function escHtml(s) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+</script>
+</body>
+</html>
