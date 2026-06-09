@@ -1,8 +1,8 @@
 """
 에브리타임 리뷰 서비스
-- 사용자 인증 (세션 쿠키를 인메모리에만 보관, 서버 DB 미저장)
-- 식당명 검색 → 게시글 텍스트 수집
-- 키워드 기반 감정 분석 + 요약 생성
+- 로그인: Playwright (JS 처리 필요)
+- 리뷰 검색: httpx (쿠키 재사용)
+- 세션: 인메모리, 1시간 TTL, 서버 미저장
 """
 
 import re
@@ -13,31 +13,30 @@ from collections import Counter
 from typing import Optional
 import httpx
 
-# ── 인메모리 세션 (서버 재시작 시 초기화, 1시간 TTL) ────────
+# ── 인메모리 세션 ────────────────────────────────────────────
 _sessions: dict[str, dict] = {}
 SESSION_TTL = 3600
 
+_UA = (
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) "
+    "AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/21A329"
+)
 _HEADERS = {
-    "User-Agent": (
-        "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) "
-        "AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/21A329"
-    ),
+    "User-Agent": _UA,
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-    "Accept-Language": "ko-KR,ko;q=0.9,en;q=0.8",
-    "Accept-Encoding": "gzip, deflate, br",
-    "Connection": "keep-alive",
+    "Accept-Language": "ko-KR,ko;q=0.9",
 }
 
 # ── 감정 키워드 ──────────────────────────────────────────────
 _POS = [
-    "맛있", "좋아", "좋았", "추천", "최고", "대박", "또 갔", "다시 갔", "또 가",
+    "맛있", "좋아", "좋았", "추천", "최고", "대박", "또 갔", "다시", "또 가",
     "친절", "깨끗", "괜찮", "만족", "훈훈", "완벽", "합리", "저렴", "가성비",
-    "신선", "맛집", "강추", "인기", "성공", "또 가고", "재방문",
+    "신선", "맛집", "강추", "인기", "성공", "재방문",
 ]
 _NEG = [
     "별로", "실망", "최악", "비싸", "불친절", "더러", "다신", "안좋",
-    "아쉬", "별로였", "못했", "실패", "후회", "개별로", "구려", "비추",
-    "짜다", "싱겁", "차갑", "식었", "위생", "불결",
+    "아쉬", "별로였", "못했", "실패", "후회", "비추", "구려",
+    "짜다", "싱겁", "차갑", "식었", "위생",
 ]
 _STOP = {
     "에서", "하고", "이고", "이다", "있다", "없다", "것이", "했다", "한다",
@@ -66,48 +65,129 @@ def delete_session(token: str) -> None:
     _sessions.pop(token, None)
 
 
-# ── 로그인 ───────────────────────────────────────────────────
+# ── 로그인 (Playwright) ──────────────────────────────────────
 
 async def login_everytime(et_id: str, password: str) -> Optional[str]:
     """
-    에브리타임 로그인.
-    성공 → 세션 토큰(str) / 실패 → None
+    에브리타임 로그인 — Playwright로 실제 브라우저 동작 재현.
+    성공 → 세션 토큰 / 실패 → None
     """
     try:
-        async with httpx.AsyncClient(
-            follow_redirects=True,
-            timeout=20,
-            headers=_HEADERS,
-        ) as c:
-            # 1) 로그인 페이지 방문 — 초기 쿠키 획득
-            await c.get("https://account.everytime.kr/login")
+        from playwright.async_api import async_playwright
 
-            # 2) 폼 POST
+        async with async_playwright() as pw:
+            browser = await pw.chromium.launch(
+                headless=True,
+                args=[
+                    "--no-sandbox",
+                    "--disable-dev-shm-usage",
+                    "--disable-gpu",
+                    "--single-process",
+                ],
+            )
+            ctx = await browser.new_context(user_agent=_UA)
+            page = await ctx.new_page()
+
+            # 1) 로그인 페이지
+            await page.goto(
+                "https://account.everytime.kr/login",
+                wait_until="networkidle",
+                timeout=15000,
+            )
+
+            # 2) 폼 입력
+            await page.fill('input[name="id"]', et_id)
+            await page.fill('input[name="password"]', password)
+
+            # 3) 제출
+            submit = await page.query_selector(
+                'input[type="submit"], button[type="submit"]'
+            )
+            if submit:
+                await submit.click()
+            else:
+                await page.keyboard.press("Enter")
+
+            # 4) 리다이렉트 대기
+            try:
+                await page.wait_for_load_state("networkidle", timeout=10000)
+            except Exception:
+                pass
+            await asyncio.sleep(1)
+
+            # 5) 성공 여부 판별
+            current_url = page.url
+            if "account.everytime.kr/login" in current_url:
+                # 여전히 로그인 페이지 = 실패
+                await browser.close()
+                return None
+
+            # 6) 쿠키 수집
+            cookies = await ctx.cookies()
+            cookie_dict = {c["name"]: c["value"] for c in cookies}
+            await browser.close()
+
+            if not cookie_dict:
+                return None
+
+            # 7) 세션 저장
+            token = hashlib.sha256(
+                f"{et_id}{time.time()}".encode()
+            ).hexdigest()[:32]
+            _sessions[token] = {
+                "cookies": cookie_dict,
+                "user_id": et_id,
+                "expires": time.time() + SESSION_TTL,
+            }
+            _purge()
+            return token
+
+    except ImportError:
+        # Playwright 미설치 시 httpx 폴백 (기능 제한)
+        return await _login_httpx(et_id, password)
+    except Exception as e:
+        print(f"[everytime] playwright login error: {e}")
+        return None
+
+
+async def _login_httpx(et_id: str, password: str) -> Optional[str]:
+    """Playwright 없을 때 폴백 (일부 환경에서 작동 안 할 수 있음)"""
+    try:
+        async with httpx.AsyncClient(
+            follow_redirects=True, timeout=15, headers=_HEADERS
+        ) as c:
+            get_resp = await c.get("https://account.everytime.kr/login")
+
+            # hidden 필드(CSRF 등) 추출
+            form_data: dict[str, str] = {"id": et_id, "password": password}
+            for inp in re.findall(r"<input[^>]+>", get_resp.text, re.IGNORECASE):
+                t = re.search(r'type=["\']([^"\']+)["\']', inp, re.IGNORECASE)
+                n = re.search(r'name=["\']([^"\']+)["\']', inp, re.IGNORECASE)
+                v = re.search(r'value=["\']([^"\']*)["\']', inp, re.IGNORECASE)
+                if t and t.group(1).lower() == "hidden" and n:
+                    form_data[n.group(1)] = v.group(1) if v else ""
+
             resp = await c.post(
                 "https://account.everytime.kr/login",
-                data={"id": et_id, "password": password},
+                data=form_data,
                 headers={
                     **_HEADERS,
                     "Content-Type": "application/x-www-form-urlencoded",
                     "Origin": "https://account.everytime.kr",
-                    "Referer": "https://account.everytime.kr/login",
+                    "Referer": str(get_resp.url),
                 },
             )
 
-            body = resp.text
-            # 실패 판별: 오류 메시지 또는 로그인 페이지 재표시
-            if (
-                "아이디 또는 비밀번호" in body
-                or "로그인에 실패" in body
-                or ("login" in str(resp.url) and "logout" not in body)
-            ):
+            if "account.everytime.kr/login" in str(resp.url):
                 return None
 
             cookies = dict(c.cookies)
             if not cookies:
                 return None
 
-            token = hashlib.sha256(f"{et_id}{time.time()}".encode()).hexdigest()[:32]
+            token = hashlib.sha256(
+                f"{et_id}{time.time()}".encode()
+            ).hexdigest()[:32]
             _sessions[token] = {
                 "cookies": cookies,
                 "user_id": et_id,
@@ -115,16 +195,14 @@ async def login_everytime(et_id: str, password: str) -> Optional[str]:
             }
             _purge()
             return token
-
     except Exception as e:
-        print(f"[everytime] login error: {e}")
+        print(f"[everytime] httpx login error: {e}")
         return None
 
 
-# ── 리뷰 검색 ────────────────────────────────────────────────
+# ── 리뷰 검색 (httpx + 세션 쿠키) ───────────────────────────
 
 async def fetch_reviews(token: str, restaurant_name: str) -> dict:
-    """식당 이름 검색 → 분석 결과 dict 반환"""
     session = get_session(token)
     if not session:
         return {"error": "세션이 만료됐어요. 다시 로그인해주세요."}
@@ -136,7 +214,6 @@ async def fetch_reviews(token: str, restaurant_name: str) -> dict:
             cookies=session["cookies"],
             follow_redirects=True,
         ) as c:
-            # 1) 검색
             resp = await c.get(
                 f"https://everytime.kr/search/all/{restaurant_name}"
             )
@@ -144,31 +221,28 @@ async def fetch_reviews(token: str, restaurant_name: str) -> dict:
                 return {"error": f"검색 요청 실패 (HTTP {resp.status_code})"}
 
             html = resp.text
-
-            # 세션 만료 감지
-            if "로그인" in html and len(html) < 5000:
+            if len(html) < 2000 and "로그인" in html:
                 return {"error": "에브리타임 세션이 만료됐어요. 다시 로그인해주세요."}
 
-            # 2) 게시글 링크 추출 (다양한 패턴 시도)
+            # 게시글 링크 추출
             links: list[str] = []
             for pattern in [
-                r'href="(/(?:community|board|free|library|review|pnu)[^"]*?/\d+)"',
                 r'<a[^>]+class="[^"]*article[^"]*"[^>]+href="([^"]+)"',
+                r'href="(/(?:community|board|free|library)[^"]*?/\d+)"',
                 r'href="(/[^"?#]+/\d{5,})"',
             ]:
-                found = re.findall(pattern, html)
-                links.extend(found)
+                links = re.findall(pattern, html)
                 if links:
                     break
 
-            links = list(dict.fromkeys(links))[:15]  # 중복 제거, 최대 15개
+            links = list(dict.fromkeys(links))[:15]
 
             if not links:
                 if len(html) < 3000:
                     return {
                         "error": (
-                            "에브리타임 콘텐츠를 불러오지 못했어요. "
-                            "브라우저 기반 실행(Playwright)이 필요합니다."
+                            "검색 결과를 불러오지 못했어요. "
+                            "로그인 세션이 유효한지 확인하거나 다시 로그인해주세요."
                         )
                     }
                 return {
@@ -178,14 +252,13 @@ async def fetch_reviews(token: str, restaurant_name: str) -> dict:
                     "keywords": [],
                 }
 
-            # 3) 게시글 텍스트 수집
+            # 게시글 텍스트 수집
             texts: list[str] = []
             for link in links[:10]:
                 url = f"https://everytime.kr{link}" if link.startswith("/") else link
                 try:
                     pr = await c.get(url)
                     if pr.status_code == 200:
-                        # <p class="text"> 패턴
                         for raw in re.findall(
                             r'<p[^>]*class="[^"]*\btext\b[^"]*"[^>]*>(.*?)</p>',
                             pr.text, re.DOTALL
@@ -202,18 +275,13 @@ async def fetch_reviews(token: str, restaurant_name: str) -> dict:
                 return {
                     "count": len(links),
                     "reviews": [],
-                    "summary": (
-                        f"게시글 {len(links)}개를 찾았지만 텍스트를 추출하지 못했어요. "
-                        "에브리타임이 JavaScript 렌더링을 사용 중일 수 있어요."
-                    ),
+                    "summary": f"게시글 {len(links)}개를 찾았지만 텍스트를 추출하지 못했어요.",
                     "sentiment": {"positive": 0, "negative": 0, "neutral": 0},
                     "keywords": [],
                 }
 
             return _analyze(texts, restaurant_name, len(links))
 
-    except httpx.RequestError as e:
-        return {"error": f"네트워크 오류: {e}"}
     except Exception as e:
         return {"error": f"오류 발생: {e}"}
 
@@ -235,7 +303,6 @@ def _analyze(texts: list[str], query: str, post_count: int) -> dict:
         else:
             neu += 1
 
-        # 대표 문장 수집
         for s in re.split(r"[.!?\n]", text):
             s = s.strip()
             if 15 <= len(s) <= 120:
@@ -243,7 +310,6 @@ def _analyze(texts: list[str], query: str, post_count: int) -> dict:
 
         words.extend(re.findall(r"[가-힣]{2,5}", text))
 
-    # 중복 제거된 대표 문장 최대 5개
     seen: set[str] = set()
     rep_out: list[str] = []
     for s in rep:
@@ -273,7 +339,7 @@ def _analyze(texts: list[str], query: str, post_count: int) -> dict:
 def _make_summary(pos: int, neg: int, neu: int, kws: list, query: str, n: int) -> str:
     total = pos + neg + neu
     if total == 0:
-        return f"'{query}'에 대한 의미 있는 후기를 찾지 못했어요."
+        return f"'{query}'에 대한 후기를 찾지 못했어요."
     pct = int(pos / total * 100)
     mood = (
         "대체로 긍정적이에요 👍" if pct >= 65

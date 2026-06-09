@@ -6,3 +6,4 @@ aiofiles==24.1.0
 python-jose[cryptography]==3.3.0
 google-auth==2.29.0
 requests==2.32.3
+playwright==1.44.0
