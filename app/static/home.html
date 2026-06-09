@@ -170,43 +170,42 @@
       border-radius: 12px;
     }
 
-    /* 음식 이미지 캐러셀 — 실측 여백 기반 per-image margin, 모든 gap ≈ 4px */
+    /* 음식 이미지 캐러셀 — Figma Frame17 기준: 68px 높이, 9px 간격, top 23px */
     .food-carousel {
       position: absolute;
-      top: 2px;
+      top: 23px;
       left: 0;
-      height: 106px;
-      width: calc(542px * 2);
+      height: 68px;
+      width: calc(505px * 2);
       display: flex;
       animation: foodScroll 10s linear infinite;
     }
     .food-carousel-set {
       display: flex;
       align-items: flex-end;
-      gap: 0;
-      width: 542px;
+      gap: 9px;
+      width: 505px;
       flex-shrink: 0;
-      height: 106px;
-      padding: 0;
+      height: 68px;
     }
     .food-carousel-set img {
-      width: 120px;
-      height: 106px;
+      height: 68px;
+      width: auto;
       object-fit: contain;
       flex-shrink: 0;
       display: block;
-      mix-blend-mode: multiply;
-      margin-left: 0; /* food1(찌개) 기준 — 세트 경계 gap도 이 값으로 맞춤 */
     }
-    .food-carousel-set img:nth-child(2) { margin-left: -27px; } /* 스시 */
-    .food-carousel-set img:nth-child(3) { margin-left: -28px; } /* 딤섬 */
-    .food-carousel-set img:nth-child(4) { margin-left: -25px; } /* 양식 */
-    .food-carousel-set img:nth-child(5) { margin-left: -30px; } /* 치킨 */
-    .food-carousel-set img:nth-child(6) { margin-left: -36px; } /* 박스(아시아) */
+    /* Figma Frame17 기준 각 이미지 너비 (총 460px + gap 45px = 505px) */
+    .food-carousel-set img:nth-child(1) { width: 68px; }
+    .food-carousel-set img:nth-child(2) { width: 78px; }
+    .food-carousel-set img:nth-child(3) { width: 78px; }
+    .food-carousel-set img:nth-child(4) { width: 72px; }
+    .food-carousel-set img:nth-child(5) { width: 68px; }
+    .food-carousel-set img:nth-child(6) { width: 96px; }
 
     @keyframes foodScroll {
       0%   { transform: translateX(0); }
-      100% { transform: translateX(-542px); }
+      100% { transform: translateX(-505px); }
     }
 
     /* 좌우 페이드 제거 — 상하 그라데이션만 사용 */
@@ -339,7 +338,6 @@
       height: 58px;
       object-fit: contain;
       display: block;
-      mix-blend-mode: multiply; /* 흰색 배경 투명 처리 */
     }
     .cat-name {
       font-family: 'Inter', sans-serif;
