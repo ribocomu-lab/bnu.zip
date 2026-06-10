@@ -33,6 +33,95 @@
       position: relative;
     }
 
+    /* 히어로 */
+    .hero {
+      width: 100%;
+      height: 260px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      font-size: 72px;
+      overflow: hidden;
+    }
+    .hero-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0) 45%, rgba(53,99,196,0.55) 100%);
+      z-index: 1;
+    }
+    .hero-back, .hero-save { z-index: 3; }
+    #heroEmoji { z-index: 2; position: relative; }
+    .hero-back {
+      position: absolute;
+      top: 18px; left: 16px;
+      width: 36px; height: 36px;
+      background: rgba(0,0,0,0.3);
+      border: none;
+      border-radius: 50%;
+      color: #fff;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hero-back svg { width: 11px; height: 18px; }
+    .hero-save {
+      position: absolute;
+      top: 18px; right: 16px;
+      width: 38px; height: 38px;
+      background: rgba(0,0,0,0.3);
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hero-save svg { width: 19px; height: 17px; transition: fill 0.15s; }
+    .hero-save.bump { animation: heartBump 0.45s ease; }
+    @keyframes heartBump {
+      0% { transform: scale(1); }
+      30% { transform: scale(1.4); }
+      55% { transform: scale(0.9); }
+      100% { transform: scale(1); }
+    }
+    .particle {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #ff4141;
+      pointer-events: none;
+      z-index: 4;
+      animation: particleBurst 0.7s ease-out forwards;
+    }
+    @keyframes particleBurst {
+      0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+      100% { transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0); opacity: 0; }
+    }
+
+    /* 스크롤 영역 (둥근 카드) */
+    .scroll-body {
+      flex: 1; overflow-y: auto; min-height: 0; transform: translateZ(0);
+      background: #fff;
+      border-radius: 24px 24px 0 0;
+      margin-top: -22px;
+      position: relative;
+      z-index: 2;
+      box-shadow: 0 -6px 18px rgba(0,0,0,0.06);
+    }
+    .card-handle {
+      width: 36px; height: 4px;
+      background: #eee;
+      border-radius: 2px;
+      margin: 10px auto 2px;
+    }
+
     /* 사진 갤러리 */
     .photo-strip {
       display: flex;
@@ -40,15 +129,14 @@
       overflow-x: auto;
       scrollbar-width: none;
       -webkit-overflow-scrolling: touch;
-      padding: 10px 16px;
-      background: #fff;
+      padding: 12px 0 2px;
       flex-shrink: 0;
     }
     .photo-strip::-webkit-scrollbar { display: none; }
     .photo-strip-item {
       flex-shrink: 0;
-      width: 90px; height: 70px;
-      border-radius: 8px;
+      width: 90px; height: 90px;
+      border-radius: 12px;
       overflow: hidden;
       background: #f0f0f0;
       cursor: pointer;
@@ -97,74 +185,31 @@
       font-size: 13px; margin-top: 8px;
     }
 
-    /* 히어로 */
-    .hero {
-      width: 100%;
-      height: 220px;
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      font-size: 72px;
-      overflow: hidden;
-    }
-    .hero-photo {
-      position: absolute;
-      inset: 0;
-      width: 100%; height: 100%;
-      object-fit: cover;
-      z-index: 0;
-    }
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(0,0,0,0.35);
-      z-index: 1;
-    }
-    .hero-back, .hero-save { z-index: 3; }
-    #heroEmoji { z-index: 2; position: relative; }
-    .hero-back {
-      position: absolute;
-      top: 16px; left: 16px;
-      width: 34px; height: 34px;
-      background: rgba(0,0,0,0.35);
-      border: none;
-      border-radius: 8px;
-      color: #fff;
-      font-size: 18px;
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .hero-save {
-      position: absolute;
-      top: 16px; right: 16px;
-      width: 34px; height: 34px;
-      background: rgba(0,0,0,0.35);
-      border: none;
-      border-radius: 8px;
-      font-size: 18px;
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-    }
-
-    /* 스크롤 영역 */
-    .scroll-body { flex: 1; overflow-y: auto; min-height: 0; transform: translateZ(0); }
-
     /* 기본 정보 */
     .info-section {
-      padding: 16px 16px 14px;
+      padding: 0 16px 14px;
       border-bottom: 1px solid #eee;
     }
-    .rest-name { font-size: 20px; font-weight: 700; color: #111; margin-bottom: 4px; }
     .cat-badge {
       display: inline-block;
-      font-size: 11px; color: #555;
-      background: #f2f2f2;
-      border-radius: 4px;
-      padding: 3px 8px;
-      margin-bottom: 12px;
+      font-size: 12px; font-weight: 700; color: #3a6cd9;
+      background: #eaf1ff;
+      border-radius: 20px;
+      padding: 4px 12px;
+      margin-bottom: 10px;
     }
+    .name-row {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 8px; margin-bottom: 10px;
+    }
+    .rest-name { font-size: 21px; font-weight: 800; color: #111; }
+    .star-rating {
+      display: flex; align-items: center; gap: 4px;
+      font-size: 14px; font-weight: 700; color: #111;
+      flex-shrink: 0;
+    }
+    .star-rating .star-ico { color: #ffb400; font-size: 15px; }
+    .star-rating .review-cnt { font-size: 12px; font-weight: 500; color: #999; }
     .tags-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
     .tag {
       font-size: 11px; color: #555;
@@ -178,78 +223,60 @@
     .tag.yellow { background: #fffbeb; color: #f59e0b; }
     .info-row {
       display: flex; align-items: center;
-      gap: 10px; margin-bottom: 8px;
+      gap: 10px; margin-bottom: 10px;
     }
-    .info-icon { font-size: 14px; flex-shrink: 0; width: 18px; text-align: center; }
-    .info-text { font-size: 13px; color: #444; }
+    .info-icon {
+      flex-shrink: 0; width: 24px; height: 24px;
+      border-radius: 50%; background: #f5f6f8;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .info-icon svg { width: 14px; height: 14px; }
+    .info-text { font-size: 13px; color: #444; flex: 1; }
     .info-text.light { color: #888; }
+    .copy-btn {
+      flex-shrink: 0; font-size: 11px; font-weight: 600; color: #3a6cd9;
+      background: #eaf1ff; border: none; border-radius: 6px;
+      padding: 4px 9px; cursor: pointer;
+    }
+    .copy-btn:active { opacity: 0.7; }
 
     /* 섹션 공통 */
     .section { padding: 14px 16px; border-bottom: 1px solid #eee; }
     .section-title { font-size: 14px; font-weight: 700; color: #111; margin-bottom: 10px; }
 
-    /* ── 에브리타임 위젯 ── */
-    .et-notice {
-      background: #fff8e6; border: 1px solid #ffe08a;
-      border-radius: 8px; padding: 9px 11px;
-      font-size: 11px; color: #7a5c00; line-height: 1.5;
-      margin-bottom: 11px;
+    /* 리뷰 */
+    .review-summary {
+      display: flex; align-items: center; gap: 16px;
+      background: #fafbfd; border-radius: 12px;
+      padding: 14px; margin-bottom: 14px;
     }
-    .et-input {
-      display: flex; align-items: center;
-      background: #fff; border: 1px solid #e0e0e0;
-      border-radius: 8px; padding: 9px 12px;
-      margin-bottom: 8px; gap: 8px;
+    .review-score { font-size: 30px; font-weight: 800; color: #111; line-height: 1; }
+    .review-score-detail { display: flex; flex-direction: column; gap: 4px; }
+    .review-stars-static { color: #ffb400; font-size: 14px; letter-spacing: 1px; }
+    .review-count-text { font-size: 12px; color: #999; }
+    .review-form { margin-bottom: 14px; }
+    .star-input { display: flex; gap: 6px; margin-bottom: 10px; }
+    .star-input span { font-size: 24px; color: #e0e0e0; cursor: pointer; transition: color 0.1s; user-select: none; }
+    .star-input span.active { color: #ffb400; }
+    .review-textarea {
+      width: 100%; min-height: 64px; border: 1px solid #eee; border-radius: 10px;
+      padding: 10px 12px; font-size: 13px; resize: none; font-family: inherit;
+      margin-bottom: 8px;
     }
-    .et-input:focus-within { border-color: #1a73e8; }
-    .et-input label { font-size: 11px; font-weight: 600; color: #888; width: 38px; flex-shrink: 0; }
-    .et-input input { flex: 1; border: none; outline: none; font-size: 13px; background: transparent; }
-    .et-btn-login {
-      width: 100%; height: 42px; background: #e8232a;
-      border: none; border-radius: 8px; color: #fff;
-      font-size: 13px; font-weight: 700; cursor: pointer;
+    .review-textarea:focus { outline: none; border-color: #3a6cd9; }
+    .review-submit {
+      width: 100%; height: 42px; background: #111; color: #fff;
+      border: none; border-radius: 10px; font-size: 13px; font-weight: 700; cursor: pointer;
     }
-    .et-btn-login:disabled { background: #ccc; cursor: not-allowed; }
-    .et-logged-bar {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 8px 11px; background: #f0faf0;
-      border: 1px solid #b8ddb8; border-radius: 8px;
-      margin-bottom: 10px;
-    }
-    .et-logged-info { font-size: 12px; font-weight: 600; color: #2a7a2a; }
-    .et-btn-sm { font-size: 11px; color: #888; background: none; border: none; cursor: pointer; text-decoration: underline; margin-left: 8px; }
-    .et-btn-refresh { font-size: 11px; color: #1a73e8; background: none; border: none; cursor: pointer; font-weight: 600; }
-    .et-loading { text-align: center; padding: 20px; color: #aaa; font-size: 13px; }
-    .et-spinner {
-      display: inline-block; width: 18px; height: 18px;
-      border: 2px solid #eee; border-top-color: #e8232a;
-      border-radius: 50%; animation: etSpin 0.7s linear infinite;
-      vertical-align: middle; margin-right: 6px;
-    }
-    @keyframes etSpin { to { transform: rotate(360deg); } }
-    .et-summary {
-      background: #f4f8ff; border-radius: 8px;
-      padding: 11px 13px; font-size: 12px;
-      color: #1a4a7a; line-height: 1.65;
-      margin-bottom: 10px; white-space: pre-line; font-weight: 600;
-    }
-    .et-bar { display: flex; height: 8px; border-radius: 4px; overflow: hidden; gap: 1px; margin-bottom: 5px; }
-    .et-bar-pos { background: #34a853; }
-    .et-bar-neu { background: #ddd; }
-    .et-bar-neg { background: #ea4335; }
-    .et-bar-legend { display: flex; gap: 10px; font-size: 10px; color: #888; margin-bottom: 10px; }
-    .et-bar-legend span { display: flex; align-items: center; gap: 3px; }
-    .et-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; }
-    .et-kw { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 10px; }
-    .et-kw-tag { background: #f0f4ff; color: #1a73e8; font-size: 11px; border-radius: 20px; padding: 3px 9px; font-weight: 600; }
-    .et-review {
-      background: #fafafa; border-left: 3px solid #e8232a;
-      border-radius: 0 6px 6px 0; padding: 8px 10px;
-      font-size: 12px; color: #333; line-height: 1.65;
-      margin-bottom: 6px;
-    }
-    .et-error { background: #fff5f5; border: 1px solid #ffd0d0; border-radius: 8px; padding: 11px; font-size: 12px; color: #c00; line-height: 1.5; }
-    .et-empty { text-align: center; padding: 20px; font-size: 12px; color: #aaa; line-height: 1.6; }
+    .review-submit:active { opacity: 0.85; }
+    .review-item { padding: 10px 0; border-bottom: 1px solid #f2f2f2; }
+    .review-item:last-child { border-bottom: none; }
+    .review-item-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+    .review-item-stars { color: #ffb400; font-size: 12px; letter-spacing: 1px; }
+    .review-item-date { font-size: 11px; color: #bbb; margin-right: 6px; }
+    .review-item-text { font-size: 13px; color: #333; line-height: 1.55; }
+    .review-delete { font-size: 11px; color: #ccc; background: none; border: none; cursor: pointer; padding: 0; }
+    .review-empty { font-size: 12px; color: #aaa; text-align: center; padding: 14px 0; }
 
     /* 지도 */
     #detailMap {
@@ -260,7 +287,7 @@
       background: #eee;
     }
 
-    /* 비슷한 식당 */
+    /* 비슷한 밥.zip / 가까운 커피.zip */
     .similar-scroll {
       display: flex;
       gap: 10px;
@@ -290,29 +317,27 @@
     .bottom-cta {
       padding: 12px 16px 20px;
       display: flex;
-      gap: 8px;
-      border-top: 1px solid #ddd;
+      gap: 10px;
+      border-top: 1px solid #eee;
       background: #fff;
       flex-shrink: 0;
     }
-    .cta-secondary {
-      flex: 1; height: 46px;
-      border: 1.5px solid #ccc;
-      border-radius: 10px;
-      background: #fff;
-      font-size: 13px; color: #555;
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center; gap: 4px;
+    .cta-share {
+      width: 46px; height: 46px; flex-shrink: 0;
+      border: 1.5px solid #eee; border-radius: 12px;
+      background: #fff; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
     }
-    .cta-secondary:active { background: #f8f8f8; }
+    .cta-share svg { width: 20px; height: 20px; }
+    .cta-share:active { background: #f8f8f8; }
     .cta-primary {
-      flex: 2; height: 46px;
-      background: #111; border: none;
-      border-radius: 10px;
-      font-size: 14px; font-weight: 700; color: #fff;
+      flex: 1; height: 46px;
+      background: #4d8eff; border: none;
+      border-radius: 12px;
+      font-size: 15px; font-weight: 700; color: #fff;
       cursor: pointer;
     }
-    .cta-primary:active { opacity: 0.8; }
+    .cta-primary:active { opacity: 0.85; }
 
     /* 토스트 */
     .toast {
@@ -406,81 +431,32 @@
   <div class="phone">
 
     <div class="hero" id="hero">
-      <button class="hero-back" onclick="history.back()">←</button>
+      <button class="hero-back" onclick="history.back()">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 22L0 12L10 2L11.775 3.775L3.55 12L11.775 20.225L10 22Z" fill="white"/></svg>
+      </button>
       <div id="heroEmoji">🍽</div>
-      <button class="hero-save" id="heroSaveBtn" onclick="toggleBookmark()">🤍</button>
+      <button class="hero-save" id="heroSaveBtn" onclick="toggleBookmark()">
+        <svg viewBox="0 0 21.6667 19.8792" fill="none" xmlns="http://www.w3.org/2000/svg"><path id="heroHeartPath" d="M10.8333 19.8792L9.2625 18.4708C7.43889 16.8278 5.93125 15.4104 4.73958 14.2188C3.54792 13.0271 2.6 11.9573 1.89583 11.0094C1.19167 10.0615 0.699653 9.19028 0.419792 8.39583C0.139931 7.60139 0 6.78889 0 5.95833C0 4.26111 0.56875 2.84375 1.70625 1.70625C2.84375 0.56875 4.26111 0 5.95833 0C6.89722 0 7.79097 0.198611 8.63958 0.595833C9.48819 0.993056 10.2194 1.55278 10.8333 2.275C11.4472 1.55278 12.1785 0.993056 13.0271 0.595833C13.8757 0.198611 14.7694 0 15.7083 0C17.4056 0 18.8229 0.56875 19.9604 1.70625C21.0979 2.84375 21.6667 4.26111 21.6667 5.95833C21.6667 6.78889 21.5267 7.60139 21.2469 8.39583C20.967 9.19028 20.475 10.0615 19.7708 11.0094C19.0667 11.9573 18.1187 13.0271 16.9271 14.2188C15.7354 15.4104 14.2278 16.8278 12.4042 18.4708L10.8333 19.8792Z" fill="white"/></svg>
+      </button>
     </div>
 
-    <!-- 사진 스트립 (스크립트에서 동적 생성) -->
-    <div class="photo-strip" id="photoStrip" style="display:none"></div>
-
     <div class="scroll-body">
+      <div class="card-handle"></div>
 
       <div class="info-section">
-        <div class="rest-name" id="restName">-</div>
         <div class="cat-badge" id="catBadge"></div>
+        <div class="name-row">
+          <div class="rest-name" id="restName">-</div>
+          <div class="star-rating" id="starRating" style="display:none">
+            <span class="star-ico">★</span>
+            <span id="starValue">-</span>
+            <span class="review-cnt" id="reviewCntInline"></span>
+          </div>
+        </div>
         <div class="tags-row" id="tagsRow"></div>
         <div id="infoRows"></div>
-      </div>
-
-      <div class="section">
-        <div class="section-title">에브리타임 후기 요약</div>
-
-        <!-- 인증 전 -->
-        <div id="etAuth">
-          <div class="et-notice">⚠️ 아이디·비밀번호는 서버에 저장되지 않으며, 현재 세션(1시간)에만 사용됩니다.</div>
-          <div class="et-input">
-            <label>아이디</label>
-            <input id="etId" type="text" placeholder="에브리타임 아이디" autocomplete="username" />
-          </div>
-          <div class="et-input">
-            <label>비밀번호</label>
-            <input id="etPw" type="password" placeholder="비밀번호" autocomplete="current-password"
-              onkeydown="if(event.key==='Enter')etLogin()" />
-          </div>
-          <button class="et-btn-login" id="etBtnLogin" onclick="etLogin()">
-            에브리타임 인증 후 후기 불러오기
-          </button>
-        </div>
-
-        <!-- 로그인 완료 바 -->
-        <div id="etLoggedBar" class="et-logged-bar" style="display:none">
-          <span class="et-logged-info" id="etUserLabel">● 연결됨</span>
-          <div>
-            <button class="et-btn-refresh" onclick="etLoad()">새로고침</button>
-            <button class="et-btn-sm" onclick="etLogout()">로그아웃</button>
-          </div>
-        </div>
-
-        <!-- 로딩 -->
-        <div id="etLoading" style="display:none">
-          <div class="et-loading"><span class="et-spinner"></span>에브리타임에서 후기 검색 중…</div>
-        </div>
-
-        <!-- 결과 -->
-        <div id="etResult" style="display:none">
-          <div class="et-summary" id="etSummary"></div>
-          <div class="et-bar">
-            <div class="et-bar-pos" id="etBarPos" style="width:0%"></div>
-            <div class="et-bar-neu" id="etBarNeu" style="width:0%"></div>
-            <div class="et-bar-neg" id="etBarNeg" style="width:0%"></div>
-          </div>
-          <div class="et-bar-legend">
-            <span><i class="et-dot" style="background:#34a853"></i><span id="etLegPos">긍정 0</span></span>
-            <span><i class="et-dot" style="background:#ddd"></i><span id="etLegNeu">중립 0</span></span>
-            <span><i class="et-dot" style="background:#ea4335"></i><span id="etLegNeg">부정 0</span></span>
-          </div>
-          <div class="et-kw" id="etKw"></div>
-          <div id="etRevList"></div>
-        </div>
-
-        <!-- 에러 -->
-        <div id="etError" class="et-error" style="display:none"></div>
-
-        <!-- 빈 결과 -->
-        <div id="etEmpty" class="et-empty" style="display:none">
-          검색 결과가 없어요.<br>후기가 없거나 에브리타임 서버 상태에 따라 달라질 수 있어요.
-        </div>
+        <!-- 사진 갤러리 (스크립트에서 동적 생성) -->
+        <div class="photo-strip" id="photoStrip" style="display:none"></div>
       </div>
 
       <div class="section">
@@ -489,14 +465,33 @@
       </div>
 
       <div class="section">
-        <div class="section-title">비슷한 식당</div>
+        <div class="section-title">리뷰</div>
+        <div class="review-summary">
+          <div class="review-score" id="reviewScore">-</div>
+          <div class="review-score-detail">
+            <div class="review-stars-static" id="reviewStarsStatic">☆☆☆☆☆</div>
+            <div class="review-count-text" id="reviewCountText">리뷰 0개</div>
+          </div>
+        </div>
+        <div class="review-form">
+          <div class="star-input" id="starInput">
+            <span data-v="1">★</span><span data-v="2">★</span><span data-v="3">★</span><span data-v="4">★</span><span data-v="5">★</span>
+          </div>
+          <textarea class="review-textarea" id="reviewText" placeholder="이곳에 대한 리뷰를 남겨보세요"></textarea>
+          <button class="review-submit" onclick="submitReview()">리뷰 등록</button>
+        </div>
+        <div id="reviewList"></div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">비슷한 밥.zip</div>
         <div class="similar-scroll" id="similarScroll">
           <div style="font-size:13px;color:#aaa">불러오는 중...</div>
         </div>
       </div>
 
       <div class="section">
-        <div class="section-title">☕ 가까운 카페</div>
+        <div class="section-title">☕ 가까운 커피.zip</div>
         <div class="similar-scroll" id="nearbyCafeScroll">
           <div style="font-size:13px;color:#aaa">불러오는 중...</div>
         </div>
@@ -505,7 +500,9 @@
     </div>
 
     <div class="bottom-cta">
-      <button class="cta-secondary" onclick="shareItem()">📤 공유</button>
+      <button class="cta-share" onclick="shareItem()" aria-label="공유">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17 22C16.1667 22 15.4583 21.7083 14.875 21.125C14.2917 20.5417 14 19.8333 14 19C14 18.9 14.025 18.6667 14.075 18.3L7.05 14.2C6.78333 14.45 6.475 14.6458 6.125 14.7875C5.775 14.9292 5.4 15 5 15C4.16667 15 3.45833 14.7083 2.875 14.125C2.29167 13.5417 2 12.8333 2 12C2 11.1667 2.29167 10.4583 2.875 9.875C3.45833 9.29167 4.16667 9 5 9C5.4 9 5.775 9.07083 6.125 9.2125C6.475 9.35417 6.78333 9.55 7.05 9.8L14.075 5.7C14.0417 5.58333 14.0208 5.47083 14.0125 5.3625C14.0042 5.25417 14 5.13333 14 5C14 4.16667 14.2917 3.45833 14.875 2.875C15.4583 2.29167 16.1667 2 17 2C17.8333 2 18.5417 2.29167 19.125 2.875C19.7083 3.45833 20 4.16667 20 5C20 5.83333 19.7083 6.54167 19.125 7.125C18.5417 7.70833 17.8333 8 17 8C16.6 8 16.225 7.92917 15.875 7.7875C15.525 7.64583 15.2167 7.45 14.95 7.2L7.925 11.3C7.95833 11.4167 7.97917 11.5292 7.9875 11.6375C7.99583 11.7458 8 11.8667 8 12C8 12.1333 7.99583 12.2542 7.9875 12.3625C7.97917 12.4708 7.95833 12.5833 7.925 12.7L14.95 16.8C15.2167 16.55 15.525 16.3542 15.875 16.2125C16.225 16.0708 16.6 16 17 16C17.8333 16 18.5417 16.2917 19.125 16.875C19.7083 17.4583 20 18.1667 20 19C20 19.8333 19.7083 20.5417 19.125 21.125C18.5417 21.7083 17.8333 22 17 22ZM17 20C17.2833 20 17.5208 19.9042 17.7125 19.7125C17.9042 19.5208 18 19.2833 18 19C18 18.7167 17.9042 18.4792 17.7125 18.2875C17.5208 18.0958 17.2833 18 17 18C16.7167 18 16.4792 18.0958 16.2875 18.2875C16.0958 18.4792 16 18.7167 16 19C16 19.2833 16.0958 19.5208 16.2875 19.7125C16.4792 19.9042 16.7167 20 17 20ZM5 13C5.28333 13 5.52083 12.9042 5.7125 12.7125C5.90417 12.5208 6 12.2833 6 12C6 11.7167 5.90417 11.4792 5.7125 11.2875C5.52083 11.0958 5.28333 11 5 11C4.71667 11 4.47917 11.0958 4.2875 11.2875C4.09583 11.4792 4 11.7167 4 12C4 12.2833 4.09583 12.5208 4.2875 12.7125C4.47917 12.9042 4.71667 13 5 13ZM17.7125 5.7125C17.9042 5.52083 18 5.28333 18 5C18 4.71667 17.9042 4.47917 17.7125 4.2875C17.5208 4.09583 17.2833 4 17 4C16.7167 4 16.4792 4.09583 16.2875 4.2875C16.0958 4.47917 16 4.71667 16 5C16 5.28333 16.0958 5.52083 16.2875 5.7125C16.4792 5.90417 16.7167 6 17 6C17.2833 6 17.5208 5.90417 17.7125 5.7125Z" fill="#1C1B1F"/></svg>
+      </button>
       <button class="cta-primary" onclick="navigate()">길찾기</button>
     </div>
 
@@ -568,10 +565,15 @@
     };
     const PNU = { lat: 35.2323, lng: 129.0876 };
 
+    const ICON_DISTANCE = `<svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.11659 14.1084C4.37214 13.7362 3.99992 13.2556 3.99992 12.6667C3.99992 12.4 4.08047 12.1528 4.24159 11.925C4.4027 11.6973 4.6277 11.5 4.91659 11.3334L5.96659 12.3167C5.86659 12.3612 5.75825 12.4112 5.64159 12.4667C5.52492 12.5223 5.43325 12.5889 5.36659 12.6667C5.51103 12.8445 5.84436 13 6.36659 13.1334C6.88881 13.2667 7.43325 13.3334 7.99992 13.3334C8.56659 13.3334 9.11381 13.2667 9.64159 13.1334C10.1694 13 10.5055 12.8445 10.6499 12.6667C10.5721 12.5778 10.4721 12.5056 10.3499 12.45C10.2277 12.3945 10.111 12.3445 9.99992 12.3L11.0333 11.3C11.3444 11.4778 11.5833 11.6806 11.7499 11.9084C11.9166 12.1362 11.9999 12.3889 11.9999 12.6667C11.9999 13.2556 11.6277 13.7362 10.8833 14.1084C10.1388 14.4806 9.1777 14.6667 7.99992 14.6667C6.82214 14.6667 5.86103 14.4806 5.11659 14.1084ZM8.01659 11C9.11659 10.1889 9.94436 9.37504 10.4999 8.55837C11.0555 7.74171 11.3333 6.92226 11.3333 6.10004C11.3333 4.96671 10.9721 4.11115 10.2499 3.53337C9.5277 2.9556 8.7777 2.66671 7.99992 2.66671C7.22214 2.66671 6.47214 2.9556 5.74992 3.53337C5.0277 4.11115 4.66659 4.96671 4.66659 6.10004C4.66659 6.84449 4.93881 7.61949 5.48325 8.42504C6.0277 9.2306 6.87214 10.0889 8.01659 11ZM7.99992 12.6667C6.43325 11.5112 5.26381 10.3889 4.49159 9.30004C3.71936 8.21115 3.33325 7.14449 3.33325 6.10004C3.33325 5.31115 3.47492 4.61949 3.75825 4.02504C4.04159 3.4306 4.40547 2.93337 4.84992 2.53337C5.29436 2.13337 5.79436 1.83337 6.34992 1.63337C6.90547 1.43337 7.45547 1.33337 7.99992 1.33337C8.54436 1.33337 9.09436 1.43337 9.64992 1.63337C10.2055 1.83337 10.7055 2.13337 11.1499 2.53337C11.5944 2.93337 11.9583 3.4306 12.2416 4.02504C12.5249 4.61949 12.6666 5.31115 12.6666 6.10004C12.6666 7.14449 12.2805 8.21115 11.5083 9.30004C10.736 10.3889 9.56659 11.5112 7.99992 12.6667ZM7.99992 7.33337C8.36659 7.33337 8.68047 7.20282 8.94159 6.94171C9.2027 6.6806 9.33325 6.36671 9.33325 6.00004C9.33325 5.63337 9.2027 5.31949 8.94159 5.05837C8.68047 4.79726 8.36659 4.66671 7.99992 4.66671C7.63325 4.66671 7.31936 4.79726 7.05825 5.05837C6.79714 5.31949 6.66659 5.63337 6.66659 6.00004C6.66659 6.36671 6.79714 6.6806 7.05825 6.94171C7.31936 7.20282 7.63325 7.33337 7.99992 7.33337Z" fill="#1C1B1F"/></svg>`;
+    const ICON_CALL = `<svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13.3 14C11.9111 14 10.5389 13.6972 9.18333 13.0917C7.82778 12.4861 6.59444 11.6278 5.48333 10.5167C4.37222 9.40556 3.51389 8.17222 2.90833 6.81667C2.30278 5.46111 2 4.08889 2 2.7C2 2.5 2.06667 2.33333 2.2 2.2C2.33333 2.06667 2.5 2 2.7 2H5.4C5.55556 2 5.69444 2.05278 5.81667 2.15833C5.93889 2.26389 6.01111 2.38889 6.03333 2.53333L6.46667 4.86667C6.48889 5.04444 6.48333 5.19444 6.45 5.31667C6.41667 5.43889 6.35556 5.54444 6.26667 5.63333L4.65 7.26667C4.87222 7.67778 5.13611 8.075 5.44167 8.45833C5.74722 8.84167 6.08333 9.21111 6.45 9.56667C6.79444 9.91111 7.15556 10.2306 7.53333 10.525C7.91111 10.8194 8.31111 11.0889 8.73333 11.3333L10.3 9.76667C10.4 9.66667 10.5306 9.59167 10.6917 9.54167C10.8528 9.49167 11.0111 9.47778 11.1667 9.5L13.4667 9.96667C13.6222 10.0111 13.75 10.0917 13.85 10.2083C13.95 10.325 14 10.4556 14 10.6V13.3C14 13.5 13.9333 13.6667 13.8 13.8C13.6667 13.9333 13.5 14 13.3 14ZM4.01667 6L5.11667 4.9L4.83333 3.33333H3.35C3.40556 3.78889 3.48333 4.23889 3.58333 4.68333C3.68333 5.12778 3.82778 5.56667 4.01667 6ZM9.98333 11.9667C10.4167 12.1556 10.8583 12.3056 11.3083 12.4167C11.7583 12.5278 12.2111 12.6 12.6667 12.6333V11.1667L11.1 10.85L9.98333 11.9667Z" fill="#1C1B1F"/></svg>`;
+    const ICON_ALARM = `<svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.65824 14.1916C4.93046 13.875 4.29712 13.4472 3.75824 12.9083C3.21935 12.3694 2.79157 11.7361 2.4749 11.0083C2.15824 10.2805 1.9999 9.49998 1.9999 8.66665C1.9999 7.83332 2.15824 7.05276 2.4749 6.32498C2.79157 5.59721 3.21935 4.96387 3.75824 4.42498C4.29712 3.88609 4.93046 3.45832 5.65824 3.14165C6.38601 2.82498 7.16657 2.66665 7.9999 2.66665C8.83324 2.66665 9.61379 2.82498 10.3416 3.14165C11.0693 3.45832 11.7027 3.88609 12.2416 4.42498C12.7805 4.96387 13.2082 5.59721 13.5249 6.32498C13.8416 7.05276 13.9999 7.83332 13.9999 8.66665C13.9999 9.49998 13.8416 10.2805 13.5249 11.0083C13.2082 11.7361 12.7805 12.3694 12.2416 12.9083C11.7027 13.4472 11.0693 13.875 10.3416 14.1916C9.61379 14.5083 8.83324 14.6666 7.9999 14.6666C7.16657 14.6666 6.38601 14.5083 5.65824 14.1916ZM9.86657 11.4667L10.7999 10.5333L8.66657 8.39998V5.33332H7.33324V8.93332L9.86657 11.4667ZM3.73324 1.56665L4.66657 2.49998L1.83324 5.33332L0.899902 4.39998L3.73324 1.56665ZM12.2666 1.56665L15.0999 4.39998L14.1666 5.33332L11.3332 2.49998L12.2666 1.56665ZM7.9999 13.3333C9.2999 13.3333 10.4027 12.8805 11.3082 11.975C12.2138 11.0694 12.6666 9.96665 12.6666 8.66665C12.6666 7.36665 12.2138 6.26387 11.3082 5.35832C10.4027 4.45276 9.2999 3.99998 7.9999 3.99998C6.6999 3.99998 5.59713 4.45276 4.69157 5.35832C3.78601 6.26387 3.33324 7.36665 3.33324 8.66665C3.33324 9.96665 3.78601 11.0694 4.69157 11.975C5.59713 12.8805 6.6999 13.3333 7.9999 13.3333Z" fill="#1C1B1F"/></svg>`;
+
     let item = null;
     let bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
     let visited = JSON.parse(localStorage.getItem('visited') || '[]');
     let viewerPhotos = [], viewerIdx = 0;
+    let selectedStars = 0;
 
     function isBookmarked() { return item && bookmarks.includes(item['이름']); }
     function isVisited() { return item && visited.includes(item['이름']); }
@@ -586,7 +588,8 @@
       loadSimilar();
       loadNearbyCafes();
       loadMap();
-      etInit();
+      renderReviewSummary();
+      loadMyReviews();
     }
 
     /* ── 상세 렌더 ── */
@@ -620,7 +623,17 @@
         document.getElementById('heroEmoji').textContent = emoji;
       }
       document.getElementById('restName').textContent = item['이름'];
-      document.getElementById('catBadge').textContent = cat + (item['카테고리'] && item['카테고리'] !== cat ? ' · ' + item['카테고리'] : '');
+      const catText = cat + (item['카테고리'] && item['카테고리'] !== cat ? ' · ' + item['카테고리'] : '');
+      document.getElementById('catBadge').textContent = '#' + catText;
+
+      // 별점 (이름 옆)
+      if (item['별점'] != null) {
+        document.getElementById('starRating').style.display = 'flex';
+        document.getElementById('starValue').textContent = item['별점'];
+        document.getElementById('reviewCntInline').textContent = `(${item['리뷰수'] ?? 0})`;
+      } else {
+        document.getElementById('starRating').style.display = 'none';
+      }
 
       // 태그
       const tags = [];
@@ -630,19 +643,17 @@
         tags.push(`<span class="tag">${item['거리(m)']}m</span>`);
       if (item['가격'])
         tags.push(`<span class="tag blue">💳 ${parseInt(item['가격']).toLocaleString()}원</span>`);
-      if (item['별점'] != null)
-        tags.push(`<span class="tag yellow">★ ${item['별점']} (${item['리뷰수'] ?? 0}개)</span>`);
       document.getElementById('tagsRow').innerHTML = tags.join('');
 
       // 정보 행
       const rows = [];
-      if (item['주소']) rows.push(`<div class="info-row"><div class="info-icon">📍</div><div class="info-text">${item['주소']}</div></div>`);
-      if (item['전화번호']) rows.push(`<div class="info-row"><div class="info-icon">📞</div><a class="info-text" href="tel:${item['전화번호']}" style="color:#1a73e8;text-decoration:none">${item['전화번호']}</a></div>`);
+      if (item['주소']) rows.push(`<div class="info-row"><div class="info-icon">${ICON_DISTANCE}</div><div class="info-text">${item['주소']}</div><button class="copy-btn" onclick="copyAddress()">복사</button></div>`);
+      if (item['전화번호']) rows.push(`<div class="info-row"><div class="info-icon">${ICON_CALL}</div><a class="info-text" href="tel:${item['전화번호']}" style="color:#1a73e8;text-decoration:none">${item['전화번호']}</a></div>`);
       if (item['운영시간']?.length) {
         const today = [6,0,1,2,3,4,5][new Date().getDay()]; // 월=0 기준
         const todayText = item['운영시간'][today] || '';
         const timeShort = todayText.replace(/^[^:]+:\s*/, '');
-        rows.push(`<div class="info-row"><div class="info-icon">🕐</div><div class="info-text">오늘 ${timeShort}</div></div>`);
+        rows.push(`<div class="info-row"><div class="info-icon">${ICON_ALARM}</div><div class="info-text">오늘 ${timeShort}</div></div>`);
       }
       document.getElementById('infoRows').innerHTML = rows.join('');
 
@@ -664,6 +675,12 @@
         </div>`).join('');
     }
 
+    /* ── 주소 복사 ── */
+    function copyAddress() {
+      if (!item || !item['주소']) return;
+      navigator.clipboard?.writeText(item['주소']).then(() => showToast('주소가 복사됐어요'));
+    }
+
     /* ── 사진 전체화면 뷰어 ── */
     function openViewer(idx) {
       viewerIdx = idx;
@@ -681,7 +698,24 @@
     function viewerNext() { viewerIdx = (viewerIdx + 1) % viewerPhotos.length; updateViewer(); }
 
     function updateSaveIcon() {
-      document.getElementById('heroSaveBtn').textContent = isBookmarked() ? '🔖' : '🤍';
+      const heart = document.getElementById('heroHeartPath');
+      heart.setAttribute('fill', isBookmarked() ? '#ff4141' : 'white');
+    }
+
+    /* ── 하트 파티클 애니메이션 ── */
+    function spawnHeartParticles(container) {
+      const colors = ['#ff4141', '#ff7a7a', '#ffb3b3', '#ffd6d6'];
+      for (let i = 0; i < 10; i++) {
+        const p = document.createElement('span');
+        p.className = 'particle';
+        const angle = (Math.PI * 2 * i) / 10 + Math.random() * 0.4;
+        const dist = 22 + Math.random() * 16;
+        p.style.setProperty('--dx', `${Math.cos(angle) * dist}px`);
+        p.style.setProperty('--dy', `${Math.sin(angle) * dist}px`);
+        p.style.background = colors[i % colors.length];
+        container.appendChild(p);
+        p.addEventListener('animationend', () => p.remove());
+      }
     }
 
     /* ── 하트 직접 북마크 토글 ── */
@@ -690,7 +724,8 @@
       const name = item['이름'];
       const current = JSON.parse(localStorage.getItem('bookmarks') || '[]');
       const idx = current.indexOf(name);
-      if (idx === -1) {
+      const becameSaved = idx === -1;
+      if (becameSaved) {
         current.push(name);
         showToast('저장한 곳에 추가됐어요 🔖');
       } else {
@@ -701,6 +736,12 @@
       localStorage.setItem('bookmarks', JSON.stringify(current));
       pushBookmarks(current);
       updateSaveIcon();
+
+      const btn = document.getElementById('heroSaveBtn');
+      btn.classList.remove('bump');
+      void btn.offsetWidth;
+      btn.classList.add('bump');
+      if (becameSaved) spawnHeartParticles(btn);
     }
 
     function showToast(msg) {
@@ -732,6 +773,10 @@
       }
       updateSaveIcon();
       closeSaveModal();
+    }
+
+    function closeSaveModal() {
+      document.getElementById('saveOverlay').classList.remove('open');
     }
 
     /* ── 길찾기 ── */
@@ -780,7 +825,7 @@
       }
     }
 
-    /* ── 비슷한 식당 ── */
+    /* ── 비슷한 밥.zip ── */
     async function loadSimilar() {
       try {
         const [food, cafe] = await Promise.all([
@@ -826,7 +871,7 @@
       location.reload();
     }
 
-    /* ── 가까운 카페 ── */
+    /* ── 가까운 커피.zip ── */
     async function loadNearbyCafes() {
       try {
         const cafes = await fetch('/api/cafe').then(r => r.json());
@@ -918,113 +963,77 @@
       }
     }
 
-    /* ── 에브리타임 위젯 ── */
-    const ET_KEY = 'et_token';
-    const ET_IDS = ['etAuth','etLoggedBar','etLoading','etResult','etError','etEmpty'];
+    /* ── 리뷰 ── */
+    function reviewKey() { return 'reviews_' + item['이름']; }
 
-    function etShow(visible) {
-      ET_IDS.forEach(id => {
-        const el = document.getElementById(id);
-        if (!el) return;
-        if (!visible.includes(id)) { el.style.display = 'none'; return; }
-        el.style.display = (id === 'etLoggedBar') ? 'flex' : 'block';
+    function renderReviewSummary() {
+      const score = item['별점'];
+      const count = item['리뷰수'] ?? 0;
+      document.getElementById('reviewScore').textContent = score != null ? score : '-';
+      const full = score != null ? Math.round(score) : 0;
+      document.getElementById('reviewStarsStatic').textContent = '★'.repeat(full) + '☆'.repeat(5 - full);
+      document.getElementById('reviewCountText').textContent = `리뷰 ${count}개`;
+    }
+
+    function escapeHtml(s) {
+      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+    function loadMyReviews() {
+      const list = JSON.parse(localStorage.getItem(reviewKey()) || '[]');
+      const el = document.getElementById('reviewList');
+      if (!list.length) {
+        el.innerHTML = '<div class="review-empty">아직 작성한 리뷰가 없어요. 첫 리뷰를 남겨보세요!</div>';
+        return;
+      }
+      el.innerHTML = list.map((r, i) => `
+        <div class="review-item">
+          <div class="review-item-head">
+            <div class="review-item-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div>
+            <div>
+              <span class="review-item-date">${r.date}</span>
+              <button class="review-delete" onclick="deleteReview(${i})">삭제</button>
+            </div>
+          </div>
+          <div class="review-item-text">${escapeHtml(r.text)}</div>
+        </div>`).join('');
+    }
+
+    function deleteReview(idx) {
+      const list = JSON.parse(localStorage.getItem(reviewKey()) || '[]');
+      list.splice(idx, 1);
+      localStorage.setItem(reviewKey(), JSON.stringify(list));
+      loadMyReviews();
+      showToast('리뷰가 삭제됐어요');
+    }
+
+    function submitReview() {
+      const text = document.getElementById('reviewText').value.trim();
+      if (!selectedStars) { alert('별점을 선택해주세요.'); return; }
+      if (!text) { alert('리뷰 내용을 입력해주세요.'); return; }
+      const list = JSON.parse(localStorage.getItem(reviewKey()) || '[]');
+      const date = new Date().toISOString().slice(0, 10);
+      list.unshift({ rating: selectedStars, text, date });
+      localStorage.setItem(reviewKey(), JSON.stringify(list));
+      document.getElementById('reviewText').value = '';
+      selectedStars = 0;
+      updateStarInput();
+      loadMyReviews();
+      showToast('리뷰가 등록됐어요');
+    }
+
+    function updateStarInput() {
+      document.querySelectorAll('#starInput span').forEach(s => {
+        s.classList.toggle('active', parseInt(s.dataset.v) <= selectedStars);
       });
     }
 
-    async function etInit() {
-      const token = sessionStorage.getItem(ET_KEY);
-      if (!token) { etShow(['etAuth']); return; }
-      try {
-        const res = await fetch(`/api/everytime/check?token=${token}`);
-        if (res.ok) {
-          const d = await res.json();
-          document.getElementById('etUserLabel').textContent = `● ${d.user_id} 연결됨`;
-          etShow(['etLoggedBar','etLoading']);
-          etLoad();
-        } else {
-          sessionStorage.removeItem(ET_KEY);
-          etShow(['etAuth']);
-        }
-      } catch { etShow(['etAuth']); }
-    }
-
-    async function etLogin() {
-      const id = document.getElementById('etId').value.trim();
-      const pw = document.getElementById('etPw').value;
-      if (!id || !pw) { alert('아이디와 비밀번호를 모두 입력해주세요.'); return; }
-      const btn = document.getElementById('etBtnLogin');
-      btn.disabled = true; btn.textContent = '로그인 중…';
-      try {
-        const res = await fetch('/api/everytime/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ id, password: pw }),
-        });
-        const data = await res.json();
-        if (!res.ok) { alert(data.detail || '로그인 실패. 아이디·비밀번호를 확인해주세요.'); return; }
-        sessionStorage.setItem(ET_KEY, data.token);
-        document.getElementById('etUserLabel').textContent = `● ${id} 연결됨`;
-        etShow(['etLoggedBar','etLoading']);
-        etLoad();
-      } catch { alert('네트워크 오류가 발생했어요.'); }
-      finally { btn.disabled = false; btn.textContent = '에브리타임 인증 후 후기 불러오기'; }
-    }
-
-    async function etLoad() {
-      if (!item) return;
-      const token = sessionStorage.getItem(ET_KEY);
-      if (!token) { etShow(['etAuth']); return; }
-      etShow(['etLoggedBar','etLoading']);
-      try {
-        const name = item['이름'];
-        const res = await fetch(
-          `/api/everytime/reviews?token=${encodeURIComponent(token)}&restaurant=${encodeURIComponent(name)}`
-        );
-        const data = await res.json();
-        if (!res.ok) {
-          etShow(['etLoggedBar','etError']);
-          document.getElementById('etError').textContent = '⚠️ ' + (data.detail || '오류가 발생했어요.');
-          return;
-        }
-        if (!data.count && !(data.reviews && data.reviews.length)) {
-          etShow(['etLoggedBar','etEmpty']); return;
-        }
-        etRender(data);
-        etShow(['etLoggedBar','etResult']);
-      } catch {
-        etShow(['etLoggedBar','etError']);
-        document.getElementById('etError').textContent = '⚠️ 네트워크 오류가 발생했어요.';
+    document.getElementById('starInput').addEventListener('click', e => {
+      if (e.target.dataset.v) {
+        selectedStars = parseInt(e.target.dataset.v);
+        updateStarInput();
       }
-    }
-
-    function etRender(d) {
-      document.getElementById('etSummary').textContent = d.summary || '';
-      const { positive: p = 0, negative: n = 0, neutral: neu = 0 } = d.sentiment || {};
-      const tot = (p + n + neu) || 1;
-      document.getElementById('etBarPos').style.width = `${(p/tot*100).toFixed(1)}%`;
-      document.getElementById('etBarNeu').style.width = `${(neu/tot*100).toFixed(1)}%`;
-      document.getElementById('etBarNeg').style.width = `${(n/tot*100).toFixed(1)}%`;
-      document.getElementById('etLegPos').textContent = `긍정 ${p}`;
-      document.getElementById('etLegNeu').textContent = `중립 ${neu}`;
-      document.getElementById('etLegNeg').textContent = `부정 ${n}`;
-      document.getElementById('etKw').innerHTML = (d.keywords || []).slice(0,8)
-        .map(k => `<span class="et-kw-tag">#${k.word} <span style="opacity:.6;font-size:10px">${k.count}</span></span>`)
-        .join('');
-      document.getElementById('etRevList').innerHTML = (d.reviews || [])
-        .map(r => `<div class="et-review">${r.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>`)
-        .join('');
-    }
-
-    async function etLogout() {
-      const token = sessionStorage.getItem(ET_KEY);
-      if (token) {
-        try { await fetch(`/api/everytime/session?token=${token}`, { method: 'DELETE' }); } catch {}
-        sessionStorage.removeItem(ET_KEY);
-      }
-      document.getElementById('etId').value = '';
-      document.getElementById('etPw').value = '';
-      etShow(['etAuth']);
-    }
+    });
 
     loadItem();
     Promise.all([syncBookmarks(), syncVisited()]).then(() => {
