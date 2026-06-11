@@ -23,7 +23,7 @@
       font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
     }
     .phone {
-      width: 390px;
+      width: 430px;
       height: 844px;
       background: #fff;
       border: 1px solid #bbb;
@@ -36,7 +36,7 @@
     /* 히어로 */
     .hero {
       width: 100%;
-      height: 310px;
+      height: 342px;
       flex-shrink: 0;
       display: flex;
       align-items: center;
@@ -109,8 +109,8 @@
     .scroll-body {
       flex: 1; overflow-y: auto; min-height: 0; transform: translateZ(0);
       background: #fff;
-      border-radius: 43px 43px 0 0;
-      margin-top: -62px;
+      border-radius: 47px 47px 0 0;
+      margin-top: -69px;
       position: relative;
       z-index: 2;
       box-shadow: 0 0 6px rgba(0,0,0,0.25);
@@ -129,7 +129,7 @@
       overflow-x: auto;
       scrollbar-width: none;
       -webkit-overflow-scrolling: touch;
-      padding: 12px 0 2px;
+      padding: 10px 0;
       flex-shrink: 0;
     }
     .photo-strip::-webkit-scrollbar { display: none; }
@@ -187,17 +187,17 @@
 
     /* 기본 정보 */
     .info-section {
-      padding: 0 16px 14px;
+      padding: 0 30px 14px;
       border-bottom: 1px solid #eee;
     }
     .cat-badge {
       display: inline-block;
-      font-size: 11px; font-weight: 500; color: #005ba9;
+      font-size: 12px; font-weight: 500; color: #005ba9;
       background: #fff;
       border: 1px solid #5888b2;
-      border-radius: 20px;
-      padding: 4px 11px;
-      letter-spacing: -0.44px;
+      border-radius: 22px;
+      padding: 8px 15px 9px;
+      letter-spacing: -0.48px;
       white-space: nowrap;
       flex-shrink: 0;
     }
@@ -210,16 +210,16 @@
       min-width: 0;
     }
     .rest-name {
-      font-size: 22px; font-weight: 700; color: #050505;
-      letter-spacing: -0.22px;
+      font-size: 24px; font-weight: 700; color: #050505;
+      letter-spacing: -0.24px;
       overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0;
     }
     .star-rating {
       display: flex; align-items: baseline; gap: 1px;
       flex-shrink: 0;
     }
-    .star-rating .star-ico { color: #f5b400; font-size: 24px; }
-    .star-rating #starValue { font-size: 15px; font-weight: 700; color: #ffbe0c; letter-spacing: -0.15px; }
+    .star-rating .star-ico { color: #f5b400; font-size: 26px; }
+    .star-rating #starValue { font-size: 16px; font-weight: 700; color: #ffbe0c; letter-spacing: -0.16px; }
     .star-rating .review-cnt { font-size: 11px; font-weight: 500; color: #999; margin-left: 2px; }
     .detail-row {
       display: flex; align-items: center;
@@ -230,27 +230,16 @@
       display: flex; align-items: center; justify-content: center;
     }
     .detail-icon svg { width: 100%; height: 100%; }
-    .detail-text { font-size: 11px; color: #050505; }
+    .detail-text { font-size: 12px; color: #050505; }
     .detail-dist { font-weight: 700; }
     .detail-addr { font-weight: 500; margin-left: 5px; }
     .detail-copy { font-weight: 500; color: #005ba9; text-decoration: underline; margin-left: 5px; cursor: pointer; }
     .detail-copy:active { opacity: 0.6; }
     .detail-phone { font-weight: 500; color: #050505; text-decoration: none; }
-    .detail-hours { font-size: 12px; }
-    .tags-row { display: flex; gap: 6px; flex-wrap: wrap; margin: 10px 0 12px; }
-    .tag {
-      font-size: 11px; color: #555;
-      background: #f2f2f2;
-      border-radius: 12px;
-      padding: 4px 10px;
-    }
-    .tag.dark { background: #222; color: #fff; }
-    .tag.green { background: #f0faf3; color: #34a853; }
-    .tag.blue { background: #f0f7ff; color: #1a73e8; }
-    .tag.yellow { background: #fffbeb; color: #f59e0b; }
+    .detail-hours { font-size: 13px; }
 
     /* 섹션 공통 */
-    .section { padding: 14px 16px; border-bottom: 1px solid #eee; }
+    .section { padding: 14px 30px; border-bottom: 1px solid #eee; }
     .section-title { font-size: 14px; font-weight: 700; color: #111; margin-bottom: 10px; }
 
     /* 리뷰 */
@@ -329,26 +318,27 @@
 
     /* 하단 CTA */
     .bottom-cta {
-      padding: 12px 16px 20px;
+      padding: 15px 16px;
       display: flex;
-      gap: 10px;
+      gap: 12px;
       border-top: 1px solid #eee;
       background: #fff;
       flex-shrink: 0;
     }
     .cta-share {
-      width: 46px; height: 46px; flex-shrink: 0;
-      border: 1.5px solid #eee; border-radius: 12px;
+      width: 56px; height: 56px; flex-shrink: 0;
+      border: 1px solid #aaa; border-radius: 12px;
       background: #fff; cursor: pointer;
       display: flex; align-items: center; justify-content: center;
     }
     .cta-share svg { width: 20px; height: 20px; }
     .cta-share:active { background: #f8f8f8; }
     .cta-primary {
-      flex: 1; height: 46px;
-      background: #4d8eff; border: none;
+      flex: 1; height: 56px;
+      background: #dbe8f3; border: none;
       border-radius: 12px;
-      font-size: 15px; font-weight: 700; color: #fff;
+      font-size: 16px; font-weight: 700; color: #000;
+      letter-spacing: -0.64px;
       cursor: pointer;
     }
     .cta-primary:active { opacity: 0.85; }
@@ -382,7 +372,7 @@
     }
     .save-overlay.open { display: flex; }
     .save-sheet {
-      width: 390px;
+      width: 430px;
       background: #fff;
       border-radius: 16px 16px 0 0;
       padding: 20px 20px 32px;
@@ -418,7 +408,7 @@
     }
     .nav-overlay.open { display: flex; }
     .nav-sheet {
-      width: 390px;
+      width: 430px;
       background: #fff;
       border-radius: 16px 16px 0 0;
       padding: 20px 20px 32px;
@@ -470,7 +460,6 @@
           <div class="cat-badge" id="catBadge"></div>
         </div>
         <div id="infoRows"></div>
-        <div class="tags-row" id="tagsRow"></div>
         <!-- 사진 갤러리 (스크립트에서 동적 생성) -->
         <div class="photo-strip" id="photoStrip" style="display:none"></div>
       </div>
@@ -640,8 +629,7 @@
         document.getElementById('heroEmoji').textContent = emoji;
       }
       document.getElementById('restName').textContent = item['이름'];
-      const catText = cat + (item['카테고리'] && item['카테고리'] !== cat ? ' · ' + item['카테고리'] : '');
-      document.getElementById('catBadge').textContent = '#' + catText;
+      document.getElementById('catBadge').textContent = '#' + cat;
 
       // 별점 (이름 옆)
       if (item['별점'] != null) {
@@ -651,16 +639,6 @@
       } else {
         document.getElementById('starRating').style.display = 'none';
       }
-
-      // 태그
-      const tags = [];
-      if (item['도보시간'] && item['도보시간'] !== '-')
-        tags.push(`<span class="tag green">🚶 ${item['도보시간']}</span>`);
-      if (item['거리(m)'] && item['거리(m)'] !== '-')
-        tags.push(`<span class="tag">${item['거리(m)']}m</span>`);
-      if (item['가격'])
-        tags.push(`<span class="tag blue">💳 ${parseInt(item['가격']).toLocaleString()}원</span>`);
-      document.getElementById('tagsRow').innerHTML = tags.join('');
 
       // 정보 행
       const rows = [];
