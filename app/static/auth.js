@@ -20,16 +20,13 @@ function renderUserBadge(containerId) {
   if (!el) return;
   if (user) {
     el.innerHTML = `
-      <div style="display:flex;align-items:center;gap:8px;cursor:pointer" onclick="toggleUserMenu()">
-        <img src="${user.picture}" style="width:28px;height:28px;border-radius:50%;border:1.5px solid #ddd" onerror="this.src=''">
-        <span style="font-size:13px;color:#111;font-weight:600;max-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${user.name.split(' ')[0]}</span>
-      </div>
+      <img src="${user.picture}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;cursor:pointer" onclick="toggleUserMenu()" onerror="this.src=''">
       <div id="userMenu" style="display:none;position:absolute;top:52px;right:16px;background:#fff;border:1px solid #eee;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,0.1);z-index:200;padding:8px 0;min-width:140px">
         <div style="padding:10px 16px;font-size:13px;color:#888;border-bottom:1px solid #f0f0f0">${user.email}</div>
         <div onclick="logout()" style="padding:10px 16px;font-size:13px;color:#e74c3c;cursor:pointer">로그아웃</div>
       </div>`;
   } else {
-    el.innerHTML = `<a href="/login" style="font-size:13px;color:#1a73e8;font-weight:600;text-decoration:none">로그인</a>`;
+    el.innerHTML = `<a href="/login" style="display:flex;width:100%;height:100%;align-items:center;justify-content:center"><img src="/static/images/icon-account.svg" alt="로그인" style="width:24px;height:24px"></a>`;
   }
 }
 

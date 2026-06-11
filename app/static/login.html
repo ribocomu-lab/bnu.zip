@@ -77,19 +77,19 @@
       100% { transform: translateY(0px); }
     }
 
-    /* ── BNU 타이틀 ── */
+    /* ── BNU 로고 (이미지) ── */
     .logo-title {
-      font-family: 'Inter', 'Poppins', sans-serif;
-      font-size: 48px;
-      font-weight: 700;
-      letter-spacing: -1.92px;
+      width: 220px;
       margin-top: 30px;
       opacity: 0;
       transform: translateY(20px);
       animation: fadeUp 0.6s ease forwards 0.2s;
     }
-    .logo-title .blue { color: #005ba9; }
-    .logo-title .black { color: #000; }
+    .logo-title img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
 
     /* ── 서브타이틀 ── */
     .logo-sub {
@@ -326,13 +326,13 @@
       <img class="pin-img" src="/static/images/logo-pin.png" alt="밥약맵 아이콘" />
     </div>
 
-    <!-- BNU 타이틀 -->
+    <!-- BNU 로고 -->
     <div class="logo-title">
-      <span class="blue">B</span><span class="black">NU</span>
+      <img src="/static/images/logo-bnu.svg" alt="BNU 로고" />
     </div>
 
     <!-- 서브타이틀 — "Bab" 롤링 슬롯 포함 -->
-    <div class="logo-sub" onclick="location.href='/static/home.html'" style="cursor:pointer">
+    <div class="logo-sub">
       <!-- 첫 번째 줄: "Bab[롤링슬롯] in PNU," -->
       <div>
         <span class="bab-slot">

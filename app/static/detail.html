@@ -36,7 +36,7 @@
     /* 히어로 */
     .hero {
       width: 100%;
-      height: 260px;
+      height: 310px;
       flex-shrink: 0;
       display: flex;
       align-items: center;
@@ -55,7 +55,7 @@
     .hero-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0) 45%, rgba(53,99,196,0.55) 100%);
+      background: linear-gradient(180deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0) 43.75%, rgba(38,78,113,0) 71.635%, rgba(75,156,225,0.55) 100%);
       z-index: 1;
     }
     .hero-back, .hero-save { z-index: 3; }
@@ -109,11 +109,11 @@
     .scroll-body {
       flex: 1; overflow-y: auto; min-height: 0; transform: translateZ(0);
       background: #fff;
-      border-radius: 24px 24px 0 0;
-      margin-top: -22px;
+      border-radius: 43px 43px 0 0;
+      margin-top: -62px;
       position: relative;
       z-index: 2;
-      box-shadow: 0 -6px 18px rgba(0,0,0,0.06);
+      box-shadow: 0 0 6px rgba(0,0,0,0.25);
     }
     .card-handle {
       width: 36px; height: 4px;
@@ -192,25 +192,52 @@
     }
     .cat-badge {
       display: inline-block;
-      font-size: 12px; font-weight: 700; color: #3a6cd9;
-      background: #eaf1ff;
+      font-size: 11px; font-weight: 500; color: #005ba9;
+      background: #fff;
+      border: 1px solid #5888b2;
       border-radius: 20px;
-      padding: 4px 12px;
-      margin-bottom: 10px;
+      padding: 4px 11px;
+      letter-spacing: -0.44px;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
     .name-row {
       display: flex; align-items: center; justify-content: space-between;
-      gap: 8px; margin-bottom: 10px;
+      gap: 8px; margin-bottom: 12px;
     }
-    .rest-name { font-size: 21px; font-weight: 800; color: #111; }
+    .name-rating-group {
+      display: flex; align-items: baseline; gap: 8px;
+      min-width: 0;
+    }
+    .rest-name {
+      font-size: 22px; font-weight: 700; color: #050505;
+      letter-spacing: -0.22px;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0;
+    }
     .star-rating {
-      display: flex; align-items: center; gap: 4px;
-      font-size: 14px; font-weight: 700; color: #111;
+      display: flex; align-items: baseline; gap: 1px;
       flex-shrink: 0;
     }
-    .star-rating .star-ico { color: #ffb400; font-size: 15px; }
-    .star-rating .review-cnt { font-size: 12px; font-weight: 500; color: #999; }
-    .tags-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+    .star-rating .star-ico { color: #f5b400; font-size: 24px; }
+    .star-rating #starValue { font-size: 15px; font-weight: 700; color: #ffbe0c; letter-spacing: -0.15px; }
+    .star-rating .review-cnt { font-size: 11px; font-weight: 500; color: #999; margin-left: 2px; }
+    .detail-row {
+      display: flex; align-items: center;
+      gap: 8px; margin-bottom: 8px;
+    }
+    .detail-icon {
+      flex-shrink: 0; width: 16px; height: 16px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .detail-icon svg { width: 100%; height: 100%; }
+    .detail-text { font-size: 11px; color: #050505; }
+    .detail-dist { font-weight: 700; }
+    .detail-addr { font-weight: 500; margin-left: 5px; }
+    .detail-copy { font-weight: 500; color: #005ba9; text-decoration: underline; margin-left: 5px; cursor: pointer; }
+    .detail-copy:active { opacity: 0.6; }
+    .detail-phone { font-weight: 500; color: #050505; text-decoration: none; }
+    .detail-hours { font-size: 12px; }
+    .tags-row { display: flex; gap: 6px; flex-wrap: wrap; margin: 10px 0 12px; }
     .tag {
       font-size: 11px; color: #555;
       background: #f2f2f2;
@@ -221,62 +248,49 @@
     .tag.green { background: #f0faf3; color: #34a853; }
     .tag.blue { background: #f0f7ff; color: #1a73e8; }
     .tag.yellow { background: #fffbeb; color: #f59e0b; }
-    .info-row {
-      display: flex; align-items: center;
-      gap: 10px; margin-bottom: 10px;
-    }
-    .info-icon {
-      flex-shrink: 0; width: 24px; height: 24px;
-      border-radius: 50%; background: #f5f6f8;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .info-icon svg { width: 14px; height: 14px; }
-    .info-text { font-size: 13px; color: #444; flex: 1; }
-    .info-text.light { color: #888; }
-    .copy-btn {
-      flex-shrink: 0; font-size: 11px; font-weight: 600; color: #3a6cd9;
-      background: #eaf1ff; border: none; border-radius: 6px;
-      padding: 4px 9px; cursor: pointer;
-    }
-    .copy-btn:active { opacity: 0.7; }
 
     /* 섹션 공통 */
     .section { padding: 14px 16px; border-bottom: 1px solid #eee; }
     .section-title { font-size: 14px; font-weight: 700; color: #111; margin-bottom: 10px; }
 
     /* 리뷰 */
-    .review-summary {
-      display: flex; align-items: center; gap: 16px;
-      background: #fafbfd; border-radius: 12px;
-      padding: 14px; margin-bottom: 14px;
+    .rv-summary {
+      display: flex; align-items: baseline; gap: 8px;
+      margin-bottom: 14px;
     }
-    .review-score { font-size: 30px; font-weight: 800; color: #111; line-height: 1; }
-    .review-score-detail { display: flex; flex-direction: column; gap: 4px; }
-    .review-stars-static { color: #ffb400; font-size: 14px; letter-spacing: 1px; }
-    .review-count-text { font-size: 12px; color: #999; }
-    .review-form { margin-bottom: 14px; }
-    .star-input { display: flex; gap: 6px; margin-bottom: 10px; }
-    .star-input span { font-size: 24px; color: #e0e0e0; cursor: pointer; transition: color 0.1s; user-select: none; }
-    .star-input span.active { color: #ffb400; }
-    .review-textarea {
-      width: 100%; min-height: 64px; border: 1px solid #eee; border-radius: 10px;
+    .rv-summary .rv-avg { font-size: 20px; font-weight: 700; color: #111; }
+    .rv-summary .rv-count { font-size: 13px; color: #666; }
+    .rv-form { margin-bottom: 14px; }
+    .rv-stars { display: flex; gap: 4px; font-size: 26px; color: #ddd; cursor: pointer; margin-bottom: 10px; user-select: none; }
+    .rv-stars span.active { color: #f5b400; }
+    .rv-textarea {
+      width: 100%; min-height: 64px; border: 1px solid #e0e0e0; border-radius: 12px;
       padding: 10px 12px; font-size: 13px; resize: none; font-family: inherit;
-      margin-bottom: 8px;
+      margin-bottom: 8px; outline: none;
+      background: linear-gradient(180deg, #fff 35.096%, #fff4d5 100%);
     }
-    .review-textarea:focus { outline: none; border-color: #3a6cd9; }
-    .review-submit {
-      width: 100%; height: 42px; background: #111; color: #fff;
-      border: none; border-radius: 10px; font-size: 13px; font-weight: 700; cursor: pointer;
+    .rv-textarea:focus { border-color: #005ba9; }
+    .rv-submit {
+      width: 100%; height: 42px; background: #005ba9; color: #fff;
+      border: none; border-radius: 30px; font-size: 13px; font-weight: 700; cursor: pointer;
     }
-    .review-submit:active { opacity: 0.85; }
-    .review-item { padding: 10px 0; border-bottom: 1px solid #f2f2f2; }
-    .review-item:last-child { border-bottom: none; }
-    .review-item-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
-    .review-item-stars { color: #ffb400; font-size: 12px; letter-spacing: 1px; }
-    .review-item-date { font-size: 11px; color: #bbb; margin-right: 6px; }
-    .review-item-text { font-size: 13px; color: #333; line-height: 1.55; }
-    .review-delete { font-size: 11px; color: #ccc; background: none; border: none; cursor: pointer; padding: 0; }
-    .review-empty { font-size: 12px; color: #aaa; text-align: center; padding: 14px 0; }
+    .rv-submit:active { opacity: 0.85; }
+    .rv-submit:disabled { background: #ccc; cursor: not-allowed; }
+    .rv-login-prompt {
+      text-align: center; padding: 14px; font-size: 12px; color: #888;
+      background: #fafafa; border-radius: 8px; margin-bottom: 14px;
+    }
+    .rv-login-prompt a { color: #005ba9; font-weight: 600; text-decoration: none; }
+    .rv-item { padding: 10px 0; border-bottom: 1px solid #f2f2f2; }
+    .rv-item:last-child { border-bottom: none; }
+    .rv-item-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+    .rv-item-name { font-size: 12px; font-weight: 700; color: #333; }
+    .rv-item-stars { color: #f5b400; font-size: 12px; letter-spacing: 1px; }
+    .rv-item-text { font-size: 13px; color: #444; line-height: 1.6; margin-bottom: 4px; white-space: pre-wrap; }
+    .rv-item-foot { display: flex; align-items: center; justify-content: space-between; }
+    .rv-item-date { font-size: 11px; color: #aaa; }
+    .rv-item-del { font-size: 11px; color: #aaa; background: none; border: none; cursor: pointer; padding: 0; text-decoration: underline; }
+    .rv-empty { font-size: 12px; color: #aaa; text-align: center; padding: 20px 0; line-height: 1.6; }
 
     /* 지도 */
     #detailMap {
@@ -444,17 +458,19 @@
       <div class="card-handle"></div>
 
       <div class="info-section">
-        <div class="cat-badge" id="catBadge"></div>
         <div class="name-row">
-          <div class="rest-name" id="restName">-</div>
-          <div class="star-rating" id="starRating" style="display:none">
-            <span class="star-ico">★</span>
-            <span id="starValue">-</span>
-            <span class="review-cnt" id="reviewCntInline"></span>
+          <div class="name-rating-group">
+            <div class="rest-name" id="restName">-</div>
+            <div class="star-rating" id="starRating" style="display:none">
+              <span class="star-ico">★</span>
+              <span id="starValue">-</span>
+              <span class="review-cnt" id="reviewCntInline"></span>
+            </div>
           </div>
+          <div class="cat-badge" id="catBadge"></div>
         </div>
-        <div class="tags-row" id="tagsRow"></div>
         <div id="infoRows"></div>
+        <div class="tags-row" id="tagsRow"></div>
         <!-- 사진 갤러리 (스크립트에서 동적 생성) -->
         <div class="photo-strip" id="photoStrip" style="display:none"></div>
       </div>
@@ -465,22 +481,25 @@
       </div>
 
       <div class="section">
-        <div class="section-title">리뷰</div>
-        <div class="review-summary">
-          <div class="review-score" id="reviewScore">-</div>
-          <div class="review-score-detail">
-            <div class="review-stars-static" id="reviewStarsStatic">☆☆☆☆☆</div>
-            <div class="review-count-text" id="reviewCountText">리뷰 0개</div>
-          </div>
-        </div>
-        <div class="review-form">
-          <div class="star-input" id="starInput">
+        <div class="section-title">부산대생의 생생한 리뷰</div>
+        <div class="rv-summary" id="reviewSummary"></div>
+
+        <div id="reviewForm" class="rv-form" style="display:none">
+          <div class="rv-stars" id="reviewStars">
             <span data-v="1">★</span><span data-v="2">★</span><span data-v="3">★</span><span data-v="4">★</span><span data-v="5">★</span>
           </div>
-          <textarea class="review-textarea" id="reviewText" placeholder="이곳에 대한 리뷰를 남겨보세요"></textarea>
-          <button class="review-submit" onclick="submitReview()">리뷰 등록</button>
+          <textarea id="reviewText" class="rv-textarea" rows="3" placeholder="이 식당은 어땠나요?"></textarea>
+          <button class="rv-submit" id="reviewSubmitBtn" onclick="submitReview()">리뷰 등록</button>
         </div>
+
+        <div id="reviewLoginPrompt" class="rv-login-prompt" style="display:none">
+          리뷰를 작성하려면 <a href="/login">로그인</a>이 필요해요.
+        </div>
+
         <div id="reviewList"></div>
+        <div id="reviewEmpty" class="rv-empty" style="display:none">
+          아직 작성된 리뷰가 없어요. 첫 리뷰를 남겨보세요!
+        </div>
       </div>
 
       <div class="section">
@@ -573,7 +592,6 @@
     let bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
     let visited = JSON.parse(localStorage.getItem('visited') || '[]');
     let viewerPhotos = [], viewerIdx = 0;
-    let selectedStars = 0;
 
     function isBookmarked() { return item && bookmarks.includes(item['이름']); }
     function isVisited() { return item && visited.includes(item['이름']); }
@@ -588,8 +606,7 @@
       loadSimilar();
       loadNearbyCafes();
       loadMap();
-      renderReviewSummary();
-      loadMyReviews();
+      reviewInit();
     }
 
     /* ── 상세 렌더 ── */
@@ -647,13 +664,16 @@
 
       // 정보 행
       const rows = [];
-      if (item['주소']) rows.push(`<div class="info-row"><div class="info-icon">${ICON_DISTANCE}</div><div class="info-text">${item['주소']}</div><button class="copy-btn" onclick="copyAddress()">복사</button></div>`);
-      if (item['전화번호']) rows.push(`<div class="info-row"><div class="info-icon">${ICON_CALL}</div><a class="info-text" href="tel:${item['전화번호']}" style="color:#1a73e8;text-decoration:none">${item['전화번호']}</a></div>`);
+      if (item['주소']) {
+        const dist = item['거리(m)'] && item['거리(m)'] !== '-' ? `<span class="detail-dist">${item['거리(m)']}m</span>` : '';
+        rows.push(`<div class="detail-row"><div class="detail-icon">${ICON_DISTANCE}</div><div class="detail-text">${dist}<span class="detail-addr">${item['주소']}</span><span class="detail-copy" onclick="copyAddress()">복사</span></div></div>`);
+      }
+      if (item['전화번호']) rows.push(`<div class="detail-row"><div class="detail-icon">${ICON_CALL}</div><a class="detail-text detail-phone" href="tel:${item['전화번호']}">${item['전화번호']}</a></div>`);
       if (item['운영시간']?.length) {
         const today = [6,0,1,2,3,4,5][new Date().getDay()]; // 월=0 기준
         const todayText = item['운영시간'][today] || '';
         const timeShort = todayText.replace(/^[^:]+:\s*/, '');
-        rows.push(`<div class="info-row"><div class="info-icon">${ICON_ALARM}</div><div class="info-text">오늘 ${timeShort}</div></div>`);
+        rows.push(`<div class="detail-row"><div class="detail-icon">${ICON_ALARM}</div><div class="detail-text detail-hours">오늘 ${timeShort}</div></div>`);
       }
       document.getElementById('infoRows').innerHTML = rows.join('');
 
@@ -963,77 +983,120 @@
       }
     }
 
-    /* ── 리뷰 ── */
-    function reviewKey() { return 'reviews_' + item['이름']; }
-
-    function renderReviewSummary() {
-      const score = item['별점'];
-      const count = item['리뷰수'] ?? 0;
-      document.getElementById('reviewScore').textContent = score != null ? score : '-';
-      const full = score != null ? Math.round(score) : 0;
-      document.getElementById('reviewStarsStatic').textContent = '★'.repeat(full) + '☆'.repeat(5 - full);
-      document.getElementById('reviewCountText').textContent = `리뷰 ${count}개`;
-    }
+    /* ── 리뷰 (서버 API 기반) ── */
+    let rvSelectedStars = 5;
 
     function escapeHtml(s) {
       return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
     }
 
-    function loadMyReviews() {
-      const list = JSON.parse(localStorage.getItem(reviewKey()) || '[]');
-      const el = document.getElementById('reviewList');
-      if (!list.length) {
-        el.innerHTML = '<div class="review-empty">아직 작성한 리뷰가 없어요. 첫 리뷰를 남겨보세요!</div>';
-        return;
-      }
-      el.innerHTML = list.map((r, i) => `
-        <div class="review-item">
-          <div class="review-item-head">
-            <div class="review-item-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div>
-            <div>
-              <span class="review-item-date">${r.date}</span>
-              <button class="review-delete" onclick="deleteReview(${i})">삭제</button>
-            </div>
-          </div>
-          <div class="review-item-text">${escapeHtml(r.text)}</div>
-        </div>`).join('');
-    }
-
-    function deleteReview(idx) {
-      const list = JSON.parse(localStorage.getItem(reviewKey()) || '[]');
-      list.splice(idx, 1);
-      localStorage.setItem(reviewKey(), JSON.stringify(list));
-      loadMyReviews();
-      showToast('리뷰가 삭제됐어요');
-    }
-
-    function submitReview() {
-      const text = document.getElementById('reviewText').value.trim();
-      if (!selectedStars) { alert('별점을 선택해주세요.'); return; }
-      if (!text) { alert('리뷰 내용을 입력해주세요.'); return; }
-      const list = JSON.parse(localStorage.getItem(reviewKey()) || '[]');
-      const date = new Date().toISOString().slice(0, 10);
-      list.unshift({ rating: selectedStars, text, date });
-      localStorage.setItem(reviewKey(), JSON.stringify(list));
-      document.getElementById('reviewText').value = '';
-      selectedStars = 0;
-      updateStarInput();
-      loadMyReviews();
-      showToast('리뷰가 등록됐어요');
-    }
-
-    function updateStarInput() {
-      document.querySelectorAll('#starInput span').forEach(s => {
-        s.classList.toggle('active', parseInt(s.dataset.v) <= selectedStars);
+    function rvUpdateStars() {
+      document.querySelectorAll('#reviewStars span').forEach(s => {
+        s.classList.toggle('active', parseInt(s.dataset.v) <= rvSelectedStars);
       });
     }
 
-    document.getElementById('starInput').addEventListener('click', e => {
-      if (e.target.dataset.v) {
-        selectedStars = parseInt(e.target.dataset.v);
-        updateStarInput();
+    function rvInitStars() {
+      document.querySelectorAll('#reviewStars span').forEach(s => {
+        s.addEventListener('click', () => {
+          rvSelectedStars = parseInt(s.dataset.v);
+          rvUpdateStars();
+        });
+      });
+      rvUpdateStars();
+    }
+
+    function reviewInit() {
+      rvInitStars();
+      const loggedIn = !!getToken();
+      document.getElementById('reviewForm').style.display = loggedIn ? 'block' : 'none';
+      document.getElementById('reviewLoginPrompt').style.display = loggedIn ? 'none' : 'block';
+      loadReviews();
+    }
+
+    async function loadReviews() {
+      if (!item) return;
+      try {
+        const res = await fetch(`/api/reviews?restaurant=${encodeURIComponent(item['이름'])}`);
+        const data = await res.json();
+        renderReviews(data);
+      } catch {}
+    }
+
+    function renderReviews(data) {
+      const { reviews = [], average = 0, count = 0 } = data;
+
+      document.getElementById('reviewSummary').innerHTML = count
+        ? `<span class="rv-avg">★ ${average}</span><span class="rv-count">(${count}개 리뷰)</span>`
+        : `<span style="color:#aaa;font-size:13px">아직 리뷰가 없어요</span>`;
+
+      const user = getUser();
+      const list = document.getElementById('reviewList');
+      const empty = document.getElementById('reviewEmpty');
+
+      if (!reviews.length) {
+        list.innerHTML = '';
+        empty.style.display = 'block';
+        return;
       }
-    });
+      empty.style.display = 'none';
+
+      list.innerHTML = reviews.map(r => {
+        const stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
+        const canDelete = user && user.email === r.user_email;
+        return `
+          <div class="rv-item">
+            <div class="rv-item-head">
+              <span class="rv-item-name">${escapeHtml(r.user_name)}</span>
+              <span class="rv-item-stars">${stars}</span>
+            </div>
+            <div class="rv-item-text">${escapeHtml(r.text)}</div>
+            <div class="rv-item-foot">
+              <span class="rv-item-date">${r.created_at.slice(0,10)}</span>
+              ${canDelete ? `<button class="rv-item-del" onclick="deleteReview('${r.id}')">삭제</button>` : ''}
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    async function submitReview() {
+      const token = getToken();
+      if (!token) { location.href = '/login'; return; }
+      const text = document.getElementById('reviewText').value.trim();
+      if (!text) { alert('리뷰 내용을 입력해주세요.'); return; }
+
+      const btn = document.getElementById('reviewSubmitBtn');
+      btn.disabled = true; btn.textContent = '등록 중…';
+      try {
+        const res = await fetch('/api/reviews', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+          body: JSON.stringify({ restaurant: item['이름'], rating: rvSelectedStars, text }),
+        });
+        const data = await res.json();
+        if (!res.ok) { alert(data.detail || '등록에 실패했어요.'); return; }
+        document.getElementById('reviewText').value = '';
+        rvSelectedStars = 5;
+        rvUpdateStars();
+        loadReviews();
+        showToast('리뷰가 등록됐어요!');
+      } catch { alert('네트워크 오류가 발생했어요.'); }
+      finally { btn.disabled = false; btn.textContent = '리뷰 등록'; }
+    }
+
+    async function deleteReview(id) {
+      const token = getToken();
+      if (!token) return;
+      if (!confirm('리뷰를 삭제할까요?')) return;
+      try {
+        await fetch(`/api/reviews/${id}`, {
+          method: 'DELETE',
+          headers: { 'Authorization': `Bearer ${token}` },
+        });
+        loadReviews();
+        showToast('리뷰가 삭제됐어요');
+      } catch {}
+    }
 
     loadItem();
     Promise.all([syncBookmarks(), syncVisited()]).then(() => {

@@ -52,13 +52,14 @@
 
     /* BNU 로고 */
     .logo-bnu {
-      font-family: 'Inter', sans-serif;
-      font-size: 24px;
-      font-weight: 700;
-      letter-spacing: -0.96px;
-      line-height: 1;
+      display: block;
+      line-height: 0;
     }
-    .logo-bnu .blue { color: #005ba9; }
+    .logo-bnu img {
+      height: 24px;
+      width: auto;
+      display: block;
+    }
 
     /* 헤더 서브타이틀 — Bab 롤링 슬롯 (login과 동일, 크기만 축소) */
     .header-sub {
@@ -112,7 +113,6 @@
       width: 24px;
       height: 24px;
       border-radius: 50%;
-      background: #e8e8e8;
       cursor: pointer;
       overflow: hidden;
       display: flex;
@@ -342,6 +342,10 @@
       display: block;
       mix-blend-mode: multiply;
     }
+    .cat-circle img.cat-icon-fastfood {
+      width: 48px;
+      height: 48px;
+    }
     .cat-name {
       font-family: 'Inter', sans-serif;
       font-size: 10.8px;
@@ -471,10 +475,10 @@
   <div class="header">
     <div class="header-top">
       <!-- BNU 로고 -->
-      <div class="logo-bnu"><span class="blue">B</span>NU</div>
+      <a class="logo-bnu" href="/"><img src="/static/images/logo-bnu.svg" alt="BNU"></a>
 
       <!-- 서브타이틀 (Bab 롤링) -->
-      <div class="header-sub" onclick="location.href='/static/home.html'" style="cursor:pointer">
+      <div class="header-sub">
         <div>
           <span class="bab-slot">
             <div class="bab-slot-inner">
@@ -587,7 +591,7 @@
           <div class="cat-name">분식</div>
         </div>
         <div class="cat-item" onclick="location.href='/search?cat=패스트푸드'">
-          <div class="cat-circle"><img src="/static/images/cat-패스트푸드.png" alt="패스트푸드"></div>
+          <div class="cat-circle"><img class="cat-icon-fastfood" src="/static/images/cat-패스트푸드.png" alt="패스트푸드"></div>
           <div class="cat-name">패스트푸드</div>
         </div>
         <div class="cat-item" onclick="location.href='/search?type=cafe'">
@@ -596,6 +600,7 @@
         </div>
       </div>
     </div>
+    <div style="height:17px;"></div>
 
     <!-- 가까운 밥.zip -->
     <div class="section">
