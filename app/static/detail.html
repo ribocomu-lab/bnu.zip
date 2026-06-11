@@ -116,7 +116,9 @@
       z-index: 2;
       box-shadow: 0 0 6px rgba(0,0,0,0.25);
       padding-top: 33px;
+      scrollbar-width: none;
     }
+    .scroll-body::-webkit-scrollbar { display: none; }
 
     /* 기본 정보 */
     .info-section {
@@ -174,7 +176,7 @@
       overflow-x: auto;
       scrollbar-width: none;
       -webkit-overflow-scrolling: touch;
-      padding: 10px 16px;
+      padding: 10px 30px;
       margin-top: 4px;
       flex-shrink: 0;
     }
@@ -666,9 +668,9 @@
       const rows = [];
       if (item['주소']) {
         const dist = item['거리(m)'] && item['거리(m)'] !== '-' ? `<span class="detail-dist">${item['거리(m)']}m</span>` : '';
-        rows.push(`<div class="detail-row"><div class="detail-icon">${ICON_DISTANCE}</div><div class="detail-text">${dist}<span class="detail-addr">${item['주소']}</span><span class="detail-copy" onclick="copyAddress()">복사</span></div></div>`);
+        rows.push(`<div class="detail-row"><div class="detail-icon">${ICON_DISTANCE}</div><div class="detail-text">${dist}<span class="detail-addr">${item['주소']}</span></div></div>`);
       }
-      if (item['전화번호']) rows.push(`<div class="detail-row"><div class="detail-icon">${ICON_CALL}</div><a class="detail-text detail-phone" href="tel:${item['전화번호']}">${item['전화번호']}</a></div>`);
+      if (item['전화번호']) rows.push(`<div class="detail-row"><div class="detail-icon">${ICON_CALL}</div><div class="detail-text"><a class="detail-phone" href="tel:${item['전화번호']}">${item['전화번호']}</a><span class="detail-copy" onclick="copyPhone()">복사</span></div></div>`);
       if (item['운영시간']?.length) {
         const today = [6,0,1,2,3,4,5][new Date().getDay()]; // 월=0 기준
         const todayText = item['운영시간'][today] || '';
@@ -695,10 +697,10 @@
         </div>`).join('');
     }
 
-    /* ── 주소 복사 ── */
-    function copyAddress() {
-      if (!item || !item['주소']) return;
-      navigator.clipboard?.writeText(item['주소']).then(() => showToast('주소가 복사됐어요'));
+    /* ── 전화번호 복사 ── */
+    function copyPhone() {
+      if (!item || !item['전화번호']) return;
+      navigator.clipboard?.writeText(item['전화번호']).then(() => showToast('전화번호가 복사됐어요'));
     }
 
     /* ── 사진 전체화면 뷰어 ── */
