@@ -313,10 +313,14 @@
       line-height: 1;
     }
 
-    /* 지도 하단 리스트 (상단 2개만 표시) */
+    /* 지도 하단 리스트 (2개 높이, 스크롤 가능) */
     .map-list {
+      height: 126px; /* 63px 카드 2개 */
+      overflow-y: auto;
+      scrollbar-width: none;
       flex-shrink: 0;
     }
+    .map-list::-webkit-scrollbar { display: none; }
     .map-card {
       display: flex;
       align-items: center;
@@ -1141,7 +1145,7 @@
     }
 
     function renderMapList(items) {
-      document.getElementById('mapList').innerHTML = items.slice(0, 2).map((item, idx) => {
+      document.getElementById('mapList').innerHTML = items.map((item, idx) => {
         const dist = item['거리(m)'] !== '-' ? item['거리(m)'] + 'm' : '';
         const walk = item['도보시간'] !== '-' ? item['도보시간'] : '';
         const meta = [walk, dist, item['대분류']].filter(Boolean).join(' · ');
