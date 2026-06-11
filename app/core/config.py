@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 import os, secrets
 
 load_dotenv()
+load_dotenv("env")  # 점 없는 로컬 env 파일도 지원
 
 NAVER_CLIENT_ID = os.getenv("NAVER_CLIENT_ID", "")
 NAVER_CLIENT_SECRET = os.getenv("NAVER_CLIENT_SECRET", "")
