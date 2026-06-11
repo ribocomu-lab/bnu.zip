@@ -10,6 +10,7 @@ class ReviewBody(BaseModel):
     restaurant: str
     rating: int = Field(ge=1, le=5)
     text: str
+    tag: str = ""  # 선후배 1:1 / 선후배 1:2 / 선후배 2:2 / 단체모임
 
 
 @router.get("")
@@ -27,7 +28,7 @@ def create_review(body: ReviewBody, user=Depends(get_current_user)):
     text = body.text.strip()
     if not text:
         raise HTTPException(400, "리뷰 내용을 입력해주세요.")
-    return review_service.add_review(body.restaurant, user["email"], user["name"], body.rating, text)
+    return review_service.add_review(body.restaurant, user["email"], user["name"], body.rating, text, body.tag.strip())
 
 
 @router.delete("/{review_id}")

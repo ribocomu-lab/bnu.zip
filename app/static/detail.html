@@ -272,6 +272,23 @@
     .rv-form { margin-bottom: 14px; }
     .rv-stars { display: flex; gap: 4px; font-size: 26px; color: #ddd; cursor: pointer; margin-bottom: 10px; user-select: none; }
     .rv-stars span.active { color: #005ba9; }
+    /* 모임 형태 선택 태그 */
+    .rv-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+    .rv-tag {
+      height: 27px; padding: 0 12px;
+      display: flex; align-items: center;
+      border: 0.5px solid #828282; border-radius: 22px;
+      font-size: 11px; font-weight: 500; letter-spacing: -0.44px;
+      color: #333; background: #fff; cursor: pointer;
+      user-select: none;
+    }
+    .rv-tag.active { border-color: #005ba9; background: #005ba9; color: #fff; font-weight: 700; }
+    .rv-item-tag {
+      font-size: 10px; font-weight: 500; color: #005ba9;
+      background: #ddf0ff; border-radius: 22px;
+      padding: 2px 8px; margin-left: 6px;
+      white-space: nowrap;
+    }
     .rv-textarea {
       width: 100%; min-height: 64px; border: 1px solid #e0e0e0; border-radius: 12px;
       padding: 10px 12px; font-size: 13px; resize: none; font-family: inherit;
@@ -493,13 +510,19 @@
       <div class="section">
         <div class="section-head">
           <div class="section-title">부산대생의 생생한 리뷰</div>
-          <button class="section-more" id="reviewMoreBtn" onclick="showAllReviews()" style="display:none">전체보기 ►</button>
+          <button class="section-more" id="reviewMoreBtn" onclick="location.href='/reviews'" style="display:none">전체보기 ►</button>
         </div>
         <div class="rv-summary" id="reviewSummary"></div>
 
         <div id="reviewForm" class="rv-form" style="display:none">
           <div class="rv-stars" id="reviewStars">
             <span data-v="1">★</span><span data-v="2">★</span><span data-v="3">★</span><span data-v="4">★</span><span data-v="5">★</span>
+          </div>
+          <div class="rv-tags" id="reviewTags">
+            <div class="rv-tag" data-tag="선후배 1:1">선후배 1:1</div>
+            <div class="rv-tag" data-tag="선후배 1:2">선후배 1:2</div>
+            <div class="rv-tag" data-tag="선후배 2:2">선후배 2:2</div>
+            <div class="rv-tag" data-tag="단체모임">단체모임</div>
           </div>
           <textarea id="reviewText" class="rv-textarea" rows="3" placeholder="이 식당은 어땠나요?"></textarea>
           <button class="rv-submit" id="reviewSubmitBtn" onclick="submitReview()">리뷰 등록</button>
@@ -600,14 +623,15 @@
   <script>
     const CAT_EMOJI = {
       '한식':'🍚','일식':'🍣','중식':'🥡','양식':'🍝','치킨':'🍗',
-      '피자·버거':'🍔','분식':'🥢','고기·구이':'🥩','돈까스·회':'🍱',
-      '카페·디저트':'☕','기타':'🍽'
+      '피자·버거':'🍔','패스트푸드':'🍔','아시아':'🍜','분식':'🥢','고기·구이':'🥩','돈까스·회':'🍱',
+      '카페·디저트':'☕','카페':'☕','기타':'🍽'
     };
     const HERO_COLORS = {
       '한식':'#2d5a27,#4a8f3f','일식':'#1a3a6b,#2d5fa3','중식':'#8b2e00,#c4511a',
       '양식':'#4a2080,#7c3aed','치킨':'#b45309,#d97706','피자·버거':'#c2410c,#ea580c',
+      '패스트푸드':'#c2410c,#ea580c','아시아':'#0f766e,#14b8a6',
       '분식':'#be185d,#db2777','고기·구이':'#7f1d1d,#b91c1c','돈까스·회':'#164e63,#0e7490',
-      '카페·디저트':'#78350f,#92400e','기타':'#374151,#6b7280'
+      '카페·디저트':'#78350f,#92400e','카페':'#78350f,#92400e','기타':'#374151,#6b7280'
     };
     const PNU = { lat: 35.2323, lng: 129.0876 };
 
@@ -1010,7 +1034,8 @@
 
     /* ── 리뷰 (서버 API 기반) ── */
     let rvSelectedStars = 5;
-    const RV_PREVIEW_COUNT = 3;
+    const RV_PREVIEW_COUNT = 2;
+    let rvSelectedTag = '';
 
     function escapeHtml(s) {
       return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -1039,6 +1064,15 @@
         });
       });
       rvUpdateStars();
+      // 모임 형태 태그 (한 번 더 누르면 해제)
+      document.querySelectorAll('#reviewTags .rv-tag').forEach(t => {
+        t.addEventListener('click', () => {
+          const isActive = t.classList.contains('active');
+          document.querySelectorAll('#reviewTags .rv-tag').forEach(x => x.classList.remove('active'));
+          rvSelectedTag = isActive ? '' : t.dataset.tag;
+          if (!isActive) t.classList.add('active');
+        });
+      });
     }
 
     function reviewInit() {
@@ -1089,13 +1123,14 @@
       empty.style.display = 'none';
       moreBtn.style.display = reviews.length > RV_PREVIEW_COUNT ? 'block' : 'none';
 
-      list.innerHTML = reviews.map((r, i) => {
+      // 상위 2개만 노출, 나머지는 /reviews 전체보기 페이지에서
+      list.innerHTML = reviews.slice(0, RV_PREVIEW_COUNT).map(r => {
         const stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
         const canDelete = user && user.email === r.user_email;
         return `
-          <div class="rv-item${i >= RV_PREVIEW_COUNT ? ' rv-hidden' : ''}">
+          <div class="rv-item">
             <div class="rv-item-head">
-              <span class="rv-item-name">${escapeHtml(anonNick(r.user_email))}</span>
+              <span class="rv-item-name">${escapeHtml(anonNick(r.user_email))}${r.tag ? `<span class="rv-item-tag">${escapeHtml(r.tag)}</span>` : ''}</span>
               <span class="rv-item-stars">${stars}</span>
             </div>
             <div class="rv-item-text">${escapeHtml(r.text)}</div>
@@ -1105,11 +1140,6 @@
             </div>
           </div>`;
       }).join('');
-    }
-
-    function showAllReviews() {
-      document.querySelectorAll('#reviewList .rv-item.rv-hidden').forEach(el => el.classList.remove('rv-hidden'));
-      document.getElementById('reviewMoreBtn').style.display = 'none';
     }
 
     async function submitReview() {
@@ -1124,12 +1154,14 @@
         const res = await fetch('/api/reviews', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-          body: JSON.stringify({ restaurant: item['이름'], rating: rvSelectedStars, text }),
+          body: JSON.stringify({ restaurant: item['이름'], rating: rvSelectedStars, text, tag: rvSelectedTag }),
         });
         const data = await res.json();
         if (!res.ok) { alert(data.detail || '등록에 실패했어요.'); return; }
         document.getElementById('reviewText').value = '';
         rvSelectedStars = 5;
+        rvSelectedTag = '';
+        document.querySelectorAll('#reviewTags .rv-tag').forEach(x => x.classList.remove('active'));
         rvUpdateStars();
         loadReviews();
         showToast('리뷰가 등록됐어요!');

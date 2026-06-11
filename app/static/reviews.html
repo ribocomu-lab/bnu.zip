@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>밥약맵 - 리뷰 전체보기</title>
+  <meta name="description" content="Bab 밥 Navigation for U — 부산대 맛집·카페 길잡이" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #e8e8e8;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      font-family: 'Poppins', 'Apple SD Gothic Neo', sans-serif;
+    }
+
+    .phone {
+      width: 430px;
+      height: 100vh;
+      min-height: 700px;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ── 헤더 (홈과 동일) ── */
+    .header {
+      background: #fff;
+      padding: 20px 31px 0;
+      flex-shrink: 0;
+    }
+    .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 16px;
+    }
+    .logo-bnu { display: block; line-height: 0; }
+    .logo-bnu img { height: 24px; width: auto; display: block; }
+    .header-sub {
+      font-family: 'Poppins', sans-serif;
+      font-size: 11.52px;
+      font-weight: 500;
+      color: #000;
+      letter-spacing: -0.46px;
+      text-align: center;
+      line-height: 1.6;
+    }
+    .header-sub .blue { color: #005ba9; font-weight: 700; }
+    .bab-slot {
+      display: inline-block;
+      overflow: hidden;
+      height: 1.1em;
+      vertical-align: middle;
+      position: relative;
+      top: -0.05em;
+    }
+    .bab-slot-inner {
+      display: flex;
+      flex-direction: column;
+      animation: babRoll 2.6s ease-out infinite 0.8s;
+    }
+    .bab-slot-inner span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 1.1em;
+      line-height: 1.1;
+      white-space: nowrap;
+    }
+    .bab-slot-inner .bab-emoji img { height: 0.9em; width: auto; vertical-align: middle; }
+    @keyframes babRoll {
+      0%   { transform: translateY(0); }
+      30%  { transform: translateY(0); }
+      50%  { transform: translateY(-1.1em); }
+      80%  { transform: translateY(-1.1em); }
+      95%  { transform: translateY(0); }
+      100% { transform: translateY(0); }
+    }
+    .account-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      cursor: pointer;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      font-size: 14px;
+    }
+    .account-icon img { width: 100%; height: 100%; object-fit: cover; }
+    .header-divider { height: 1px; background: #e8e8e8; margin: 0 -31px; }
+
+    /* ── 타이틀 행 (뒤로가기 + 식당명) ── */
+    .page-title-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 31px 12px;
+      flex-shrink: 0;
+    }
+    .back-btn {
+      width: 28px; height: 28px;
+      border: none; background: none;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .back-btn svg { width: 11px; height: 18px; }
+    .page-title {
+      font-family: 'Poppins', 'Apple SD Gothic Neo', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: #191919;
+      letter-spacing: -0.16px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      min-width: 0;
+    }
+    .page-title .blue { color: #005ba9; }
+
+    /* ── 본문 스크롤 ── */
+    .scroll-content {
+      flex: 1;
+      overflow-y: auto;
+      min-height: 0;
+      padding: 0 31px 20px;
+      scrollbar-width: none;
+    }
+    .scroll-content::-webkit-scrollbar { display: none; }
+
+    /* ── 리뷰 (detail과 동일 톤) ── */
+    .rv-summary {
+      display: flex; align-items: baseline; gap: 8px;
+      margin-bottom: 14px;
+    }
+    .rv-summary .rv-avg { font-size: 20px; font-weight: 700; color: #005ba9; }
+    .rv-summary .rv-count { font-size: 13px; color: #666; font-family: 'Inter', sans-serif; }
+    .rv-form { margin-bottom: 14px; }
+    .rv-stars { display: flex; gap: 4px; font-size: 26px; color: #ddd; cursor: pointer; margin-bottom: 10px; user-select: none; }
+    .rv-stars span.active { color: #005ba9; }
+    .rv-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+    .rv-tag {
+      height: 27px; padding: 0 12px;
+      display: flex; align-items: center;
+      border: 0.5px solid #828282; border-radius: 22px;
+      font-family: 'Inter', 'Apple SD Gothic Neo', sans-serif;
+      font-size: 11px; font-weight: 500; letter-spacing: -0.44px;
+      color: #333; background: #fff; cursor: pointer;
+      user-select: none;
+    }
+    .rv-tag.active { border-color: #005ba9; background: #005ba9; color: #fff; font-weight: 700; }
+    .rv-textarea {
+      width: 100%; min-height: 64px; border: 1px solid #e0e0e0; border-radius: 12px;
+      padding: 10px 12px; font-size: 13px; resize: none; font-family: inherit;
+      margin-bottom: 8px; outline: none;
+      background: linear-gradient(180deg, #fff 35.096%, #fff4d5 100%);
+    }
+    .rv-textarea::placeholder { color: #aaa; }
+    .rv-textarea:focus { border-color: #005ba9; }
+    .rv-submit {
+      width: 100%; height: 42px; background: #005ba9; color: #fff;
+      border: none; border-radius: 30px; font-size: 13px; font-weight: 700; cursor: pointer;
+      font-family: inherit;
+    }
+    .rv-submit:active { opacity: 0.85; }
+    .rv-submit:disabled { background: #ccc; cursor: not-allowed; }
+    .rv-login-prompt {
+      text-align: center; padding: 14px; font-size: 12px; color: #888;
+      background: #fafafa; border-radius: 8px; margin-bottom: 14px;
+    }
+    .rv-login-prompt a { color: #005ba9; font-weight: 600; text-decoration: none; }
+    .rv-item { padding: 10px 0; border-bottom: 1px solid #eee; }
+    .rv-item:last-child { border-bottom: none; }
+    .rv-item-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+    .rv-item-name { font-size: 12px; font-weight: 700; color: #333; }
+    .rv-item-tag {
+      font-size: 10px; font-weight: 500; color: #005ba9;
+      background: #ddf0ff; border-radius: 22px;
+      padding: 2px 8px; margin-left: 6px;
+      white-space: nowrap;
+    }
+    .rv-item-stars { color: #005ba9; font-size: 12px; letter-spacing: 1px; }
+    .rv-item-text { font-size: 13px; color: #444; line-height: 1.6; margin-bottom: 4px; white-space: pre-wrap; font-family: 'Inter', 'Apple SD Gothic Neo', sans-serif; }
+    .rv-item-foot { display: flex; align-items: center; justify-content: space-between; }
+    .rv-item-date { font-size: 11px; color: #aaa; }
+    .rv-item-del { font-size: 11px; color: #aaa; background: none; border: none; cursor: pointer; padding: 0; text-decoration: underline; }
+    .rv-empty { font-size: 12px; color: #aaa; text-align: center; padding: 30px 0; line-height: 1.6; }
+
+    /* ── 토스트 ── */
+    .toast {
+      position: fixed;
+      bottom: 100px;
+      left: 50%; transform: translateX(-50%);
+      background: #111; color: #fff;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-size: 13px; font-weight: 600;
+      z-index: 300;
+      opacity: 0;
+      transition: opacity 0.2s;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    .toast.show { opacity: 1; }
+
+    /* ── 하단 네비 (홈과 동일) ── */
+    .bottom-nav {
+      height: 73px;
+      background: #fff;
+      border-top: 1px solid #eee;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 0 3px rgba(0,0,0,0.25);
+      flex-shrink: 0;
+      z-index: 200;
+    }
+    .nav-item {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      cursor: pointer;
+    }
+    .nav-icon-svg { width: 26px; height: 26px; fill: none; }
+    .nav-icon-svg path, .nav-icon-svg circle { stroke: #bbb; stroke-width: 2; }
+  </style>
+</head>
+<body>
+  <div class="phone">
+
+    <!-- ── 헤더 (홈과 동일) ── -->
+    <div class="header">
+      <div class="header-top">
+        <a class="logo-bnu" href="/home"><img src="/static/images/logo-bnu.svg" alt="BNU"></a>
+        <div class="header-sub">
+          <div>
+            <span class="bab-slot">
+              <div class="bab-slot-inner">
+                <span>Bab</span>
+                <span class="bab-emoji"><img src="/static/images/bab-emoji.png" alt="밥" /></span>
+              </div>
+            </span>
+            &nbsp;in <span class="blue">PNU</span>,
+          </div>
+          <div>
+            <span class="bab-slot">
+              <div class="bab-slot-inner">
+                <span>Bab</span>
+                <span class="bab-emoji"><img src="/static/images/bab-emoji.png" alt="밥" /></span>
+              </div>
+            </span>
+            &nbsp;Navigation for U
+          </div>
+        </div>
+        <div class="account-icon" id="authArea">👤</div>
+      </div>
+      <div class="header-divider"></div>
+    </div>
+
+    <!-- ── 타이틀 ── -->
+    <div class="page-title-row">
+      <button class="back-btn" onclick="history.back()" aria-label="뒤로가기">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M10 22L0 12L10 2L11.775 3.775L3.55 12L11.775 20.225L10 22Z" fill="#191919"/></svg>
+      </button>
+      <div class="page-title"><span class="blue" id="restName">-</span>의 생생한 리뷰</div>
+    </div>
+
+    <!-- ── 본문 ── -->
+    <div class="scroll-content">
+      <div class="rv-summary" id="reviewSummary"></div>
+
+      <div id="reviewForm" class="rv-form" style="display:none">
+        <div class="rv-stars" id="reviewStars">
+          <span data-v="1">★</span><span data-v="2">★</span><span data-v="3">★</span><span data-v="4">★</span><span data-v="5">★</span>
+        </div>
+        <div class="rv-tags" id="reviewTags">
+          <div class="rv-tag" data-tag="선후배 1:1">선후배 1:1</div>
+          <div class="rv-tag" data-tag="선후배 1:2">선후배 1:2</div>
+          <div class="rv-tag" data-tag="선후배 2:2">선후배 2:2</div>
+          <div class="rv-tag" data-tag="단체모임">단체모임</div>
+        </div>
+        <textarea id="reviewText" class="rv-textarea" rows="3" placeholder="이 식당은 어땠나요?"></textarea>
+        <button class="rv-submit" id="reviewSubmitBtn" onclick="submitReview()">리뷰 등록</button>
+      </div>
+
+      <div id="reviewLoginPrompt" class="rv-login-prompt" style="display:none">
+        리뷰를 작성하려면 <a href="/login">로그인</a>이 필요해요.
+      </div>
+
+      <div id="reviewList"></div>
+      <div id="reviewEmpty" class="rv-empty" style="display:none">
+        아직 작성된 리뷰가 없어요. 첫 리뷰를 남겨보세요!
+      </div>
+    </div>
+
+    <!-- ── 하단 네비 (홈과 동일) ── -->
+    <nav class="bottom-nav">
+      <div class="nav-item" onclick="location.href='/home'">
+        <svg class="nav-icon-svg" viewBox="0 0 24 24" fill="none">
+          <path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z" stroke-linejoin="round"/>
+          <path d="M9 21V12h6v9" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="nav-item" onclick="location.href='/search'">
+        <svg class="nav-icon-svg" viewBox="0 0 24 24" fill="none">
+          <circle cx="11" cy="11" r="7"/>
+          <path d="M16.5 16.5L21 21" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="nav-item" onclick="location.href='/recommend'">
+        <svg class="nav-icon-svg" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6L12 2z" stroke-width="1.8" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="nav-item" onclick="location.href='/mylist'">
+        <svg class="nav-icon-svg" viewBox="0 0 24 24" fill="none">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke-width="1.8" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </nav>
+
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="/static/auth.js"></script>
+  <script>
+    let item = null;
+    let rvSelectedStars = 5;
+    let rvSelectedTag = '';
+
+    function escapeHtml(s) {
+      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+    // 익명 닉네임 (detail과 동일 규칙 — 같은 사람은 항상 같은 닉네임)
+    const NICK_ADJ = ['배고픈','행복한','졸린','수줍은','씩씩한','느긋한','야무진','용감한','신난','과제하는','밥약하는','지각한'];
+    const NICK_NOUN = ['산지니','금정산다람쥐','넉터비둘기','효원이','웅비탑지킴이','새벽벌요정','문창회관단골','미리내오리','부엉이','곰두리'];
+    function anonNick(email) {
+      let h = 0;
+      for (const ch of String(email || '')) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+      return NICK_ADJ[h % NICK_ADJ.length] + ' ' + NICK_NOUN[Math.floor(h / 7) % NICK_NOUN.length];
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2000);
+    }
+
+    function rvUpdateStars() {
+      document.querySelectorAll('#reviewStars span').forEach(s => {
+        s.classList.toggle('active', parseInt(s.dataset.v) <= rvSelectedStars);
+      });
+    }
+
+    function rvInit() {
+      document.querySelectorAll('#reviewStars span').forEach(s => {
+        s.addEventListener('click', () => {
+          rvSelectedStars = parseInt(s.dataset.v);
+          rvUpdateStars();
+        });
+      });
+      rvUpdateStars();
+      document.querySelectorAll('#reviewTags .rv-tag').forEach(t => {
+        t.addEventListener('click', () => {
+          const isActive = t.classList.contains('active');
+          document.querySelectorAll('#reviewTags .rv-tag').forEach(x => x.classList.remove('active'));
+          rvSelectedTag = isActive ? '' : t.dataset.tag;
+          if (!isActive) t.classList.add('active');
+        });
+      });
+    }
+
+    async function loadReviews() {
+      try {
+        const res = await fetch(`/api/reviews?restaurant=${encodeURIComponent(item['이름'])}`);
+        renderReviews(await res.json());
+      } catch {}
+    }
+
+    function renderReviews(data) {
+      const { reviews = [], average = 0, count = 0 } = data;
+
+      document.getElementById('reviewSummary').innerHTML = count
+        ? `<span class="rv-avg">★ ${average}</span><span class="rv-count">(${count}개 리뷰)</span>`
+        : `<span style="color:#aaa;font-size:13px">아직 리뷰가 없어요</span>`;
+
+      const user = getUser();
+      const list = document.getElementById('reviewList');
+      const empty = document.getElementById('reviewEmpty');
+
+      if (!reviews.length) {
+        list.innerHTML = '';
+        empty.style.display = 'block';
+        return;
+      }
+      empty.style.display = 'none';
+
+      list.innerHTML = reviews.map(r => {
+        const stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
+        const canDelete = user && user.email === r.user_email;
+        return `
+          <div class="rv-item">
+            <div class="rv-item-head">
+              <span class="rv-item-name">${escapeHtml(anonNick(r.user_email))}${r.tag ? `<span class="rv-item-tag">${escapeHtml(r.tag)}</span>` : ''}</span>
+              <span class="rv-item-stars">${stars}</span>
+            </div>
+            <div class="rv-item-text">${escapeHtml(r.text)}</div>
+            <div class="rv-item-foot">
+              <span class="rv-item-date">${r.created_at.slice(0,10)}</span>
+              ${canDelete ? `<button class="rv-item-del" onclick="deleteReview('${r.id}')">삭제</button>` : ''}
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    async function submitReview() {
+      const token = getToken();
+      if (!token) { location.href = '/login'; return; }
+      const text = document.getElementById('reviewText').value.trim();
+      if (!text) { alert('리뷰 내용을 입력해주세요.'); return; }
+
+      const btn = document.getElementById('reviewSubmitBtn');
+      btn.disabled = true; btn.textContent = '등록 중…';
+      try {
+        const res = await fetch('/api/reviews', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+          body: JSON.stringify({ restaurant: item['이름'], rating: rvSelectedStars, text, tag: rvSelectedTag }),
+        });
+        const data = await res.json();
+        if (!res.ok) { alert(data.detail || '등록에 실패했어요.'); return; }
+        document.getElementById('reviewText').value = '';
+        rvSelectedStars = 5;
+        rvSelectedTag = '';
+        document.querySelectorAll('#reviewTags .rv-tag').forEach(x => x.classList.remove('active'));
+        rvUpdateStars();
+        loadReviews();
+        showToast('리뷰가 등록됐어요!');
+      } catch { alert('네트워크 오류가 발생했어요.'); }
+      finally { btn.disabled = false; btn.textContent = '리뷰 등록'; }
+    }
+
+    async function deleteReview(id) {
+      const token = getToken();
+      if (!token) return;
+      if (!confirm('리뷰를 삭제할까요?')) return;
+      try {
+        await fetch(`/api/reviews/${id}`, {
+          method: 'DELETE',
+          headers: { 'Authorization': `Bearer ${token}` },
+        });
+        loadReviews();
+        showToast('리뷰가 삭제됐어요');
+      } catch {}
+    }
+
+    // ── 초기화 ──
+    try {
+      item = JSON.parse(sessionStorage.getItem('detailItem'));
+    } catch {}
+    if (!item) {
+      location.href = '/search';
+    } else {
+      document.getElementById('restName').textContent = item['이름'];
+      rvInit();
+      const loggedIn = !!getToken();
+      document.getElementById('reviewForm').style.display = loggedIn ? 'block' : 'none';
+      document.getElementById('reviewLoginPrompt').style.display = loggedIn ? 'none' : 'block';
+      loadReviews();
+      renderUserBadge('authArea');
+    }
+  </script>
+</body>
+</html>

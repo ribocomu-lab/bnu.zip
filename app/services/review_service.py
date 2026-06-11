@@ -35,7 +35,7 @@ def get_user_reviews(user_email: str) -> list[dict]:
     return reviews
 
 
-def add_review(restaurant: str, user_email: str, user_name: str, rating: int, text: str) -> dict:
+def add_review(restaurant: str, user_email: str, user_name: str, rating: int, text: str, tag: str = "") -> dict:
     reviews = _load()
     review = {
         "id": hashlib.sha256(f"{user_email}{restaurant}{time.time()}".encode()).hexdigest()[:16],
@@ -44,6 +44,7 @@ def add_review(restaurant: str, user_email: str, user_name: str, rating: int, te
         "user_name": user_name,
         "rating": rating,
         "text": text,
+        "tag": tag,
         "created_at": time.strftime("%Y-%m-%dT%H:%M:%S"),
     }
     reviews.append(review)

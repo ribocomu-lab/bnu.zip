@@ -56,6 +56,7 @@ def add_review_ref(email: str, review: dict):
             "restaurant": review["restaurant"],
             "rating": review["rating"],
             "text": review["text"],
+            "tag": review.get("tag", ""),
             "created_at": review["created_at"],
         })
         _save(users)

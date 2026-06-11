@@ -380,6 +380,25 @@
       flex-shrink: 0;
     }
     .map-card.highlighted .map-card-meta { color: #5888b2; }
+    /* 포커싱된 카드에만 보이는 상세 이동 버튼 */
+    .map-card-go {
+      display: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #005ba9;
+      color: #fff;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1;
+      flex-shrink: 0;
+      cursor: pointer;
+      padding-bottom: 2px;
+    }
+    .map-card-go:active { opacity: 0.8; }
+    .map-card.highlighted .map-card-go { display: flex; }
 
     /* 클러스터/마커 (Leaflet divIcon) */
     .cluster-badge {
@@ -817,35 +836,21 @@
     const catEmoji = {
       '돈까스·회': '🍱', '한식': '🍚', '치킨': '🍗', '피자·버거': '🍔',
       '분식': '🥢', '중식': '🥡', '일식': '🍣', '양식': '🍝',
-      '고기': '🥩', '고기·구이': '🥩', '카페·디저트': '☕', '패스트푸드': '🍔', '아시아': '🍜', '기타': '🍽'
+      '고기': '🥩', '고기·구이': '🥩', '카페·디저트': '☕', '카페': '☕', '패스트푸드': '🍔', '아시아': '🍜', '기타': '🍽'
     };
 
     // 카테고리 칩 (피그마 순서 고정)
     const CATEGORIES = ['전체', '한식', '중식', '일식', '양식', '아시아', '분식', '패스트푸드', '카페', '치킨', '기타'];
     const MAIN_CATS = ['한식', '중식', '일식', '양식', '아시아', '분식', '패스트푸드', '치킨'];
 
-    // 데이터의 대분류 표기를 칩에 매핑 (예: 돈까스·회 → 일식, 아시안 → 아시아)
-    const CAT_ALIAS = {
-      '한식': ['한식', '찜·탕', '고기', '고기·구이'],
-      '일식': ['일식', '돈까스·회'],
-      '아시아': ['아시아', '아시안'],
-      '패스트푸드': ['패스트푸드', '피자·버거'],
-    };
-    const FASTFOOD_RE = /버거|피자|맥도날드|롯데리아|맘스터치|서브웨이|KFC|파파이스|쉑쉑/i;
-
     function matchCategory(item, cat) {
       if (cat === '전체') return true;
       if (cat === '카페') return item._type === 'cafe';
       if (cat === '기타') {
         // 어느 메인 칩에도 매칭되지 않는 식당
-        return item._type !== 'cafe' && !MAIN_CATS.some(mc => matchCategory(item, mc));
+        return item._type !== 'cafe' && !MAIN_CATS.includes(item['대분류']);
       }
-      const c = item['대분류'];
-      if (cat === '패스트푸드') {
-        return CAT_ALIAS['패스트푸드'].includes(c) || FASTFOOD_RE.test(item['이름']);
-      }
-      const alias = CAT_ALIAS[cat];
-      return alias ? alias.includes(c) : c === cat;
+      return item['대분류'] === cat;
     }
 
     function getEmoji(item) {
@@ -1177,8 +1182,16 @@
               <div class="map-card-name">${item['이름']}</div>
             </div>
             <div class="map-card-meta">${!hasRealCoord(item) ? '위치 없음' : meta}</div>
+            <div class="map-card-go" onclick="event.stopPropagation(); openDetailIdx(${idx})" aria-label="상세보기">›</div>
           </div>`;
       }).join('');
+    }
+
+    function openDetailIdx(idx) {
+      const item = getFilteredItems()[idx];
+      if (!item) return;
+      sessionStorage.setItem('detailItem', JSON.stringify(item));
+      location.href = '/detail';
     }
 
     function focusMarker(listIdx) {

@@ -59,6 +59,11 @@ def detail_page():
     return FileResponse(os.path.join(STATIC_DIR, "detail.html"))
 
 
+@app.get("/reviews")
+def reviews_page():
+    return FileResponse(os.path.join(STATIC_DIR, "reviews.html"))
+
+
 @app.get("/health")
 def health():
     return {"status": "ok"}
