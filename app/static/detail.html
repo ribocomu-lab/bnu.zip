@@ -638,7 +638,7 @@
 
     /* ── 상세 렌더 ── */
     function renderDetail() {
-      const cat = item['대분류'] || item['카테고리'] || '';
+      const cat = item['대분류'] || '';
       const emoji = cat === '카페·디저트' || item._type === 'cafe' ? '☕' : (CAT_EMOJI[cat] || '🍽');
       const colors = (HERO_COLORS[cat] || '374151,6b7280').split(',');
       const hero = document.getElementById('hero');

@@ -1047,7 +1047,7 @@
 
   function makeRestCard(item, idx, arr) {
     const name = item['이름'] || '-';
-    const cat  = item['대분류'] || item['카테고리'] || '';
+    const cat  = item['대분류'] || '';
     const dist = item['거리(m)'] && item['거리(m)'] !== '-' ? item['거리(m)'] + 'm' : '';
     // 이미지: API에서 사진 URL이 있으면 사용, 없으면 카테고리 이모지 플레이스홀더
     const imgSrc = item['사진'] || '';
@@ -1168,7 +1168,7 @@
 
       luckyItem = pool[Math.floor(Math.random() * pool.length)];
       const name = luckyItem['이름'] || '-';
-      const cat = luckyItem['대분류'] || luckyItem['카테고리'] || '';
+      const cat = luckyItem['대분류'] || '';
       const dist = luckyItem['거리(m)'] && luckyItem['거리(m)'] !== '-' ? luckyItem['거리(m)'] + 'm' : '';
       const thumb = document.getElementById('luckyThumb');
       thumb.innerHTML = luckyItem['사진']

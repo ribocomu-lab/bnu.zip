@@ -47,6 +47,27 @@ def set_bookmarks(email: str, bookmarks: list) -> list:
     return bookmarks
 
 
+def add_review_ref(email: str, review: dict):
+    """작성한 리뷰를 사용자 레코드에도 기록 (원본은 reviews.json 유지)"""
+    users = _load()
+    if email in users:
+        users[email].setdefault("reviews", []).append({
+            "id": review["id"],
+            "restaurant": review["restaurant"],
+            "rating": review["rating"],
+            "text": review["text"],
+            "created_at": review["created_at"],
+        })
+        _save(users)
+
+
+def remove_review_ref(email: str, review_id: str):
+    users = _load()
+    if email in users and users[email].get("reviews"):
+        users[email]["reviews"] = [r for r in users[email]["reviews"] if r.get("id") != review_id]
+        _save(users)
+
+
 def get_visited(email: str) -> list:
     user = get_user(email)
     return user.get("visited", []) if user else []

@@ -2,18 +2,20 @@
   {
     "이름": "22그램",
     "주소": "부산 금정구 금강로 271-11",
-    "카테고리": "카페",
     "거리(m)": "13",
     "도보시간": "1분 이내",
     "출처": "카카오",
     "대분류": "카페·디저트",
     "lat": 35.232372,
     "lng": 129.0845794,
-    "별점": null,
+    "별점": 4.9,
     "리뷰수": 197,
-    "사진": null,
-    "사진목록": [],
-    "전화번호": null,
+    "사진": "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20230105_219%2F1672915222499vtl07_JPEG%2F20230105_140952.jpg",
+    "사진목록": [
+      "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20230105_219%2F1672915222499vtl07_JPEG%2F20230105_140952.jpg",
+      "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20230105_214%2F1672915238311lpiiV_JPEG%2F1672897660113.jpg"
+    ],
+    "전화번호": "010-5722-1765",
     "운영시간": [
       "월요일: 08:00 ~ 16:30",
       "화요일: 08:00 ~ 16:30",
@@ -25,7 +27,6 @@
   {
     "이름": "고더커피 부산대정문점",
     "주소": "부산 금정구 부산대학로64번길 14",
-    "카테고리": "카페",
     "거리(m)": "16",
     "도보시간": "1분 이내",
     "출처": "카카오",
@@ -39,7 +40,7 @@
       "https://lh3.googleusercontent.com/place-photos/AJRVUZPiFCPonOfELWCOKNFQ9jT8UJ51xHwml6wHpDfdRWEbBjaQWvK72TIgNmWlyM3GOR7EFd_5xx_OuNOCjaPDlk822rRG4ud0kYJen0eN05CoqvRJYvmo1FrbeaWGhxCjgxqJ6sgn252u_emw_OHF9_ii=s1600-w800",
       "https://lh3.googleusercontent.com/place-photos/AJRVUZNMII_drORT-4By7Zi6LZOoPTTHS_AtQpKq0Zrx9pHK3rQFawvzCSjVyoUIKUBKAmUz9RXfIv-s9yg_3AYd7yfOD9ndXxTDJ3wDTkjhJeziZsx_k0ew6hU9da2eoYHxRZd2W_D1Pj8eEfzYJL5dfJTi=s1600-w800"
     ],
-    "전화번호": null,
+    "전화번호": "0503-5260-8423",
     "운영시간": [
       "월요일: 08:20 ~ 20:30",
       "화요일: 08:20 ~ 20:30",
@@ -53,7 +54,6 @@
   {
     "이름": "마스커피랩",
     "주소": "부산 금정구 금강로 271-5",
-    "카테고리": "카페",
     "거리(m)": "23",
     "도보시간": "1분 이내",
     "출처": "카카오",
@@ -62,7 +62,7 @@
     "lng": 129.0849661,
     "별점": 4.5,
     "리뷰수": 4,
-    "전화번호": null,
+    "전화번호": "0507-1466-7740",
     "운영시간": [
       "월요일: 오후 12:00~9:00",
       "화요일: 오후 12:00~9:00",
@@ -84,7 +84,6 @@
   {
     "이름": "스타벅스 부산대정문점",
     "주소": "부산 금정구 부산대학로64번길 12",
-    "카테고리": "카페",
     "거리(m)": "25",
     "도보시간": "1분 이내",
     "출처": "카카오",
@@ -115,7 +114,6 @@
   {
     "이름": "카페그라운드",
     "주소": "부산 금정구 금강로 271-38",
-    "카테고리": "카페",
     "거리(m)": "32",
     "도보시간": "1분 이내",
     "출처": "카카오",
@@ -125,7 +123,7 @@
     "별점": 4.7,
     "리뷰수": 3,
     "전화번호": "070-7543-8812",
-    "운영시간": [],
+    "운영시간": "일요일 휴무, 10:00 - 19:00",
     "사진": "https://lh3.googleusercontent.com/place-photos/AJRVUZNAEfUPmfa8SFSluVrdzK1B5T6mm0cDAQmZy6JuZG4uf_MgTeKj6lhQYUHXRQ77B362OZkpZxk1uJEfeBDOuVNDxrcJRry4b0ZQ4e4MrlWPEjTfR5WpcPCd_65ac-evoLgmQIPWUWjxz_6etQ=s1600-w800",
     "사진목록": [
       "https://lh3.googleusercontent.com/place-photos/AJRVUZNAEfUPmfa8SFSluVrdzK1B5T6mm0cDAQmZy6JuZG4uf_MgTeKj6lhQYUHXRQ77B362OZkpZxk1uJEfeBDOuVNDxrcJRry4b0ZQ4e4MrlWPEjTfR5WpcPCd_65ac-evoLgmQIPWUWjxz_6etQ=s1600-w800",
@@ -138,7 +136,6 @@
   {
     "이름": "카페열한시",
     "주소": "부산 금정구 부산대학로64번길 24",
-    "카테고리": "카페",
     "거리(m)": "50",
     "도보시간": "약 2분",
     "출처": "카카오",
@@ -169,7 +166,6 @@
   {
     "이름": "어벤더치커피 부산대정문점",
     "주소": "부산 금정구 부산대학로64번길 6",
-    "카테고리": "카페",
     "거리(m)": "62",
     "도보시간": "약 2분",
     "출처": "카카오",
@@ -200,7 +196,6 @@
   {
     "이름": "더카페 NC부산대점",
     "주소": "부산 금정구 부산대학로63번길 2",
-    "카테고리": "카페",
     "거리(m)": "64",
     "도보시간": "약 2분",
     "출처": "카카오",
@@ -231,7 +226,6 @@
   {
     "이름": "유일무이카페",
     "주소": "부산 금정구 부산대학로 62-1",
-    "카테고리": "카페",
     "거리(m)": "66",
     "도보시간": "약 2분",
     "출처": "카카오",
@@ -262,14 +256,13 @@
   {
     "이름": "텐퍼센트커피 부산대공대점",
     "주소": "부산 금정구 금강로 272-1",
-    "카테고리": "카페",
     "거리(m)": "69",
     "도보시간": "약 2분",
     "출처": "카카오",
     "대분류": "카페·디저트",
     "lat": 35.2324116,
     "lng": 129.0854763,
-    "별점": null,
+    "별점": 5.0,
     "리뷰수": 3,
     "전화번호": "070-4353-3098",
     "운영시간": [
@@ -281,13 +274,14 @@
       "토요일: 오전 8:30 ~ 오후 8:00",
       "일요일: 휴무일"
     ],
-    "사진": null,
-    "사진목록": []
+    "사진": "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20260106_168%2F1767674207879gr1lQ_JPEG%2F20260106_131928.jpg",
+    "사진목록": [
+      "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20260106_168%2F1767674207879gr1lQ_JPEG%2F20260106_131928.jpg"
+    ]
   },
   {
     "이름": "자스민커피 3호점",
     "주소": "부산 금정구 부산대학로 60",
-    "카테고리": "카페",
     "거리(m)": "69",
     "도보시간": "약 2분",
     "출처": "카카오",
@@ -302,7 +296,7 @@
       "https://lh3.googleusercontent.com/place-photos/AJRVUZNB2xZOGwAAZTaNejfreV658xvgxRZMCmWmlopk06ZFM3X1DoOyQ0s0lNEDla7hLcN8SIoxk9ouesU-Y793pRcWwXeQ4VpwZa6uAYIlC01ggi3KDh151lHw-WdrPHMihRH78EqO-O_YeBQrT7H_iYithQ=s1600-w800",
       "https://lh3.googleusercontent.com/place-photos/AJRVUZNWp5egpJPKM3gJqrQsV1In6UKhJwjyMjXyyrWxQQ-ZCcx_yd0Mh9M1Dh7Z9USpRZAUP1Hw-0X0Ebdj7i0UxB2TArJwkbFjMPsz0pStK9wcVm0AAiMvTu5FQLIaSzi8G4K9ohGd7YHkzKRLce82IJ6M_A=s1600-w800"
     ],
-    "전화번호": null,
+    "전화번호": "0502-6807-3645",
     "운영시간": [
       "월요일: 09:00 ~ 18:00",
       "화요일: 09:00 ~ 18:00",
@@ -316,7 +310,6 @@
   {
     "이름": "모모니예",
     "주소": "부산 금정구 부산대학로63번길 2",
-    "카테고리": "카페",
     "거리(m)": "69",
     "도보시간": "약 2분",
     "출처": "카카오",
@@ -333,13 +326,15 @@
       "목요일: 08:30 ~ 17:30",
       "금요일: 08:30 ~ 17:30"
     ],
-    "사진": null,
-    "사진목록": []
+    "사진": "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20241008_150%2F1728350188508Q7GSE_JPEG%2F1728350097181.jpg",
+    "사진목록": [
+      "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20241008_150%2F1728350188508Q7GSE_JPEG%2F1728350097181.jpg",
+      "https://search.pstatic.net/common/?src=https%3A%2F%2Fpup-review-phinf.pstatic.net%2FMjAyNTA1MThfMTg5%2FMDAxNzQ3NTY0NzI4NTk4.TWvuhrwW8QpHO3iA45l1UN9gpnKW67bxtU0sVp-vv60g.kdbrpHEViVMmNPRUA_yOTsZB6pp6Qrm95H90bKk0Rw8g.JPEG%2F20250514_101639.jpg.jpg%3Ftype%3Dw1500_60_sharpen"
+    ]
   },
   {
     "이름": "해리스카페 부산대본점",
     "주소": "부산 금정구 부산대학로63번길 2",
-    "카테고리": "카페",
     "거리(m)": "70",
     "도보시간": "약 2분",
     "출처": "카카오",
@@ -356,7 +351,7 @@
       "https://lh3.googleusercontent.com/place-photos/AJRVUZOLKxUAPrz3u-V-qCVOgiy1d_lriUopsX35o4ydFmHFXeb8ejvQdlKDvrNi01pcx50x71NfoVYqb1PQA_D6rXiTymlJfjS_m2wNqot3e67PiJ4VgL1LzGpxyTMKJSWoY9UCwRNtskGtUlX5=s1600-w800",
       "https://lh3.googleusercontent.com/place-photos/AJRVUZOias-37Hr6oiB_jmjOx2i7Uqq6_AARJtzlTWwlIKktrVLV8zuUzJMDmMZCMDYAcsoI7LGDiLoOokNH1sKyNiJ27n3UzM7k6g0BCO1w1lsWaMaQPuhybLpsYqI2eLoJvBofkLv7WSEdQA2j3g=s1600-w800"
     ],
-    "전화번호": null,
+    "전화번호": "051-747-5259",
     "운영시간": [
       "월요일: 오전 9:00 ~ 오후 6:00",
       "화요일: 오전 9:00 ~ 오후 6:00",
@@ -370,7 +365,6 @@
   {
     "이름": "청솔로9 부산대점",
     "주소": "부산 금정구 부산대학로64번길 32",
-    "카테고리": "카페",
     "거리(m)": "70",
     "도보시간": "약 2분",
     "출처": "카카오",
@@ -383,7 +377,7 @@
     "사진목록": [
       "https://lh3.googleusercontent.com/place-photos/AJRVUZPRqYsuoyVLh0024vAsoxy9Gu-SZmfo21qV0X4OU0loVsYKpdA1e4n4GRiQ5aVyu5gxjH0Y9YiG23MQBSARa5KgqM8YnpezB1LR3yLRuBqyO1WsuP4Pp28KdwzGbvgezS6YdtaV1Wxj91NzAg=s1600-w800"
     ],
-    "전화번호": null,
+    "전화번호": "0507-0289-3103",
     "운영시간": [
       "월요일: 11:00 ~ 01:00",
       "화요일: 11:00 ~ 01:00",
@@ -397,14 +391,13 @@
   {
     "이름": "더다락",
     "주소": "부산 금정구 부산대학로 60",
-    "카테고리": "카페",
     "거리(m)": "73",
     "도보시간": "약 2분",
     "출처": "카카오",
     "대분류": "카페·디저트",
     "lat": 35.2316704,
     "lng": 129.0849469,
-    "별점": null,
+    "별점": 4.2,
     "리뷰수": 69,
     "전화번호": "010-6753-3470",
     "운영시간": [
@@ -427,7 +420,6 @@
   {
     "이름": "공차 부산대정문점",
     "주소": "부산 금정구 부산대학로 60",
-    "카테고리": "카페",
     "거리(m)": "75",
     "도보시간": "약 2분",
     "출처": "카카오",
@@ -446,23 +438,27 @@
       "토요일: 오전 7:00 ~ 오후 11:00",
       "일요일: 오전 7:00 ~ 오후 11:00"
     ],
-    "사진": null,
-    "사진목록": []
+    "사진": "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20230804_79%2F1691110777481JVyJ6_JPEG%2FKakaoTalk_20230725_211238301_01.jpg",
+    "사진목록": [
+      "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20230804_79%2F1691110777481JVyJ6_JPEG%2FKakaoTalk_20230725_211238301_01.jpg",
+      "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20230804_27%2F169111077739009b0N_JPEG%2FKakaoTalk_20230725_211238301_09.jpg"
+    ]
   },
   {
     "이름": "모아밀",
     "주소": "부산 금정구 금강로 274",
-    "카테고리": "카페",
     "거리(m)": "78",
     "도보시간": "약 2분",
     "출처": "카카오",
     "대분류": "카페·디저트",
     "lat": 35.2324925,
     "lng": 129.0855406,
-    "별점": null,
+    "별점": 5.0,
     "리뷰수": 222,
-    "사진": null,
-    "사진목록": [],
+    "사진": "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20260414_11%2F1776157052408ks1Ct_JPEG%2F%25C3%25BC%25B8%25AE-%25BA%25ED%25B7%25EB-%25C4%25C9%25C0%25CC%25C5%25A9.jpg",
+    "사진목록": [
+      "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20260414_11%2F1776157052408ks1Ct_JPEG%2F%25C3%25BC%25B8%25AE-%25BA%25ED%25B7%25EB-%25C4%25C9%25C0%25CC%25C5%25A9.jpg"
+    ],
     "전화번호": "0503-7152-1467",
     "운영시간": [
       "월요일: 11:00 ~ 19:00",
@@ -475,7 +471,6 @@
   {
     "이름": "더카페 부산대NC백화점(지하1층)",
     "주소": "부산 금정구 부산대학로63번길 2",
-    "카테고리": "카페",
     "거리(m)": "80",
     "도보시간": "약 2분",
     "출처": "카카오",
@@ -506,7 +501,6 @@
   {
     "이름": "P270",
     "주소": "부산 금정구 금강로 270-3",
-    "카테고리": "카페",
     "거리(m)": "83",
     "도보시간": "약 2분",
     "출처": "카카오",
@@ -515,9 +509,12 @@
     "lng": 129.0856158,
     "별점": 4.8,
     "리뷰수": 23,
-    "사진": null,
-    "사진목록": [],
-    "전화번호": null,
+    "사진": "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20220907_223%2F1662527522699FCIoy_JPEG%2F1637392099348.jpg",
+    "사진목록": [
+      "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20220907_223%2F1662527522699FCIoy_JPEG%2F1637392099348.jpg",
+      "https://search.pstatic.net/common/?src=https%3A%2F%2Fpup-review-phinf.pstatic.net%2FMjAyMzAxMjlfMjgy%2FMDAxNjc0OTc1ODY0OTg5.aj7Xg3BA3VhHfsPUpiM2-DP4dG7yX3ULPyGuwoEH5wkg.682N0qyWuCbWDi7cf7jW9y6P4kSnXvbpfVdvG4uyAX8g.JPEG%2F3C1A6059-8DA6-4C3D-8B65-61D6F412FC6B.jpeg%3Ftype%3Dw1500_60_sharpen"
+    ],
+    "전화번호": "010-3264-1564",
     "운영시간": [
       "화요일: 18:00 ~ 24:00",
       "수요일: 18:00 ~ 24:00",
@@ -529,7 +526,6 @@
   {
     "이름": "콘드168",
     "주소": "부산 금정구 금강로 277",
-    "카테고리": "카페",
     "거리(m)": "90",
     "도보시간": "약 3분",
     "출처": "카카오",
@@ -538,8 +534,11 @@
     "lng": 129.085453,
     "별점": 5,
     "리뷰수": 1,
-    "사진": null,
-    "사진목록": [],
+    "사진": "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20250723_65%2F1753253270734iDnON_JPEG%2F%25B5%25CE%25B9%25D9%25C0%25CC%25C3%25CA%25C4%25DA%25BA%25F9%25BC%25F6_%25BA%25B9%25BB%25E7%25BA%25BB-001.jpg",
+    "사진목록": [
+      "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20250723_65%2F1753253270734iDnON_JPEG%2F%25B5%25CE%25B9%25D9%25C0%25CC%25C3%25CA%25C4%25DA%25BA%25F9%25BC%25F6_%25BA%25B9%25BB%25E7%25BA%25BB-001.jpg",
+      "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20240717_162%2F17211445268727U2sz_PNG%2F%25C1%25A6%25B8%25F1%25C0%25BB-%25C0%25D4%25B7%25C2%25C7%25D8%25C1%25D6%25BC%25BC%25BF%25E4_-001.png"
+    ],
     "전화번호": "0502-5550-2629",
     "운영시간": [
       "화요일: 12:00 ~ 20:00",
@@ -553,17 +552,19 @@
   {
     "이름": "월남덕커피",
     "주소": "부산 금정구 금강로 279",
-    "카테고리": "카페",
     "거리(m)": "96",
     "도보시간": "약 3분",
     "출처": "카카오",
     "대분류": "카페·디저트",
     "lat": 35.2351225,
     "lng": 129.0839897,
-    "별점": null,
+    "별점": 5.0,
     "리뷰수": 94,
-    "사진": null,
-    "사진목록": [],
+    "사진": "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20230815_234%2F1692051732573nn8Dr_JPEG%2FIMG_7144.jpeg",
+    "사진목록": [
+      "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20230815_234%2F1692051732573nn8Dr_JPEG%2FIMG_7144.jpeg",
+      "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20230824_285%2F16928449710132ff4i_JPEG%2FIMG_8627.jpeg"
+    ],
     "전화번호": "050-71422-7083",
     "운영시간": [
       "월요일: 오전 11:00 ~ 오후 10:00",
@@ -578,7 +579,6 @@
   {
     "이름": "노스커피 문창점",
     "주소": "부산 금정구 부산대학로64번길 40",
-    "카테고리": "카페",
     "거리(m)": "101",
     "도보시간": "약 3분",
     "출처": "카카오",
@@ -609,7 +609,6 @@
   {
     "이름": "노스커피 북문",
     "주소": "부산 금정구 부산대학로64번길 40",
-    "카테고리": "카페",
     "거리(m)": "102",
     "도보시간": "약 3분",
     "출처": "카카오",
@@ -640,14 +639,13 @@
   {
     "이름": "카페16온스 부산대정문점",
     "주소": "부산 금정구 부산대학로 63",
-    "카테고리": "카페",
     "거리(m)": "104",
     "도보시간": "약 3분",
     "출처": "카카오",
     "대분류": "카페·디저트",
     "lat": 35.2314107,
     "lng": 129.0844507,
-    "별점": null,
+    "별점": 0,
     "리뷰수": 13,
     "전화번호": "050-71319-8473",
     "운영시간": [
@@ -659,13 +657,14 @@
       "토요일: 10:00 ~ 19:00",
       "일요일: 10:00 ~ 19:00"
     ],
-    "사진": null,
-    "사진목록": []
+    "사진": "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20250306_172%2F1741227220261bWsXi_JPEG%2F%25BA%25CE%25BB%25EA%25B4%25EB%25C1%25A4%25B9%25AE%25C1%25A12.jpg",
+    "사진목록": [
+      "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20250306_172%2F1741227220261bWsXi_JPEG%2F%25BA%25CE%25BB%25EA%25B4%25EB%25C1%25A4%25B9%25AE%25C1%25A12.jpg"
+    ]
   },
   {
     "이름": "코트커피",
     "주소": "부산 금정구 부산대학로 63",
-    "카테고리": "카페",
     "거리(m)": "104",
     "도보시간": "약 3분",
     "출처": "카카오",
@@ -682,7 +681,6 @@
   {
     "이름": "전람회의그림",
     "주소": "부산 금정구 금강로 280",
-    "카테고리": "카페",
     "거리(m)": "104",
     "도보시간": "약 3분",
     "출처": "카카오",
@@ -692,7 +690,7 @@
     "별점": 4.2,
     "리뷰수": 40,
     "전화번호": "051-517-4775",
-    "운영시간": [],
+    "운영시간": "매일 11:00 - 24:00",
     "사진": "https://lh3.googleusercontent.com/place-photos/AJRVUZML5A5joRg-Z0U9LV9jtoZh3mb1B1oPGgNYVU4KX5HgbKQ9NZnPwq1s3yhpjqAh8K-gY9gSlmlDX7zjQxth8PRzYL54Clw2NQKebvAUlJg5OXhuUKzyZv2Y96VKe56r2LhVvv0gN4oPbDSiUA=s1600-w800",
     "사진목록": [
       "https://lh3.googleusercontent.com/place-photos/AJRVUZML5A5joRg-Z0U9LV9jtoZh3mb1B1oPGgNYVU4KX5HgbKQ9NZnPwq1s3yhpjqAh8K-gY9gSlmlDX7zjQxth8PRzYL54Clw2NQKebvAUlJg5OXhuUKzyZv2Y96VKe56r2LhVvv0gN4oPbDSiUA=s1600-w800",
@@ -705,7 +703,6 @@
   {
     "이름": "자스민커피 부산대정문2호점",
     "주소": "부산 금정구 부산대학로 57",
-    "카테고리": "카페",
     "거리(m)": "113",
     "도보시간": "약 3분",
     "출처": "카카오",
@@ -733,24 +730,25 @@
   {
     "이름": "챔스빈",
     "주소": "부산 금정구 부산대학로 52-1",
-    "카테고리": "카페",
     "거리(m)": "118",
     "도보시간": "약 3분",
     "출처": "카카오",
     "대분류": "카페·디저트",
     "lat": 35.2315109966961,
     "lng": 129.085575297296,
-    "별점": null,
-    "리뷰수": null,
-    "사진": null,
-    "사진목록": [],
+    "별점": 4.5,
+    "리뷰수": 2,
+    "사진": "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20260204_206%2F17701925893575YXCo_JPEG%2F1000012188.jpg",
+    "사진목록": [
+      "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20260204_206%2F17701925893575YXCo_JPEG%2F1000012188.jpg",
+      "https://search.pstatic.net/common/?src=https%3A%2F%2Fpup-review-phinf.pstatic.net%2FMjAyNjA2MDVfMjM4%2FMDAxNzgwNjYyNTU4NjA2.jO5oE-E8JS_JHkEO_H0r_j8KLuB_bB4aJrgSYSuGuwYg.PF5heiDZwVloXAF4-4R7YjO1UU5w2tDbCQym1v1fwG4g.JPEG%2FAE868552-914B-4D5C-822A-BCD350294A59.jpeg%3Ftype%3Dw1500_60_sharpen"
+    ],
     "전화번호": "050-35260-5170",
-    "운영시간": []
+    "운영시간": "매일 11:00 - 23:00"
   },
   {
     "이름": "그릭오 부산대점",
     "주소": "부산 금정구 금강로279번길 4",
-    "카테고리": "카페",
     "거리(m)": "120",
     "도보시간": "약 3분",
     "출처": "카카오",
@@ -781,7 +779,6 @@
   {
     "이름": "투썸플레이스 부산대정문점",
     "주소": "부산 금정구 금강로 260-2",
-    "카테고리": "카페",
     "거리(m)": "121",
     "도보시간": "약 3분",
     "출처": "카카오",
@@ -812,7 +809,6 @@
   {
     "이름": "번아웃커피 부산대점",
     "주소": "부산 금정구 부산대학로64번길 43",
-    "카테고리": "카페",
     "거리(m)": "126",
     "도보시간": "약 3분",
     "출처": "카카오",
@@ -843,7 +839,6 @@
   {
     "이름": "설빙 부산대점",
     "주소": "부산 금정구 금강로 260-1",
-    "카테고리": "카페",
     "거리(m)": "130",
     "도보시간": "약 3분",
     "출처": "카카오",
@@ -874,7 +869,6 @@
   {
     "이름": "컵넛 부산대정문점",
     "주소": "부산 금정구 금강로279번길 20",
-    "카테고리": "카페",
     "거리(m)": "132",
     "도보시간": "약 3분",
     "출처": "카카오",
@@ -905,7 +899,6 @@
   {
     "이름": "밀림플랜트커피",
     "주소": "부산 금정구 금강로 255-6",
-    "카테고리": "카페",
     "거리(m)": "138",
     "도보시간": "약 4분",
     "출처": "카카오",
@@ -923,12 +916,11 @@
       "https://lh3.googleusercontent.com/place-photos/AJRVUZOesBlS-l5xqs6rivuVWZF8oS63cc6ECdsTlDxUfKjH-Evt96sZrYA3rHwSlklQ3drpywkuEOUoD40hwJfWCETWwlqbU38-HJ3EPZaLQoDJxGncCYeWuJRBrtzk2hwaqjATLrcmnE3QUd8A=s1600-w800"
     ],
     "전화번호": "0502-5551-6473",
-    "운영시간": []
+    "운영시간": "월요일 휴무, 11:30 - 20:00"
   },
   {
     "이름": "번아웃커피 문창점",
     "주소": "부산 금정구 부산대학로 50",
-    "카테고리": "카페",
     "거리(m)": "139",
     "도보시간": "약 4분",
     "출처": "카카오",
@@ -959,7 +951,6 @@
   {
     "이름": "로제이브커피스페셜티 본점",
     "주소": "부산 금정구 금강로279번길 22",
-    "카테고리": "카페",
     "거리(m)": "143",
     "도보시간": "약 4분",
     "출처": "카카오",
@@ -988,7 +979,6 @@
   {
     "이름": "킹스네일커피",
     "주소": "부산 금정구 부산대학로63번길 22",
-    "카테고리": "카페",
     "거리(m)": "150",
     "도보시간": "약 4분",
     "출처": "카카오",
@@ -1019,7 +1009,6 @@
   {
     "이름": "카페누베",
     "주소": "부산 금정구 금정로 85-10",
-    "카테고리": "카페",
     "거리(m)": "156",
     "도보시간": "약 4분",
     "출처": "카카오",
@@ -1050,7 +1039,6 @@
   {
     "이름": "할리데이온시티",
     "주소": "부산 금정구 금정로 77-1",
-    "카테고리": "카페",
     "거리(m)": "171",
     "도보시간": "약 4분",
     "출처": "카카오",
@@ -1067,7 +1055,7 @@
       "https://lh3.googleusercontent.com/place-photos/AJRVUZNJsbhcm52stlRHo6SS8kEZbYWRaNslr-7KGabHzU8xcsl7vALNvhBz5xwT1DoVat-qADrBrmHaSlBl6_-eHY08vVz1BtJun6LysR_MY6uw-KfsIGPTt9yTsfQD4KmzMG9MZJoHia-waq79mM4=s1600-w800",
       "https://lh3.googleusercontent.com/place-photos/AJRVUZPTgWlALk8uld-MDvdNV1E8InngTq8Js1eFiYgt-mLyHEsXWBTm5hkKcNQSzsB8qzqFa-6KIYHlThDSqpyN34azMMJEPMjTZ2Z96TNDjZlHU4NVy8-i42ivYv0FRX8kjuaj_8kx3wnbwHnNdV26zhalIQ=s1600-w800"
     ],
-    "전화번호": null,
+    "전화번호": "0507-1322-0332",
     "운영시간": [
       "월요일: 12:00 ~ 24:00",
       "화요일: 12:00 ~ 24:00",
@@ -1081,7 +1069,6 @@
   {
     "이름": "카페미엔느",
     "주소": "부산 금정구 금정로 79",
-    "카테고리": "카페",
     "거리(m)": "172",
     "도보시간": "약 4분",
     "출처": "카카오",
@@ -1112,7 +1099,6 @@
   {
     "이름": "오가닉커피스튜디오",
     "주소": "부산 금정구 부산대학로50번길 45",
-    "카테고리": "카페",
     "거리(m)": "189",
     "도보시간": "약 5분",
     "출처": "카카오",
@@ -1143,7 +1129,6 @@
   {
     "이름": "몽벨쉘터 부산대점",
     "주소": "부산광역시 금정구 금정로52번길 3-10 1층, 2층",
-    "카테고리": "베이커리",
     "거리(m)": "348",
     "도보시간": "약 8분",
     "출처": "네이버",
@@ -1174,7 +1159,6 @@
   {
     "이름": "쏘쏘사라다 부산대본점",
     "주소": "부산광역시 금정구 장전로12번길 19 1층, 2층",
-    "카테고리": "베이커리",
     "거리(m)": "479",
     "도보시간": "약 11분",
     "출처": "네이버",
@@ -1183,7 +1167,7 @@
     "lng": 129.0877237,
     "별점": 4.7,
     "리뷰수": 10,
-    "전화번호": null,
+    "전화번호": "0507-1339-0418",
     "운영시간": [
       "월요일: 오전 11:00 ~ 오후 8:00",
       "화요일: 오전 11:00 ~ 오후 8:00",
@@ -1205,7 +1189,6 @@
   {
     "이름": "보노베리 본점",
     "주소": "부산광역시 금정구 장전온천천로 67-1 1. 2층",
-    "카테고리": "카페,디저트",
     "거리(m)": "399",
     "도보시간": "약 9분",
     "출처": "네이버",
@@ -1236,7 +1219,6 @@
   {
     "이름": "스타벅스 금정구청DT점",
     "주소": "부산광역시 금정구 중앙대로 1730 (부곡동)",
-    "카테고리": "카페",
     "거리(m)": "1044",
     "도보시간": "약 24분",
     "출처": "네이버",
@@ -1267,7 +1249,6 @@
   {
     "이름": "논피니토",
     "주소": "부산광역시 금정구 금정로 94 1, 2층 카페 논피니토",
-    "카테고리": "카페,디저트",
     "거리(m)": "236",
     "도보시간": "약 6분",
     "출처": "네이버",
@@ -1298,7 +1279,6 @@
   {
     "이름": "스타벅스 온천장역DT점",
     "주소": "부산광역시 금정구 식물원로 13 (장전동)",
-    "카테고리": "카페",
     "거리(m)": "937",
     "도보시간": "약 21분",
     "출처": "네이버",
@@ -1329,7 +1309,6 @@
   {
     "이름": "이흥용과자점 부산대직영점",
     "주소": "부산광역시 금정구 부산대학로63번길 30 이흥용과자점",
-    "카테고리": "베이커리",
     "거리(m)": "229",
     "도보시간": "약 6분",
     "출처": "네이버",
@@ -1360,7 +1339,6 @@
   {
     "이름": "앤티앤스 NC백화점부산대점",
     "주소": "부산광역시 금정구 부산대학로63번길 2",
-    "카테고리": "베이커리",
     "거리(m)": "70",
     "도보시간": "약 2분",
     "출처": "네이버",
@@ -1391,17 +1369,19 @@
   {
     "이름": "브런치앤디너 테라비 부산대점",
     "주소": "부산광역시 금정구 장전로20번길 28 브런치앤디너 테라비 부산대점",
-    "카테고리": "브런치카페",
     "거리(m)": "405",
     "도보시간": "약 10분",
     "출처": "네이버",
     "대분류": "카페·디저트",
     "lat": 35.2293075,
     "lng": 129.087483,
-    "별점": null,
+    "별점": 4.0,
     "리뷰수": 3124,
-    "사진": null,
-    "사진목록": [],
+    "사진": ":https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20230407_79%2F1680839612524tbLgF_JPEG%2F%25BF%25A1%25B1%25D7%25BA%25A3%25B3%25D7%25B5%25F1%25C6%25AE.jpg",
+    "사진목록": [
+      ":https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20230407_79%2F1680839612524tbLgF_JPEG%2F%25BF%25A1%25B1%25D7%25BA%25A3%25B3%25D7%25B5%25F1%25C6%25AE.jpg",
+      "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20231220_35%2F17030460336853SK0X_JPEG%2Fscaled_1703045782088.jpg"
+    ],
     "전화번호": "070-7774-9589",
     "운영시간": [
       "월요일: 10:00 ~ 20:00",
@@ -1415,7 +1395,6 @@
   {
     "이름": "블루그로토",
     "주소": "부산광역시 금정구 장전온천천로73번길 14 1층 블루그로토",
-    "카테고리": "카페,디저트",
     "거리(m)": "311",
     "도보시간": "약 7분",
     "출처": "네이버",
@@ -1446,7 +1425,6 @@
   {
     "이름": "파리바게뜨 부산대역점",
     "주소": "부산광역시 금정구 중앙대로 1617-9 (부곡동)",
-    "카테고리": "베이커리",
     "거리(m)": "605",
     "도보시간": "약 14분",
     "출처": "네이버",
@@ -1477,7 +1455,6 @@
   {
     "이름": "어벤더치 부산대본점",
     "주소": "부산광역시 금정구 장전온천천로 45",
-    "카테고리": "카페,디저트",
     "거리(m)": "534",
     "도보시간": "약 12분",
     "출처": "네이버",
@@ -1508,15 +1485,14 @@
   {
     "이름": "오네쉬 요거트&amp;그래놀라 부산대점",
     "주소": "부산광역시 금정구 부곡온천천로 30 2층",
-    "카테고리": "카페,디저트",
     "거리(m)": "599",
     "도보시간": "약 14분",
     "출처": "네이버",
     "대분류": "카페·디저트",
     "lat": 35.2288543,
     "lng": 129.0897931,
-    "별점": null,
-    "리뷰수": null,
+    "별점": 4.2,
+    "리뷰수": 29,
     "사진": "https://lh3.googleusercontent.com/place-photos/AJRVUZPqj-yZT0AsDYEAfb77hte3Ym14vkSzS2zzvHqaGLis4oK_oB2bOmbwVSyigRHYnpLYzlZw9YsgsSbc4qSXwkcq3mkRMbMSinfU_vJ34KabviWa64tIbHX94-odM0gTEGSpbrgd77fF9S8sPQ5v2-rxdg=s1600-w800",
     "사진목록": [
       "https://lh3.googleusercontent.com/place-photos/AJRVUZPqj-yZT0AsDYEAfb77hte3Ym14vkSzS2zzvHqaGLis4oK_oB2bOmbwVSyigRHYnpLYzlZw9YsgsSbc4qSXwkcq3mkRMbMSinfU_vJ34KabviWa64tIbHX94-odM0gTEGSpbrgd77fF9S8sPQ5v2-rxdg=s1600-w800",
@@ -1539,7 +1515,6 @@
   {
     "이름": "컴포즈커피 부산대역점",
     "주소": "부산광역시 금정구 중앙대로1629번길 16 301동 123호",
-    "카테고리": "카페",
     "거리(m)": "504",
     "도보시간": "약 12분",
     "출처": "네이버",
@@ -1558,7 +1533,9 @@
       "토요일: 오전 7:00 ~ 오후 10:00",
       "일요일: 오전 7:00 ~ 오후 10:00"
     ],
-    "사진": null,
-    "사진목록": []
+    "사진": "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20220519_178%2F16529235645976boIb_JPEG%2FKakaoTalk_20220519_101423811.jpg",
+    "사진목록": [
+      "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20220519_178%2F16529235645976boIb_JPEG%2FKakaoTalk_20220519_101423811.jpg"
+    ]
   }
 ]

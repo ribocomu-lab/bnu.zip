@@ -884,8 +884,7 @@
         const q = searchQuery.toLowerCase();
         items = items.filter(i =>
           i['이름'].toLowerCase().includes(q) ||
-          (i['대분류'] || '').toLowerCase().includes(q) ||
-          (i['카테고리'] || '').toLowerCase().includes(q)
+          (i['대분류'] || '').toLowerCase().includes(q)
         );
       }
 
@@ -997,7 +996,7 @@
             <div class="card-info">
               <div class="card-name">${item['이름']}</div>
               <div class="card-meta">
-                <div class="tag ${isCafe ? 'cafe' : ''}">${item['대분류'] || item['카테고리']}</div>
+                <div class="tag ${isCafe ? 'cafe' : ''}">${item['대분류']}</div>
                 ${gone ? '<div class="tag visited">✅ 가본 곳</div>' : ''}
               </div>
               <div class="card-desc">📍 ${item['주소'] || '-'}</div>

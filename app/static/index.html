@@ -172,7 +172,7 @@
         <div class="card-body">
           <div class="card-name">${item['이름']}</div>
           <div class="card-meta">
-            <span class="badge">${item['대분류'] || item['카테고리']}</span>
+            <span class="badge">${item['대분류']}</span>
             ${item['거리(m)'] !== '-' ? `<span style="color:#888">${item['거리(m)']}m</span> · ` : ''}${item['도보시간'] !== '-' ? `<span class="walk">🚶 ${item['도보시간']} (직선거리 기준)</span>` : ''}
             <span style="margin-left:6px">${item['출처']}</span>
           </div>

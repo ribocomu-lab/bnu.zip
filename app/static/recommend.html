@@ -958,7 +958,7 @@
             </div>
             <div style="flex:1;min-width:0">
               <div class="result-name">${food['이름']}</div>
-              <div class="result-tags" style="margin:4px 0"><span class="result-tag">${food['대분류'] || food['카테고리']}</span></div>
+              <div class="result-tags" style="margin:4px 0"><span class="result-tag">${food['대분류']}</span></div>
               <div style="font-size:12px;color:#005ba9;font-weight:600">${distStr}</div>
               <div style="font-size:11px;color:#888;margin-top:2px">${[priceStr, ratingStr].filter(Boolean).join(' · ')}</div>
             </div>
@@ -981,7 +981,7 @@
             <div style="flex:1;min-width:0">
               <div class="cafe-card-name">${cafe['이름']}</div>
               <div class="cafe-card-dist">${cafeDistStr}</div>
-              <div class="cafe-card-sub">${cafe['카테고리'] || '카페'}</div>
+              <div class="cafe-card-sub">${cafe['대분류'] || '카페'}</div>
             </div>
           </div>` : `<div style="color:#aaa;font-size:13px;text-align:center;padding:8px">주변 카페 정보 없음</div>`}
         </div>`;

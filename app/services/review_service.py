@@ -3,6 +3,7 @@ import os
 import time
 import hashlib
 from app.core.config import DATA_DIR
+from app.services import user_service
 
 REVIEWS_JSON = os.path.join(DATA_DIR, "reviews.json")
 
@@ -47,6 +48,7 @@ def add_review(restaurant: str, user_email: str, user_name: str, rating: int, te
     }
     reviews.append(review)
     _save(reviews)
+    user_service.add_review_ref(user_email, review)
     return review
 
 
@@ -56,4 +58,5 @@ def delete_review(review_id: str, user_email: str) -> bool:
     if len(filtered) == len(reviews):
         return False
     _save(filtered)
+    user_service.remove_review_ref(user_email, review_id)
     return True
