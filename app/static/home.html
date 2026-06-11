@@ -466,6 +466,302 @@
     .nav-icon-svg { fill: none; }
     .nav-item.active .nav-icon-svg path { stroke: #005ba9; }
     .nav-icon-svg path { stroke: #bbb; stroke-width: 2; }
+
+    /* ── 산지니의 행운식당 팝업 ── */
+    .lucky-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 30, 60, 0.45);
+      z-index: 500;
+      align-items: center;
+      justify-content: center;
+    }
+    .lucky-overlay.open { display: flex; }
+    .lucky-sheet {
+      width: 330px;
+      background: #fff;
+      border-radius: 24px;
+      padding: 26px 24px 16px;
+      position: relative;
+      text-align: center;
+      box-shadow: 0 12px 40px rgba(0, 40, 80, 0.25);
+      animation: luckyPop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    @keyframes luckyPop {
+      from { transform: scale(0.7) translateY(24px); opacity: 0; }
+      to   { transform: scale(1) translateY(0); opacity: 1; }
+    }
+    .lucky-close {
+      position: absolute;
+      top: 14px; right: 14px;
+      width: 28px; height: 28px;
+      border: none; border-radius: 50%;
+      background: #f4f4f4; color: #999;
+      font-size: 13px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .lucky-close:active { background: #e8e8e8; }
+    .lucky-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: 17px; font-weight: 700; color: #005ba9;
+      letter-spacing: -0.3px;
+    }
+    .lucky-title .tw { display: inline-block; animation: twinkle 1.4s ease-in-out infinite; }
+    .lucky-title .tw2 { animation-delay: 0.7s; }
+    @keyframes twinkle {
+      0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
+      50% { transform: scale(0.55) rotate(20deg); opacity: 0.4; }
+    }
+    .lucky-desc {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px; color: #888; line-height: 1.6;
+      margin-top: 8px;
+    }
+
+    /* 무대 (산지니 + 캡슐) */
+    .lucky-stage {
+      position: relative;
+      height: 168px;
+      margin: 8px 0 4px;
+    }
+
+    /* 산지니 (부산대 새매) */
+    .sanjini {
+      position: absolute;
+      left: 50%; bottom: 76px;
+      width: 84px; height: 70px;
+      z-index: 2;
+      animation: sjBob 2.4s ease-in-out infinite;
+    }
+    @keyframes sjBob {
+      0%, 100% { transform: translate(-50%, 0); }
+      50% { transform: translate(-50%, -5px); }
+    }
+    .lucky-stage.shaking .sanjini { animation: sjBob 0.45s ease-in-out infinite; }
+    .sj-body {
+      position: absolute;
+      left: 50%; top: 6px;
+      transform: translateX(-50%);
+      width: 64px; height: 60px;
+      background: #5888b2;
+      border-radius: 50% 50% 46% 46%;
+    }
+    /* 머리 깃털 */
+    .sj-body::before {
+      content: '';
+      position: absolute;
+      top: -9px; left: 50%;
+      transform: translateX(-50%) rotate(-12deg);
+      width: 0; height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-bottom: 12px solid #46729a;
+      border-radius: 2px;
+    }
+    .sj-belly {
+      position: absolute;
+      bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 40px; height: 28px;
+      background: #dbe8f3;
+      border-radius: 50% 50% 44% 44%;
+    }
+    .sj-eye {
+      position: absolute;
+      top: 18px;
+      width: 13px; height: 13px;
+      background: #fff;
+      border-radius: 50%;
+    }
+    .sj-eye-l { left: 12px; }
+    .sj-eye-r { right: 12px; }
+    .sj-eye::after {
+      content: '';
+      position: absolute;
+      top: 3.5px; left: 3.5px;
+      width: 6px; height: 6px;
+      background: #1d2733;
+      border-radius: 50%;
+      animation: sjBlink 3.4s infinite;
+    }
+    @keyframes sjBlink {
+      0%, 92%, 100% { transform: scaleY(1); }
+      96% { transform: scaleY(0.1); }
+    }
+    /* 결과 후 행복한 눈 (^^) */
+    .sanjini.happy .sj-eye {
+      height: 7px;
+      background: transparent;
+      border-radius: 0 0 12px 12px;
+      border-bottom: 3px solid #1d2733;
+      top: 21px;
+    }
+    .sanjini.happy .sj-eye::after { display: none; }
+    .sj-beak {
+      position: absolute;
+      top: 28px; left: 50%;
+      transform: translateX(-50%);
+      width: 0; height: 0;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-top: 9px solid #ffbe0c;
+      border-radius: 3px;
+    }
+    .sj-cheek {
+      position: absolute;
+      top: 31px;
+      width: 9px; height: 6px;
+      background: #ffb3c1;
+      border-radius: 50%;
+      opacity: 0.75;
+    }
+    .sj-cheek-l { left: 8px; }
+    .sj-cheek-r { right: 8px; }
+    .sj-wing {
+      position: absolute;
+      top: 26px;
+      width: 18px; height: 30px;
+      background: #46729a;
+      border-radius: 50% 50% 60% 60%;
+      z-index: -1;
+    }
+    .sj-wing-l { left: 4px; transform: rotate(18deg); transform-origin: top center; }
+    .sj-wing-r { right: 4px; transform: rotate(-18deg); transform-origin: top center; }
+    .lucky-stage.shaking .sj-wing-l { animation: flapL 0.22s ease-in-out infinite alternate; }
+    .lucky-stage.shaking .sj-wing-r { animation: flapR 0.22s ease-in-out infinite alternate; }
+    @keyframes flapL { from { transform: rotate(18deg); } to { transform: rotate(58deg); } }
+    @keyframes flapR { from { transform: rotate(-18deg); } to { transform: rotate(-58deg); } }
+
+    /* 가챠 캡슐 */
+    .capsule {
+      position: absolute;
+      left: 50%; bottom: 4px;
+      transform: translateX(-50%);
+      width: 86px; height: 86px;
+      z-index: 1;
+    }
+    .lucky-stage.shaking .capsule { animation: capShake 0.12s linear infinite; }
+    @keyframes capShake {
+      0% { transform: translateX(-50%) rotate(0deg); }
+      25% { transform: translateX(calc(-50% - 3px)) rotate(-6deg); }
+      75% { transform: translateX(calc(-50% + 3px)) rotate(6deg); }
+      100% { transform: translateX(-50%) rotate(0deg); }
+    }
+    .capsule-top {
+      position: absolute;
+      top: 0; left: 0;
+      width: 86px; height: 43px;
+      background: linear-gradient(180deg, #ffd34d, #ffbe0c);
+      border-radius: 86px 86px 0 0;
+      transition: transform 0.5s cubic-bezier(0.34, 1.4, 0.64, 1), opacity 0.5s;
+    }
+    .capsule-bottom {
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 86px; height: 43px;
+      background: #fff;
+      border: 2px solid #dcdcdc;
+      border-top: none;
+      border-radius: 0 0 86px 86px;
+      box-shadow: inset 0 -6px 0 rgba(0, 91, 169, 0.08);
+    }
+    .capsule-shine {
+      position: absolute;
+      top: 9px; left: 14px;
+      width: 18px; height: 10px;
+      background: #fff;
+      border-radius: 50%;
+      opacity: 0.55;
+      transform: rotate(-24deg);
+      transition: opacity 0.3s;
+    }
+    .lucky-stage.opened .capsule-top {
+      transform: translateY(-58px) rotate(-28deg);
+      opacity: 0;
+    }
+    .lucky-stage.opened .capsule-shine { opacity: 0; }
+
+    /* 컨페티 */
+    .lucky-confetti span {
+      position: absolute;
+      left: 50%; bottom: 44px;
+      width: 8px; height: 8px;
+      border-radius: 2px;
+      pointer-events: none;
+      animation: confettiFly 0.9s ease-out forwards;
+    }
+    @keyframes confettiFly {
+      0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+      100% { transform: translate(var(--cx), var(--cy)) rotate(540deg); opacity: 0; }
+    }
+
+    /* 결과 카드 */
+    .lucky-result {
+      display: none;
+      border: 2px solid #dbe8f3;
+      border-radius: 16px;
+      padding: 12px;
+      margin: 4px 0 12px;
+      align-items: center;
+      gap: 12px;
+      text-align: left;
+    }
+    .lucky-result.show { display: flex; animation: luckyPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+    .lucky-result-thumb {
+      width: 62px; height: 62px;
+      border-radius: 12px;
+      background: #f4f4f4;
+      flex-shrink: 0;
+      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 30px;
+    }
+    .lucky-result-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .lucky-result-info { min-width: 0; }
+    .lucky-result-name {
+      font-family: 'Poppins', sans-serif;
+      font-size: 15px; font-weight: 700; color: #191919;
+      letter-spacing: -0.15px;
+      margin-bottom: 3px;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .lucky-result-meta {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px; color: #5888b2; font-weight: 500;
+    }
+    .lucky-result-meta .dist { color: #ffbe0c; font-weight: 700; margin-left: 6px; }
+
+    /* 버튼 */
+    .lucky-btn {
+      width: 100%; height: 44px;
+      background: #005ba9; color: #fff;
+      border: none; border-radius: 22px;
+      font-family: 'Poppins', 'Apple SD Gothic Neo', sans-serif;
+      font-size: 14px; font-weight: 700;
+      cursor: pointer;
+      letter-spacing: -0.2px;
+    }
+    .lucky-btn:active { opacity: 0.85; }
+    .lucky-btn:disabled { background: #b9cfe3; cursor: wait; }
+    .lucky-btn.ghost {
+      background: #fff; color: #005ba9;
+      border: 1.5px solid #dbe8f3;
+    }
+    .lucky-actions {
+      display: none;
+      gap: 8px;
+    }
+    .lucky-actions.show { display: flex; }
+    .lucky-actions .lucky-btn { flex: 1; }
+    .lucky-hide {
+      margin-top: 12px;
+      background: none; border: none;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px; color: #aaa;
+      text-decoration: underline;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -475,7 +771,7 @@
   <div class="header">
     <div class="header-top">
       <!-- BNU 로고 -->
-      <a class="logo-bnu" href="/"><img src="/static/images/logo-bnu.svg" alt="BNU"></a>
+      <a class="logo-bnu" href="/home"><img src="/static/images/logo-bnu.svg" alt="BNU"></a>
 
       <!-- 서브타이틀 (Bab 롤링) -->
       <div class="header-sub">
@@ -666,6 +962,52 @@
 
 </div>
 
+<!-- ── 산지니의 행운식당 팝업 ── -->
+<div class="lucky-overlay" id="luckyOverlay" onclick="closeLucky()">
+  <div class="lucky-sheet" onclick="event.stopPropagation()">
+    <button class="lucky-close" onclick="closeLucky()" aria-label="닫기">✕</button>
+    <div class="lucky-title"><span class="tw">✨</span> 산지니의 행운식당 <span class="tw tw2">✨</span></div>
+    <div class="lucky-desc" id="luckyDesc">오늘 뭐 먹을지 고민된다면,<br>산지니가 행운의 식당을 뽑아줄게요!</div>
+
+    <div class="lucky-stage" id="luckyStage">
+      <div class="sanjini" id="sanjini">
+        <div class="sj-wing sj-wing-l"></div>
+        <div class="sj-wing sj-wing-r"></div>
+        <div class="sj-body">
+          <div class="sj-belly"></div>
+          <div class="sj-eye sj-eye-l"></div>
+          <div class="sj-eye sj-eye-r"></div>
+          <div class="sj-beak"></div>
+          <div class="sj-cheek sj-cheek-l"></div>
+          <div class="sj-cheek sj-cheek-r"></div>
+        </div>
+      </div>
+      <div class="capsule">
+        <div class="capsule-bottom"></div>
+        <div class="capsule-top"></div>
+        <div class="capsule-shine"></div>
+      </div>
+      <div class="lucky-confetti" id="luckyConfetti"></div>
+    </div>
+
+    <div class="lucky-result" id="luckyResult">
+      <div class="lucky-result-thumb" id="luckyThumb">🍚</div>
+      <div class="lucky-result-info">
+        <div class="lucky-result-name" id="luckyName">-</div>
+        <div class="lucky-result-meta" id="luckyMeta"></div>
+      </div>
+    </div>
+
+    <button class="lucky-btn" id="luckyBtn" onclick="drawLucky()">🎰 행운 뽑기!</button>
+    <div class="lucky-actions" id="luckyActions">
+      <button class="lucky-btn ghost" onclick="drawLucky()">다시 뽑기</button>
+      <button class="lucky-btn" onclick="goLucky()">보러가기 ►</button>
+    </div>
+
+    <button class="lucky-hide" onclick="hideLuckyToday()">오늘 하루 안 보기</button>
+  </div>
+</div>
+
 <script src="/static/auth.js"></script>
 <script>
   // 카테고리 이미지 매핑 (images/ 폴더에 넣어두면 됨)
@@ -740,6 +1082,103 @@
     // 가까운 카페 (top 7)
     document.getElementById('nearCafe').innerHTML =
       cafeData.slice(0, 7).map((item, idx) => makeRestCard(item, idx, 'cafeData')).join('');
+
+    maybeShowLucky();
+  }
+
+  /* ── 산지니의 행운식당 ── */
+  const LUCKY_HIDE_KEY = 'luckyHideDate';
+  let luckyItem = null, luckyBusy = false;
+
+  function luckyToday() {
+    const d = new Date();
+    return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
+  }
+
+  function maybeShowLucky() {
+    if (localStorage.getItem(LUCKY_HIDE_KEY) === luckyToday()) return;
+    if (sessionStorage.getItem('luckySeen')) return;
+    sessionStorage.setItem('luckySeen', '1');
+    setTimeout(() => document.getElementById('luckyOverlay').classList.add('open'), 600);
+  }
+
+  function closeLucky() {
+    document.getElementById('luckyOverlay').classList.remove('open');
+  }
+
+  function hideLuckyToday() {
+    localStorage.setItem(LUCKY_HIDE_KEY, luckyToday());
+    closeLucky();
+  }
+
+  function spawnLuckyConfetti() {
+    const wrap = document.getElementById('luckyConfetti');
+    const colors = ['#005ba9', '#5888b2', '#ffbe0c', '#ffd34d', '#dbe8f3', '#ffb3c1'];
+    for (let i = 0; i < 16; i++) {
+      const p = document.createElement('span');
+      const angle = (Math.PI * i) / 8 + Math.random() * 0.3;
+      const dist = 55 + Math.random() * 50;
+      p.style.setProperty('--cx', `${Math.cos(angle) * dist}px`);
+      p.style.setProperty('--cy', `${-Math.abs(Math.sin(angle)) * dist - 20}px`);
+      p.style.background = colors[i % colors.length];
+      wrap.appendChild(p);
+      p.addEventListener('animationend', () => p.remove());
+    }
+  }
+
+  function drawLucky() {
+    if (luckyBusy) return;
+    const pool = foodData.length ? foodData : [...foodData, ...cafeData];
+    if (!pool.length) return;
+    luckyBusy = true;
+
+    const stage = document.getElementById('luckyStage');
+    const bird = document.getElementById('sanjini');
+    const btn = document.getElementById('luckyBtn');
+    const result = document.getElementById('luckyResult');
+    const actions = document.getElementById('luckyActions');
+
+    // 초기화 (다시 뽑기 대비)
+    stage.classList.remove('opened');
+    bird.classList.remove('happy');
+    result.classList.remove('show');
+    actions.classList.remove('show');
+    btn.style.display = 'block';
+    btn.disabled = true;
+    btn.textContent = '두구두구...';
+    document.getElementById('luckyDesc').innerHTML = '산지니가 열심히 뽑는 중...!';
+
+    stage.classList.add('shaking');
+
+    setTimeout(() => {
+      stage.classList.remove('shaking');
+      stage.classList.add('opened');
+      bird.classList.add('happy');
+      spawnLuckyConfetti();
+
+      luckyItem = pool[Math.floor(Math.random() * pool.length)];
+      const name = luckyItem['이름'] || '-';
+      const cat = luckyItem['대분류'] || luckyItem['카테고리'] || '';
+      const dist = luckyItem['거리(m)'] && luckyItem['거리(m)'] !== '-' ? luckyItem['거리(m)'] + 'm' : '';
+      const thumb = document.getElementById('luckyThumb');
+      thumb.innerHTML = luckyItem['사진']
+        ? `<img src="${luckyItem['사진']}" alt="${name}" onerror="this.outerHTML='${catEmoji[cat] || '🍚'}'">`
+        : (catEmoji[cat] || '🍚');
+      document.getElementById('luckyName').textContent = name;
+      document.getElementById('luckyMeta').innerHTML = `${cat}${dist ? `<span class="dist">${dist}</span>` : ''}`;
+      document.getElementById('luckyDesc').innerHTML = '오늘의 행운식당은 바로 여기!';
+
+      result.classList.add('show');
+      btn.style.display = 'none';
+      btn.disabled = false;
+      btn.textContent = '🎰 행운 뽑기!';
+      actions.classList.add('show');
+      luckyBusy = false;
+    }, 1300);
+  }
+
+  function goLucky() {
+    if (luckyItem) openDetail(luckyItem);
   }
 
   // 로그인 콜백 처리 (카카오/구글 공통)
@@ -751,7 +1190,7 @@
       try {
         localStorage.setItem('jwt', kt);
         localStorage.setItem('user', ku);
-        history.replaceState({}, '', '/');
+        history.replaceState({}, '', '/home');
 
         // 서버 데이터로 덮어쓰기 (계정별 독립)
         const headers = { 'Authorization': `Bearer ${kt}` };

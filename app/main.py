@@ -26,6 +26,11 @@ app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 @app.get("/")
 def index():
+    return FileResponse(os.path.join(STATIC_DIR, "login.html"))
+
+
+@app.get("/home")
+def home():
     return FileResponse(os.path.join(STATIC_DIR, "home.html"))
 
 

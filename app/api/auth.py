@@ -149,7 +149,7 @@ async def google_callback(code: str):
     user = user_service.upsert_user(email, name, picture)
     jwt_token = create_jwt(email)
     user_encoded = urllib.parse.quote(json.dumps(user, ensure_ascii=False))
-    return RedirectResponse(f"/?_kt={jwt_token}&_ku={user_encoded}")
+    return RedirectResponse(f"/home?_kt={jwt_token}&_ku={user_encoded}")
 
 
 @router.get("/kakao/url")
@@ -206,4 +206,4 @@ async def kakao_callback(code: str):
 
     # 3. 프론트엔드로 리다이렉트 (토큰 전달)
     user_encoded = urllib.parse.quote(json.dumps(user, ensure_ascii=False))
-    return RedirectResponse(f"/?_kt={jwt_token}&_ku={user_encoded}")
+    return RedirectResponse(f"/home?_kt={jwt_token}&_ku={user_encoded}")

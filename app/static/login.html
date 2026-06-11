@@ -377,7 +377,7 @@
     </button>
 
     <!-- 둘러보기 -->
-    <button class="skip-btn" onclick="location.href='/'">로그인 없이 둘러보기</button>
+    <button class="skip-btn" onclick="location.href='/home'">로그인 없이 둘러보기</button>
 
     <div class="error-msg" id="errorMsg">로그인에 실패했어요. 다시 시도해주세요.</div>
 
@@ -403,7 +403,12 @@
 
   <script src="/static/auth.js"></script>
   <script>
-    const REDIRECT = new URLSearchParams(location.search).get('from') || '/';
+    const REDIRECT = new URLSearchParams(location.search).get('from') || '/home';
+
+    // 이미 로그인된 상태로 첫 화면에 들어오면 홈으로 바로 이동
+    if (!new URLSearchParams(location.search).get('from') && typeof getToken === 'function' && getToken()) {
+      location.replace('/home');
+    }
 
     function showLoading() { document.getElementById('loadingOverlay').classList.add('show'); }
     function showError(msg) {

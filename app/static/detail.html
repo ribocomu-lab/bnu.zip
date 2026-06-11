@@ -152,6 +152,8 @@
     .star-rating .star-ico { color: #f5b400; font-size: 26px; line-height: 1; }
     .star-rating #starValue { font-size: 16px; font-weight: 700; color: #ffbe0c; letter-spacing: -0.16px; }
     .star-rating .review-cnt { font-size: 11px; font-weight: 500; color: #999; margin-left: 3px; }
+    .star-rating.empty .star-ico { color: #ccc; }
+    .star-rating.empty #starValue { color: #ccc; }
     .detail-row {
       display: flex; align-items: center;
       gap: 6px; margin-bottom: 8px;
@@ -655,13 +657,17 @@
       document.getElementById('restName').textContent = item['이름'];
       document.getElementById('catBadge').textContent = '#' + cat;
 
-      // 별점 (이름 아래)
+      // 별점 (이름 아래) — 별점 없으면 회색 별 + (0)
+      const ratingEl = document.getElementById('starRating');
+      ratingEl.style.display = 'flex';
       if (item['별점'] != null) {
-        document.getElementById('starRating').style.display = 'flex';
+        ratingEl.classList.remove('empty');
         document.getElementById('starValue').textContent = item['별점'];
         document.getElementById('reviewCntInline').textContent = `(${item['리뷰수'] ?? 0})`;
       } else {
-        document.getElementById('starRating').style.display = 'none';
+        ratingEl.classList.add('empty');
+        document.getElementById('starValue').textContent = '0';
+        document.getElementById('reviewCntInline').textContent = '(0)';
       }
 
       // 정보 행
