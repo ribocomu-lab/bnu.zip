@@ -519,165 +519,169 @@
       margin-top: 8px;
     }
 
-    /* 무대 (산지니 + 캡슐) */
+    /* 무대 (뽑기 머신 + 캡슐) */
     .lucky-stage {
       position: relative;
-      height: 168px;
+      height: 180px;
       margin: 8px 0 4px;
     }
 
-    /* 산지니 (부산대 새매) */
-    .sanjini {
+    /* 뽑기 머신 */
+    .gacha {
       position: absolute;
-      left: 50%; bottom: 76px;
-      width: 84px; height: 70px;
-      z-index: 2;
-      animation: sjBob 2.4s ease-in-out infinite;
-    }
-    @keyframes sjBob {
-      0%, 100% { transform: translate(-50%, 0); }
-      50% { transform: translate(-50%, -5px); }
-    }
-    .lucky-stage.shaking .sanjini { animation: sjBob 0.45s ease-in-out infinite; }
-    .sj-body {
-      position: absolute;
-      left: 50%; top: 6px;
+      left: 50%; bottom: 12px;
       transform: translateX(-50%);
-      width: 64px; height: 60px;
-      background: #5888b2;
-      border-radius: 50% 50% 46% 46%;
-    }
-    /* 머리 깃털 */
-    .sj-body::before {
-      content: '';
-      position: absolute;
-      top: -9px; left: 50%;
-      transform: translateX(-50%) rotate(-12deg);
-      width: 0; height: 0;
-      border-left: 5px solid transparent;
-      border-right: 5px solid transparent;
-      border-bottom: 12px solid #46729a;
-      border-radius: 2px;
-    }
-    .sj-belly {
-      position: absolute;
-      bottom: 0; left: 50%;
-      transform: translateX(-50%);
-      width: 40px; height: 28px;
-      background: #dbe8f3;
-      border-radius: 50% 50% 44% 44%;
-    }
-    .sj-eye {
-      position: absolute;
-      top: 18px;
-      width: 13px; height: 13px;
-      background: #fff;
-      border-radius: 50%;
-    }
-    .sj-eye-l { left: 12px; }
-    .sj-eye-r { right: 12px; }
-    .sj-eye::after {
-      content: '';
-      position: absolute;
-      top: 3.5px; left: 3.5px;
-      width: 6px; height: 6px;
-      background: #1d2733;
-      border-radius: 50%;
-      animation: sjBlink 3.4s infinite;
-    }
-    @keyframes sjBlink {
-      0%, 92%, 100% { transform: scaleY(1); }
-      96% { transform: scaleY(0.1); }
-    }
-    /* 결과 후 행복한 눈 (^^) */
-    .sanjini.happy .sj-eye {
-      height: 7px;
-      background: transparent;
-      border-radius: 0 0 12px 12px;
-      border-bottom: 3px solid #1d2733;
-      top: 21px;
-    }
-    .sanjini.happy .sj-eye::after { display: none; }
-    .sj-beak {
-      position: absolute;
-      top: 28px; left: 50%;
-      transform: translateX(-50%);
-      width: 0; height: 0;
-      border-left: 6px solid transparent;
-      border-right: 6px solid transparent;
-      border-top: 9px solid #ffbe0c;
-      border-radius: 3px;
-    }
-    .sj-cheek {
-      position: absolute;
-      top: 31px;
-      width: 9px; height: 6px;
-      background: #ffb3c1;
-      border-radius: 50%;
-      opacity: 0.75;
-    }
-    .sj-cheek-l { left: 8px; }
-    .sj-cheek-r { right: 8px; }
-    .sj-wing {
-      position: absolute;
-      top: 26px;
-      width: 18px; height: 30px;
-      background: #46729a;
-      border-radius: 50% 50% 60% 60%;
-      z-index: -1;
-    }
-    .sj-wing-l { left: 4px; transform: rotate(18deg); transform-origin: top center; }
-    .sj-wing-r { right: 4px; transform: rotate(-18deg); transform-origin: top center; }
-    .lucky-stage.shaking .sj-wing-l { animation: flapL 0.22s ease-in-out infinite alternate; }
-    .lucky-stage.shaking .sj-wing-r { animation: flapR 0.22s ease-in-out infinite alternate; }
-    @keyframes flapL { from { transform: rotate(18deg); } to { transform: rotate(58deg); } }
-    @keyframes flapR { from { transform: rotate(-18deg); } to { transform: rotate(-58deg); } }
-
-    /* 가챠 캡슐 */
-    .capsule {
-      position: absolute;
-      left: 50%; bottom: 4px;
-      transform: translateX(-50%);
-      width: 86px; height: 86px;
+      width: 100px; height: 148px;
       z-index: 1;
     }
-    .lucky-stage.shaking .capsule { animation: capShake 0.12s linear infinite; }
-    @keyframes capShake {
-      0% { transform: translateX(-50%) rotate(0deg); }
-      25% { transform: translateX(calc(-50% - 3px)) rotate(-6deg); }
-      75% { transform: translateX(calc(-50% + 3px)) rotate(6deg); }
-      100% { transform: translateX(-50%) rotate(0deg); }
+    .lucky-stage.shaking .gacha { animation: gachaWiggle 0.18s linear infinite; }
+    @keyframes gachaWiggle {
+      0%, 100% { transform: translateX(-50%) rotate(0deg); }
+      25% { transform: translateX(calc(-50% - 2px)) rotate(-1.5deg); }
+      75% { transform: translateX(calc(-50% + 2px)) rotate(1.5deg); }
     }
+    /* 유리 돔 + 미니 캡슐들 */
+    .gacha-dome {
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 84px; height: 46px;
+      background: linear-gradient(180deg, rgba(219,232,243,0.3), rgba(219,232,243,0.8));
+      border: 2.5px solid #b9cfe3;
+      border-bottom: none;
+      border-radius: 84px 84px 0 0;
+      overflow: hidden;
+    }
+    .gacha-dome-shine {
+      position: absolute;
+      top: 8px; left: 11px;
+      width: 16px; height: 9px;
+      background: #fff;
+      opacity: 0.85;
+      border-radius: 50%;
+      transform: rotate(-28deg);
+    }
+    .mini-cap {
+      position: absolute;
+      bottom: -3px;
+      width: 17px; height: 17px;
+      border-radius: 50%;
+      border: 1px solid rgba(0,0,0,0.07);
+    }
+    .mini-cap.c1 { left: 4px;  background: linear-gradient(180deg, #ffbe0c 50%, #fff 50%); }
+    .mini-cap.c2 { left: 19px; bottom: 8px; background: linear-gradient(180deg, #ff8ba0 50%, #fff 50%); }
+    .mini-cap.c3 { left: 33px; background: linear-gradient(180deg, #7cc4ff 50%, #fff 50%); }
+    .mini-cap.c4 { left: 48px; bottom: 8px; background: linear-gradient(180deg, #b39df1 50%, #fff 50%); }
+    .mini-cap.c5 { left: 61px; background: linear-gradient(180deg, #8ad48a 50%, #fff 50%); }
+    .lucky-stage.shaking .mini-cap { animation: miniJiggle 0.16s ease-in-out infinite alternate; }
+    .lucky-stage.shaking .mini-cap.c2,
+    .lucky-stage.shaking .mini-cap.c4 { animation-delay: 0.08s; }
+    @keyframes miniJiggle {
+      from { transform: translateY(0); }
+      to { transform: translateY(-6px); }
+    }
+    /* 머신 몸통 */
+    .gacha-body {
+      position: absolute;
+      top: 44px; left: 0;
+      width: 100px; height: 94px;
+      background: linear-gradient(180deg, #1672bd, #005ba9);
+      border-radius: 12px;
+      box-shadow: inset 0 -5px 0 rgba(0,0,0,0.12);
+    }
+    /* 돌리는 레버 */
+    .gacha-knob {
+      position: absolute;
+      top: 15px; left: 50%;
+      transform: translateX(-50%);
+      width: 30px; height: 30px;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+    }
+    .gacha-knob::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 21px; height: 7px;
+      background: #ffbe0c;
+      border-radius: 4px;
+      transform: translate(-50%, -50%);
+    }
+    .lucky-stage.shaking .gacha-knob { animation: knobSpin 1s ease-in-out; }
+    @keyframes knobSpin {
+      from { transform: translateX(-50%) rotate(0deg); }
+      to { transform: translateX(-50%) rotate(720deg); }
+    }
+    /* 캡슐 출구 */
+    .gacha-slot {
+      position: absolute;
+      bottom: 11px; left: 50%;
+      transform: translateX(-50%);
+      width: 36px; height: 23px;
+      background: #00396b;
+      border-radius: 8px;
+      box-shadow: inset 0 3px 5px rgba(0,0,0,0.45);
+    }
+    .gacha-feet {
+      position: absolute;
+      bottom: -7px; left: 50%;
+      transform: translateX(-50%);
+      width: 108px; height: 10px;
+      background: #dbe8f3;
+      border-radius: 5px;
+    }
+
+    /* 뽑힌 캡슐 — 출구에서 떨어져 통통 튀어나옴 */
+    .capsule {
+      position: absolute;
+      left: 50%; bottom: 2px;
+      transform: translateX(-50%);
+      width: 60px; height: 60px;
+      z-index: 2;
+      opacity: 0;
+    }
+    .lucky-stage.out .capsule { animation: capOut 0.85s cubic-bezier(0.3, 1, 0.6, 1) forwards; }
+    @keyframes capOut {
+      0%   { opacity: 0; transform: translate(-50%, -30px) scale(0.4); }
+      15%  { opacity: 1; }
+      45%  { transform: translate(-50%, 0) scale(0.62); }
+      62%  { transform: translate(-50%, -18px) scale(0.78); }
+      78%  { transform: translate(-50%, 0) scale(0.9); }
+      90%  { transform: translate(-50%, -7px) scale(0.97); }
+      100% { opacity: 1; transform: translate(-50%, 0) scale(1); }
+    }
+    .lucky-stage.opened .capsule { opacity: 1; }
     .capsule-top {
       position: absolute;
       top: 0; left: 0;
-      width: 86px; height: 43px;
+      width: 60px; height: 30px;
       background: linear-gradient(180deg, #ffd34d, #ffbe0c);
-      border-radius: 86px 86px 0 0;
+      border-radius: 60px 60px 0 0;
       transition: transform 0.5s cubic-bezier(0.34, 1.4, 0.64, 1), opacity 0.5s;
     }
     .capsule-bottom {
       position: absolute;
       bottom: 0; left: 0;
-      width: 86px; height: 43px;
+      width: 60px; height: 30px;
       background: #fff;
       border: 2px solid #dcdcdc;
       border-top: none;
-      border-radius: 0 0 86px 86px;
-      box-shadow: inset 0 -6px 0 rgba(0, 91, 169, 0.08);
+      border-radius: 0 0 60px 60px;
+      box-shadow: inset 0 -5px 0 rgba(0, 91, 169, 0.08);
     }
     .capsule-shine {
       position: absolute;
-      top: 9px; left: 14px;
-      width: 18px; height: 10px;
+      top: 6px; left: 10px;
+      width: 13px; height: 7px;
       background: #fff;
       border-radius: 50%;
-      opacity: 0.55;
+      opacity: 0.6;
       transform: rotate(-24deg);
       transition: opacity 0.3s;
     }
     .lucky-stage.opened .capsule-top {
-      transform: translateY(-58px) rotate(-28deg);
+      transform: translateY(-48px) rotate(-28deg);
       opacity: 0;
     }
     .lucky-stage.opened .capsule-shine { opacity: 0; }
@@ -685,7 +689,7 @@
     /* 컨페티 */
     .lucky-confetti span {
       position: absolute;
-      left: 50%; bottom: 44px;
+      left: 50%; bottom: 30px;
       width: 8px; height: 8px;
       border-radius: 2px;
       pointer-events: none;
@@ -970,17 +974,20 @@
     <div class="lucky-desc" id="luckyDesc">오늘 뭐 먹을지 고민된다면,<br>산지니가 행운의 식당을 뽑아줄게요!</div>
 
     <div class="lucky-stage" id="luckyStage">
-      <div class="sanjini" id="sanjini">
-        <div class="sj-wing sj-wing-l"></div>
-        <div class="sj-wing sj-wing-r"></div>
-        <div class="sj-body">
-          <div class="sj-belly"></div>
-          <div class="sj-eye sj-eye-l"></div>
-          <div class="sj-eye sj-eye-r"></div>
-          <div class="sj-beak"></div>
-          <div class="sj-cheek sj-cheek-l"></div>
-          <div class="sj-cheek sj-cheek-r"></div>
+      <div class="gacha">
+        <div class="gacha-dome">
+          <span class="mini-cap c1"></span>
+          <span class="mini-cap c2"></span>
+          <span class="mini-cap c3"></span>
+          <span class="mini-cap c4"></span>
+          <span class="mini-cap c5"></span>
+          <div class="gacha-dome-shine"></div>
         </div>
+        <div class="gacha-body">
+          <div class="gacha-knob"></div>
+          <div class="gacha-slot"></div>
+        </div>
+        <div class="gacha-feet"></div>
       </div>
       <div class="capsule">
         <div class="capsule-bottom"></div>
@@ -998,7 +1005,7 @@
       </div>
     </div>
 
-    <button class="lucky-btn" id="luckyBtn" onclick="drawLucky()">🎰 행운 뽑기!</button>
+    <button class="lucky-btn" id="luckyBtn" onclick="drawLucky()">행운 뽑기!</button>
     <div class="lucky-actions" id="luckyActions">
       <button class="lucky-btn ghost" onclick="drawLucky()">다시 뽑기</button>
       <button class="lucky-btn" onclick="goLucky()">보러가기 ►</button>
@@ -1096,9 +1103,8 @@
   }
 
   function maybeShowLucky() {
+    // '오늘 하루 안 보기'를 누른 날만 숨김 — X로 닫으면 다음 진입 때 다시 표시
     if (localStorage.getItem(LUCKY_HIDE_KEY) === luckyToday()) return;
-    if (sessionStorage.getItem('luckySeen')) return;
-    sessionStorage.setItem('luckySeen', '1');
     setTimeout(() => document.getElementById('luckyOverlay').classList.add('open'), 600);
   }
 
@@ -1133,27 +1139,31 @@
     luckyBusy = true;
 
     const stage = document.getElementById('luckyStage');
-    const bird = document.getElementById('sanjini');
     const btn = document.getElementById('luckyBtn');
     const result = document.getElementById('luckyResult');
     const actions = document.getElementById('luckyActions');
 
     // 초기화 (다시 뽑기 대비)
-    stage.classList.remove('opened');
-    bird.classList.remove('happy');
+    stage.classList.remove('out', 'opened');
     result.classList.remove('show');
     actions.classList.remove('show');
     btn.style.display = 'block';
     btn.disabled = true;
     btn.textContent = '두구두구...';
-    document.getElementById('luckyDesc').innerHTML = '산지니가 열심히 뽑는 중...!';
+    document.getElementById('luckyDesc').innerHTML = '머신이 열심히 굴리는 중...!';
 
+    // 1단계: 레버 돌리기 + 머신 흔들림
     stage.classList.add('shaking');
 
+    // 2단계: 캡슐이 출구에서 통통 튀어나옴
     setTimeout(() => {
       stage.classList.remove('shaking');
+      stage.classList.add('out');
+    }, 1000);
+
+    // 3단계: 짜잔~ 캡슐 오픈 + 컨페티 + 결과
+    setTimeout(() => {
       stage.classList.add('opened');
-      bird.classList.add('happy');
       spawnLuckyConfetti();
 
       luckyItem = pool[Math.floor(Math.random() * pool.length)];
@@ -1166,15 +1176,15 @@
         : (catEmoji[cat] || '🍚');
       document.getElementById('luckyName').textContent = name;
       document.getElementById('luckyMeta').innerHTML = `${cat}${dist ? `<span class="dist">${dist}</span>` : ''}`;
-      document.getElementById('luckyDesc').innerHTML = '오늘의 행운식당은 바로 여기!';
+      document.getElementById('luckyDesc').innerHTML = '짜잔~ 오늘의 행운식당!';
 
       result.classList.add('show');
       btn.style.display = 'none';
       btn.disabled = false;
-      btn.textContent = '🎰 행운 뽑기!';
+      btn.textContent = '행운 뽑기!';
       actions.classList.add('show');
       luckyBusy = false;
-    }, 1300);
+    }, 1950);
   }
 
   function goLucky() {
