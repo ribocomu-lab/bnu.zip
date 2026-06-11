@@ -597,6 +597,7 @@
   </div>
 
   <script src="/static/auth.js"></script>
+  <script src="/static/collections.js"></script>
   <script>
     const catEmoji = {
       '돈까스·회':'🍱','한식':'🍚','치킨':'🍗','피자·버거':'🍔',
@@ -718,6 +719,8 @@
     }
 
     function render() {
+      // 팝업 등 다른 경로로 만든 컬렉션 반영
+      myCollections = JSON.parse(localStorage.getItem('myCollections') || '[]');
       renderCollections();
       let items = getList();
       document.getElementById('countBadge').textContent = items.length;
@@ -799,9 +802,12 @@
       void btn.offsetWidth;
       btn.classList.add('bump');
 
-      // 저장한 곳 탭에서 하트를 해제하면 목록에서 제거
-      if (mainTab === 'saved' && !becameSaved) {
-        setTimeout(render, 450);
+      if (becameSaved) {
+        CollectionPicker.open(name, () => render());
+      } else {
+        CollectionPicker.removeFromAll(name);
+        // 저장한 곳 탭에서 하트를 해제하면 목록에서 제거
+        if (mainTab === 'saved') setTimeout(render, 450);
       }
     }
 

@@ -585,6 +585,7 @@
   </div>
 
   <script src="/static/auth.js"></script>
+  <script src="/static/collections.js"></script>
   <script>
     const CAT_EMOJI = {
       '한식':'🍚','일식':'🍣','중식':'🥡','양식':'🍝','치킨':'🍗',
@@ -769,7 +770,12 @@
       btn.classList.remove('bump');
       void btn.offsetWidth;
       btn.classList.add('bump');
-      if (becameSaved) spawnHeartParticles(btn);
+      if (becameSaved) {
+        spawnHeartParticles(btn);
+        CollectionPicker.open(name);
+      } else {
+        CollectionPicker.removeFromAll(name);
+      }
     }
 
     function showToast(msg) {
