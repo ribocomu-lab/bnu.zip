@@ -12,225 +12,588 @@
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Bab 밥 in PNU" />
   <meta name="twitter:description" content="Bab 밥 Navigation for U — 부산대 맛집·카페 길잡이" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
-      background: #f0f0f0;
+      background: #e8e8e8;
       display: flex;
       justify-content: center;
       align-items: flex-start;
       min-height: 100vh;
-      font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      font-family: 'Poppins', 'Apple SD Gothic Neo', sans-serif;
     }
+
     .phone {
-      width: 390px;
-      height: 844px;
+      width: 430px;
+      height: 100vh;
+      min-height: 700px;
       background: #fff;
-      border: 1px solid #bbb;
       display: flex;
       flex-direction: column;
+      position: relative;
       overflow: hidden;
     }
 
-    /* 헤더 */
+    /* ── 헤더 (홈과 동일) ── */
     .header {
-      padding: 16px 16px 0;
-      border-bottom: 1px solid #ddd;
+      background: #fff;
+      padding: 20px 31px 0;
       flex-shrink: 0;
     }
     .header-top {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
+      justify-content: space-between;
+      padding-bottom: 16px;
     }
-    .header-title { font-size: 17px; font-weight: 700; color: #111; }
-
-    /* 메인 탭 */
-    .tab-row { display: flex; }
-    .tab {
-      flex: 1;
-      padding: 10px 0;
+    .logo-bnu { display: block; line-height: 0; }
+    .logo-bnu img { height: 24px; width: auto; display: block; }
+    .header-sub {
+      font-family: 'Poppins', sans-serif;
+      font-size: 11.52px;
+      font-weight: 500;
+      color: #000;
+      letter-spacing: -0.46px;
       text-align: center;
-      font-size: 14px;
-      color: #aaa;
-      border-bottom: 2px solid transparent;
-      cursor: pointer;
+      line-height: 1.6;
     }
-    .tab.active { color: #111; font-weight: 700; border-bottom-color: #111; }
-
-    /* 요약 바 */
-    .summary-bar {
+    .header-sub .blue { color: #005ba9; font-weight: 700; }
+    .bab-slot {
+      display: inline-block;
+      overflow: hidden;
+      height: 1.1em;
+      vertical-align: middle;
+      position: relative;
+      top: -0.05em;
+    }
+    .bab-slot-inner {
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
+      animation: babRoll 2.6s ease-out infinite 0.8s;
+    }
+    .bab-slot-inner span {
+      display: flex;
       align-items: center;
-      padding: 10px 16px;
-      border-bottom: 1px solid #eee;
+      justify-content: center;
+      height: 1.1em;
+      line-height: 1.1;
+      white-space: nowrap;
+    }
+    .bab-slot-inner .bab-emoji img { height: 0.9em; width: auto; vertical-align: middle; }
+    @keyframes babRoll {
+      0%   { transform: translateY(0); }
+      30%  { transform: translateY(0); }
+      50%  { transform: translateY(-1.1em); }
+      80%  { transform: translateY(-1.1em); }
+      95%  { transform: translateY(0); }
+      100% { transform: translateY(0); }
+    }
+    .account-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      cursor: pointer;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      font-size: 14px;
+    }
+    .account-icon img { width: 100%; height: 100%; object-fit: cover; }
+    .header-divider { height: 1px; background: #e8e8e8; margin: 0 -31px; }
+
+    /* ── 탭 (저장한 곳 / 가본 곳) ── */
+    .tab-toggle {
+      display: flex;
+      border-bottom: 1px solid #bbb;
+      background: #fff;
       flex-shrink: 0;
     }
-    .summary-count { font-size: 12px; color: #888; }
-    .summary-count span { color: #111; font-weight: 700; }
-    .sort-row { display: flex; gap: 6px; }
-    .sort-btn {
-      font-size: 11px;
-      color: #888;
-      padding: 4px 8px;
-      border: 1px solid #ddd;
-      border-radius: 12px;
+    .tab-btn {
+      flex: 1;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Inter', 'Apple SD Gothic Neo', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: -0.48px;
+      color: #696969;
+      background: #fff;
       cursor: pointer;
     }
-    .sort-btn.active { border-color: #111; background: #111; color: #fff; font-weight: 600; }
+    .tab-btn.active {
+      background: linear-gradient(180deg, #fff 50.962%, #ffe398 100%);
+      color: #ea8100;
+      font-weight: 800;
+    }
 
-    /* 컬렉션 칩 */
+    /* ── 내 컬렉션 ── */
     .collection-section {
-      padding: 10px 16px;
-      border-bottom: 1px solid #eee;
+      padding: 16px 31px 0;
       flex-shrink: 0;
     }
-    .collection-label { font-size: 11px; color: #aaa; margin-bottom: 8px; letter-spacing: 0.5px; }
+    .collection-label {
+      font-family: 'Inter', 'Apple SD Gothic Neo', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: -0.48px;
+      color: #696969;
+      margin-bottom: 8px;
+    }
     .collection-scroll {
       display: flex;
       gap: 8px;
       overflow-x: auto;
       scrollbar-width: none;
       -webkit-overflow-scrolling: touch;
-      padding-right: 4px;
+      padding-bottom: 2px;
     }
     .collection-scroll::-webkit-scrollbar { display: none; }
     .col-chip {
       flex-shrink: 0;
-      padding: 6px 14px;
-      border: 1px solid #ddd;
-      border-radius: 20px;
+      height: 29px;
+      padding: 0 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 0.5px solid #828282;
+      border-radius: 22px;
+      font-family: 'Inter', 'Apple SD Gothic Neo', sans-serif;
       font-size: 12px;
-      color: #555;
+      font-weight: 500;
+      letter-spacing: -0.48px;
+      color: #000;
+      background: #fff;
       white-space: nowrap;
       cursor: pointer;
     }
-    .col-chip.active { border-color: #111; background: #111; color: #fff; font-weight: 600; }
+    .col-chip.active {
+      border-color: #f5b400;
+      background: #f5b400;
+      color: #fff;
+      font-weight: 700;
+    }
+    .col-chip.add { padding: 0 6px; min-width: 30px; }
+    .col-chip.add svg { width: 18px; height: 18px; }
 
-    /* 리스트 */
-    .list-scroll { flex: 1; overflow-y: auto; min-height: 0; }
+    /* ── 결과 바 (알약) ── */
+    .result-bar {
+      margin: 14px 31px;
+      height: 48px;
+      border-radius: 65px;
+      background: linear-gradient(90deg, #fff 0%, #ddf0ff 100%);
+      box-shadow: 0 1px 4px rgba(0, 91, 169, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 10px 0 19px;
+      flex-shrink: 0;
+    }
+    .result-count {
+      font-family: 'Inter', 'Apple SD Gothic Neo', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: -0.48px;
+      color: #000;
+    }
+    .result-count span { color: #005ba9; font-weight: 700; }
+    .sort-row { display: flex; gap: 8px; }
+    .sort-btn {
+      height: 29px;
+      padding: 0 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Inter', 'Apple SD Gothic Neo', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: -0.48px;
+      color: #000;
+      border: none;
+      border-radius: 22px;
+      background: #fff;
+      cursor: pointer;
+    }
+    .sort-btn.active {
+      background: #005ba9;
+      color: #fff;
+      font-weight: 700;
+    }
 
+    /* ── 리스트 (탐색 리스트뷰와 동일) ── */
+    .list-scroll {
+      flex: 1;
+      overflow-y: auto;
+      min-height: 0;
+      scrollbar-width: none;
+    }
+    .list-scroll::-webkit-scrollbar { display: none; }
     .restaurant-card {
       display: flex;
       gap: 12px;
-      padding: 14px 16px;
-      border-bottom: 1px solid #eee;
+      padding: 14px 31px;
+      border-bottom: 1px solid #e8e8e8;
+      cursor: pointer;
     }
+    .restaurant-card:active { background: #f8f8f8; }
     .card-thumb {
-      width: 64px;
-      height: 64px;
+      width: 72px;
+      height: 72px;
       background: #f4f4f4;
-      border-radius: 10px;
+      border: 1px solid #dcdcdc;
+      border-radius: 12px;
       flex-shrink: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 26px;
+      font-size: 24px;
+      overflow: hidden;
     }
-    .card-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
-    .card-name { font-size: 15px; font-weight: 700; color: #111; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .card-meta { display: flex; gap: 5px; align-items: center; flex-wrap: wrap; }
-    .tag { font-size: 11px; color: #555; background: #f2f2f2; border-radius: 4px; padding: 2px 6px; }
-    .tag.cafe { background: #fef3e2; color: #e67e22; }
-    .tag.price { background: #f0f7ff; color: #1a73e8; }
-    .card-addr { font-size: 12px; color: #888; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .card-bottom { display: flex; justify-content: space-between; align-items: center; }
-    .card-dist { font-size: 11px; color: #34a853; font-weight: 600; }
-    .action-btn {
-      width: 28px; height: 28px;
-      background: #f4f4f4;
-      border-radius: 6px;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer;
-      font-size: 14px;
-    }
-    .action-btn:active { background: #e8e8e8; }
-
-    /* 빈 상태 */
-    .empty-state {
+    .card-info {
       flex: 1;
       display: flex;
       flex-direction: column;
+      gap: 4px;
+      min-width: 0;
+    }
+    .card-name {
+      font-family: 'Poppins', 'Apple SD Gothic Neo', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.15px;
+      color: #191919;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .card-meta {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .tag {
+      font-family: 'Inter', 'Apple SD Gothic Neo', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: -0.44px;
+      color: #005ba9;
+      background: #ddf0ff;
+      border-radius: 22px;
+      padding: 3px 9px;
+    }
+    .tag.cafe { background: #fff4d5; color: #ea8100; }
+    .card-desc {
+      font-family: 'Inter', 'Apple SD Gothic Neo', sans-serif;
+      font-size: 12px;
+      color: #888;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .card-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 2px;
+    }
+    .card-dist {
+      font-family: 'Poppins', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      color: #005ba9;
+    }
+    .card-actions { display: flex; align-items: center; gap: 10px; }
+
+    /* 하트 (탐색과 동일) */
+    .bookmark-btn {
+      width: 28px;
+      height: 28px;
+      display: flex;
       align-items: center;
       justify-content: center;
-      gap: 12px;
-      padding: 60px 20px;
-    }
-    .empty-icon { font-size: 48px; }
-    .empty-text { font-size: 14px; color: #aaa; text-align: center; line-height: 1.6; }
-    .empty-btn {
-      margin-top: 8px;
-      padding: 10px 24px;
-      background: #111;
-      color: #fff;
-      border: none;
-      border-radius: 20px;
-      font-size: 13px;
-      font-weight: 700;
       cursor: pointer;
+      position: relative;
+    }
+    .bookmark-btn svg { width: 19px; height: 17px; }
+    .bookmark-btn svg path { transition: fill 0.15s; }
+    .bookmark-btn.bump { animation: heartBump 0.45s ease; }
+    @keyframes heartBump {
+      0% { transform: scale(1); }
+      30% { transform: scale(1.4); }
+      55% { transform: scale(0.9); }
+      100% { transform: scale(1); }
     }
 
-    /* 하단 네비 */
-    .bottom-nav {
-      display: flex;
-      border-top: 1px solid #ddd;
+    /* 체크박스 (체크 그리기 애니메이션) */
+    .check-btn {
+      width: 22px;
+      height: 22px;
+      border: 2px solid #bbb;
+      border-radius: 6px;
       background: #fff;
-      padding: 8px 0 16px;
+      cursor: pointer;
+      position: relative;
       flex-shrink: 0;
+      transition: background 0.2s, border-color 0.2s;
     }
-    .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; }
-    .nav-icon { font-size: 20px; color: #ccc; }
-    .nav-item.active .nav-icon { color: #111; }
-    .nav-label { font-size: 10px; color: #aaa; }
-    .nav-item.active .nav-label { color: #111; font-weight: 700; }
+    .check-btn svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .check-btn svg path {
+      stroke: #fff;
+      stroke-width: 2.6;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 20;
+      stroke-dashoffset: 20;
+    }
+    .check-btn.checked {
+      background: #005ba9;
+      border-color: #005ba9;
+    }
+    .check-btn.checked svg path { animation: drawCheck 0.35s ease forwards 0.05s; }
+    .check-btn.checked.static svg path { animation: none; stroke-dashoffset: 0; }
+    @keyframes drawCheck { to { stroke-dashoffset: 0; } }
+
+    /* ── 빈 상태 (피그마) ── */
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 90px;
+      gap: 20px;
+    }
+    .empty-illust { width: 128px; height: 142px; }
+    .empty-text {
+      font-family: 'Inter', 'Apple SD Gothic Neo', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: -0.48px;
+      color: #5888b2;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    /* ── 하단 네비 (홈과 동일) ── */
+    .bottom-nav {
+      height: 73px;
+      background: #fff;
+      border-top: 1px solid #eee;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 0 3px rgba(0,0,0,0.25);
+      flex-shrink: 0;
+      z-index: 200;
+    }
+    .nav-item {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      cursor: pointer;
+    }
+    .nav-icon-svg { width: 26px; height: 26px; fill: none; }
+    .nav-icon-svg path, .nav-icon-svg circle { stroke: #bbb; stroke-width: 2; }
+    .nav-item.active .nav-icon-svg path,
+    .nav-item.active .nav-icon-svg circle { stroke: #005ba9; }
+
+    /* ── 컬렉션 추가 팝업 ── */
+    .col-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 30, 60, 0.45);
+      z-index: 500;
+      align-items: center;
+      justify-content: center;
+    }
+    .col-overlay.open { display: flex; }
+    .col-sheet {
+      width: 330px;
+      background: #fff;
+      border-radius: 24px;
+      padding: 26px 24px 20px;
+      position: relative;
+      box-shadow: 0 12px 40px rgba(0, 40, 80, 0.25);
+      animation: colPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    @keyframes colPop {
+      from { transform: scale(0.75) translateY(20px); opacity: 0; }
+      to   { transform: scale(1) translateY(0); opacity: 1; }
+    }
+    .col-close {
+      position: absolute;
+      top: 14px; right: 14px;
+      width: 28px; height: 28px;
+      border: none; border-radius: 50%;
+      background: #f4f4f4; color: #999;
+      font-size: 13px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .col-close:active { background: #e8e8e8; }
+    .col-title {
+      font-family: 'Poppins', 'Apple SD Gothic Neo', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: #005ba9;
+      text-align: center;
+      letter-spacing: -0.3px;
+    }
+    .col-desc {
+      font-family: 'Inter', 'Apple SD Gothic Neo', sans-serif;
+      font-size: 12px;
+      color: #888;
+      text-align: center;
+      line-height: 1.6;
+      margin: 8px 0 18px;
+    }
+    .col-input {
+      width: 100%;
+      height: 44px;
+      border: 1px solid #dcdcdc;
+      border-radius: 25px;
+      background: #f4f4f4;
+      padding: 0 18px;
+      font-family: 'Inter', 'Apple SD Gothic Neo', sans-serif;
+      font-size: 13px;
+      color: #333;
+      outline: none;
+    }
+    .col-input::placeholder { color: #aaa; }
+    .col-input:focus { border-color: #005ba9; background: #fff; }
+    .col-error {
+      display: none;
+      font-family: 'Inter', 'Apple SD Gothic Neo', sans-serif;
+      font-size: 11px;
+      color: #d6453d;
+      margin: 8px 4px 0;
+    }
+    .col-error.show { display: block; }
+    .col-actions { display: flex; gap: 8px; margin-top: 18px; }
+    .col-btn {
+      flex: 1;
+      height: 44px;
+      border: none;
+      border-radius: 22px;
+      background: #005ba9;
+      color: #fff;
+      font-family: 'Inter', 'Apple SD Gothic Neo', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: -0.2px;
+      cursor: pointer;
+    }
+    .col-btn:active { opacity: 0.85; }
+    .col-btn.ghost {
+      background: #fff;
+      color: #005ba9;
+      border: 1.5px solid #dbe8f3;
+    }
   </style>
 </head>
 <body>
   <div class="phone">
 
+    <!-- ── 헤더 (홈과 동일) ── -->
     <div class="header">
       <div class="header-top">
-        <div class="header-title">🔖 내 목록</div>
-        <div style="position:relative" id="authArea"></div>
+        <a class="logo-bnu" href="/home"><img src="/static/images/logo-bnu.svg" alt="BNU"></a>
+        <div class="header-sub">
+          <div>
+            <span class="bab-slot">
+              <div class="bab-slot-inner">
+                <span>Bab</span>
+                <span class="bab-emoji"><img src="/static/images/bab-emoji.png" alt="밥" /></span>
+              </div>
+            </span>
+            &nbsp;in <span class="blue">PNU</span>,
+          </div>
+          <div>
+            <span class="bab-slot">
+              <div class="bab-slot-inner">
+                <span>Bab</span>
+                <span class="bab-emoji"><img src="/static/images/bab-emoji.png" alt="밥" /></span>
+              </div>
+            </span>
+            &nbsp;Navigation for U
+          </div>
+        </div>
+        <div class="account-icon" id="authArea">👤</div>
       </div>
-      <div class="tab-row">
-        <div class="tab active" onclick="switchMainTab('saved')">저장한 곳</div>
-        <div class="tab" onclick="switchMainTab('visited')">가본 곳</div>
-      </div>
+      <div class="header-divider"></div>
     </div>
 
-    <div class="summary-bar">
-      <div class="summary-count">총 <span id="countBadge">0</span>개 저장됨</div>
-      <div class="sort-row">
-        <div class="sort-btn active" onclick="setSort('recent')">최근 저장순</div>
-        <div class="sort-btn" onclick="setSort('distance')">거리순</div>
-      </div>
+    <!-- ── 탭 ── -->
+    <div class="tab-toggle">
+      <div class="tab-btn active" id="savedTabBtn" onclick="switchMainTab('saved')">저장한 곳</div>
+      <div class="tab-btn" id="visitedTabBtn" onclick="switchMainTab('visited')">가본 곳</div>
     </div>
 
+    <!-- ── 내 컬렉션 ── -->
     <div class="collection-section">
-      <div class="collection-label">컬렉션</div>
+      <div class="collection-label">내 컬렉션</div>
       <div class="collection-scroll" id="collectionScroll"></div>
     </div>
 
-    <div class="list-scroll" id="listScroll"></div>
-
-    <div class="bottom-nav">
-      <div class="nav-item" onclick="location.href='/home'">
-        <div class="nav-icon">🏠</div><div class="nav-label">홈</div>
-      </div>
-      <div class="nav-item" onclick="location.href='/search'">
-        <div class="nav-icon">🔍</div><div class="nav-label">탐색</div>
-      </div>
-      <div class="nav-item" onclick="location.href='/recommend'">
-        <div class="nav-icon">✨</div><div class="nav-label">추천</div>
-      </div>
-      <div class="nav-item active">
-        <div class="nav-icon">🔖</div><div class="nav-label">내 목록</div>
+    <!-- ── 결과 바 ── -->
+    <div class="result-bar">
+      <div class="result-count">총 <span id="countBadge">0</span> 개</div>
+      <div class="sort-row">
+        <div class="sort-btn active" data-sort="distance" onclick="setSort('distance')">거리순</div>
+        <div class="sort-btn" data-sort="recent" onclick="setSort('recent')">최근 저장순</div>
       </div>
     </div>
 
+    <!-- ── 리스트 ── -->
+    <div class="list-scroll" id="listScroll"></div>
+
+    <!-- ── 하단 네비 (홈과 동일) ── -->
+    <nav class="bottom-nav">
+      <div class="nav-item" onclick="location.href='/home'">
+        <svg class="nav-icon-svg" viewBox="0 0 24 24" fill="none">
+          <path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z" stroke-linejoin="round"/>
+          <path d="M9 21V12h6v9" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="nav-item" onclick="location.href='/search'">
+        <svg class="nav-icon-svg" viewBox="0 0 24 24" fill="none">
+          <circle cx="11" cy="11" r="7"/>
+          <path d="M16.5 16.5L21 21" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="nav-item" onclick="location.href='/recommend'">
+        <svg class="nav-icon-svg" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6L12 2z" stroke-width="1.8" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="nav-item active">
+        <svg class="nav-icon-svg" viewBox="0 0 24 24" fill="none">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke-width="1.8" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </nav>
+
+  </div>
+
+  <!-- ── 컬렉션 추가 팝업 ── -->
+  <div class="col-overlay" id="colOverlay" onclick="closeColModal()">
+    <div class="col-sheet" onclick="event.stopPropagation()">
+      <button class="col-close" onclick="closeColModal()" aria-label="닫기">✕</button>
+      <div class="col-title">새 컬렉션 만들기</div>
+      <div class="col-desc">나만의 컬렉션으로<br>맛집을 자유롭게 정리해보세요</div>
+      <input class="col-input" id="colInput" type="text" maxlength="12" placeholder="컬렉션 이름 (최대 12자)" />
+      <div class="col-error" id="colError">이미 있는 이름이에요</div>
+      <div class="col-actions">
+        <button class="col-btn ghost" onclick="closeColModal()">취소</button>
+        <button class="col-btn" onclick="createCollection()">만들기</button>
+      </div>
+    </div>
   </div>
 
   <script src="/static/auth.js"></script>
@@ -238,14 +601,17 @@
     const catEmoji = {
       '돈까스·회':'🍱','한식':'🍚','치킨':'🍗','피자·버거':'🍔',
       '분식':'🥢','중식':'🥡','일식':'🍣','양식':'🍝',
-      '고기·구이':'🥩','카페·디저트':'☕','기타':'🍽'
+      '고기':'🥩','고기·구이':'🥩','카페·디저트':'☕','패스트푸드':'🍔','아시아':'🍜','기타':'🍽'
     };
+
+    const HEART_PATH = 'M10.8333 19.8792L9.2625 18.4708C7.43889 16.8278 5.93125 15.4104 4.73958 14.2188C3.54792 13.0271 2.6 11.9573 1.89583 11.0094C1.19167 10.0615 0.699653 9.19028 0.419792 8.39583C0.139931 7.60139 0 6.78889 0 5.95833C0 4.26111 0.56875 2.84375 1.70625 1.70625C2.84375 0.56875 4.26111 0 5.95833 0C6.89722 0 7.79097 0.198611 8.63958 0.595833C9.48819 0.993056 10.2194 1.55278 10.8333 2.275C11.4472 1.55278 12.1785 0.993056 13.0271 0.595833C13.8757 0.198611 14.7694 0 15.7083 0C17.4056 0 18.8229 0.56875 19.9604 1.70625C21.0979 2.84375 21.6667 4.26111 21.6667 5.95833C21.6667 6.78889 21.5267 7.60139 21.2469 8.39583C20.967 9.19028 20.475 10.0615 19.7708 11.0094C19.0667 11.9573 18.1187 13.0271 16.9271 14.2188C15.7354 15.4104 14.2278 16.8278 12.4042 18.4708L10.8333 19.8792Z';
 
     let allItems = [];
     let bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
     let visited = JSON.parse(localStorage.getItem('visited') || '[]');
+    let myCollections = JSON.parse(localStorage.getItem('myCollections') || '[]');
     let mainTab = 'saved';
-    let currentSort = 'recent';
+    let currentSort = 'distance';
     let currentCol = 'all';
 
     async function load() {
@@ -263,16 +629,15 @@
     function switchMainTab(tab) {
       mainTab = tab;
       currentCol = 'all';
-      document.querySelectorAll('.tab').forEach((t, i) => {
-        t.classList.toggle('active', ['saved','visited'][i] === tab);
-      });
+      document.getElementById('savedTabBtn').classList.toggle('active', tab === 'saved');
+      document.getElementById('visitedTabBtn').classList.toggle('active', tab === 'visited');
       render();
     }
 
     function setSort(sort) {
       currentSort = sort;
-      document.querySelectorAll('.sort-btn').forEach((b, i) => {
-        b.classList.toggle('active', ['recent','distance'][i] === sort);
+      document.querySelectorAll('.sort-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.sort === sort);
       });
       render();
     }
@@ -282,55 +647,92 @@
       render();
     }
 
-    function getSaved() {
-      return allItems.filter(i => bookmarks.includes(i['이름']));
-    }
-
-    function renderCollections(saved) {
-      const foodCount = saved.filter(i => i._type === 'food').length;
-      const cafeCount = saved.filter(i => i._type === 'cafe').length;
-      const chips = [
-        { key: 'all',  label: `전체 (${saved.length})` },
-        { key: 'food', label: `밥집 (${foodCount})` },
-        { key: 'cafe', label: `카페 (${cafeCount})` },
+    /* ── 내 컬렉션 ── */
+    function renderCollections() {
+      const base = [
+        { key: 'all',  label: '전체' },
+        { key: 'food', label: '밥.zip' },
+        { key: 'cafe', label: '커피.zip' },
       ];
-      document.getElementById('collectionScroll').innerHTML = chips.map(c => `
+      const custom = myCollections.map(c => ({ key: 'col:' + c.name, label: c.name }));
+      const chips = [...base, ...custom].map(c => `
         <div class="col-chip ${currentCol === c.key ? 'active' : ''}"
-             onclick="setCollection('${c.key}')">${c.label}</div>
+             onclick="setCollection('${c.key.replace(/'/g, "\\'")}')">${c.label}</div>
       `).join('');
+      document.getElementById('collectionScroll').innerHTML = chips + `
+        <div class="col-chip add" onclick="openColModal()" aria-label="컬렉션 추가">
+          <svg viewBox="0 0 18 18" fill="none"><path d="M9 3.75V14.25M3.75 9H14.25" stroke="#555" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </div>`;
     }
 
-    function removeBookmark(name) {
-      bookmarks = bookmarks.filter(b => b !== name);
-      localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
-      pushBookmarks(bookmarks);
+    function openColModal() {
+      document.getElementById('colInput').value = '';
+      document.getElementById('colError').classList.remove('show');
+      document.getElementById('colOverlay').classList.add('open');
+      setTimeout(() => document.getElementById('colInput').focus(), 80);
+    }
+
+    function closeColModal() {
+      document.getElementById('colOverlay').classList.remove('open');
+    }
+
+    function createCollection() {
+      const input = document.getElementById('colInput');
+      const error = document.getElementById('colError');
+      const name = input.value.trim();
+      if (!name) {
+        error.textContent = '컬렉션 이름을 입력해주세요';
+        error.classList.add('show');
+        return;
+      }
+      const reserved = ['전체', '밥.zip', '커피.zip'];
+      if (reserved.includes(name) || myCollections.some(c => c.name === name)) {
+        error.textContent = '이미 있는 이름이에요';
+        error.classList.add('show');
+        return;
+      }
+      myCollections.push({ name, items: [] });
+      localStorage.setItem('myCollections', JSON.stringify(myCollections));
+      currentCol = 'col:' + name;
+      closeColModal();
       render();
     }
 
-    function removeVisited(name) {
-      visited = visited.filter(v => v !== name);
-      localStorage.setItem('visited', JSON.stringify(visited));
-      render();
-    }
+    document.getElementById('colInput').addEventListener('keydown', e => {
+      if (e.key === 'Enter') createCollection();
+    });
 
+    /* ── 목록 ── */
     function getList() {
       const names = mainTab === 'visited' ? visited : bookmarks;
-      return allItems.filter(i => names.includes(i['이름']));
+      let items = allItems.filter(i => names.includes(i['이름']));
+
+      if (currentCol === 'food') items = items.filter(i => i._type === 'food');
+      else if (currentCol === 'cafe') items = items.filter(i => i._type === 'cafe');
+      else if (currentCol.startsWith('col:')) {
+        const col = myCollections.find(c => 'col:' + c.name === currentCol);
+        const colNames = col ? col.items : [];
+        items = items.filter(i => colNames.includes(i['이름']));
+      }
+      return items;
     }
 
     function render() {
+      renderCollections();
       let items = getList();
-      const label = mainTab === 'visited' ? '가본 곳' : '저장한 곳';
-      const emptyIcon = mainTab === 'visited' ? '✅' : '🔖';
-      const emptyText = mainTab === 'visited'
-        ? '가본 식당이 없어요<br>상세 페이지에서 ✅를 눌러 추가하세요'
-        : '저장한 식당이 없어요<br>탐색에서 🤍를 눌러 저장해보세요';
-
       document.getElementById('countBadge').textContent = items.length;
-      renderCollections(items);
 
-      if (currentCol === 'food') items = items.filter(i => i._type === 'food');
-      if (currentCol === 'cafe') items = items.filter(i => i._type === 'cafe');
+      if (items.length === 0) {
+        const emptyText = mainTab === 'visited'
+          ? '가본 밥.zip이 없어요<br>체크를 눌러 기록해보세요!'
+          : '저장한 밥.zip이 없어요<br>하트를 눌러 저장해보세요!';
+        document.getElementById('listScroll').innerHTML = `
+          <div class="empty-state">
+            <img class="empty-illust" src="/static/images/mylist-empty.svg" alt="" />
+            <div class="empty-text">${emptyText}</div>
+          </div>`;
+        return;
+      }
 
       if (currentSort === 'distance') {
         items = [...items].sort((a, b) => {
@@ -338,45 +740,43 @@
           const db = b['거리(m)'] === '-' ? 9999 : parseInt(b['거리(m)']);
           return da - db;
         });
-      }
-
-      if (items.length === 0) {
-        document.getElementById('listScroll').innerHTML = `
-          <div class="empty-state">
-            <div class="empty-icon">${emptyIcon}</div>
-            <div class="empty-text">${emptyText}</div>
-            <button class="empty-btn" onclick="location.href='/search'">식당 탐색하기</button>
-          </div>`;
-        return;
+      } else {
+        // 최근 저장순: bookmarks/visited 배열의 뒤쪽이 최신
+        const names = mainTab === 'visited' ? visited : bookmarks;
+        items = [...items].sort((a, b) => names.indexOf(b['이름']) - names.indexOf(a['이름']));
       }
 
       window._mylistItems = items;
       document.getElementById('listScroll').innerHTML = items.map((item, idx) => {
-
         const isCafe = item._type === 'cafe';
         const emoji = isCafe ? '☕' : (catEmoji[item['대분류']] || '🍽');
-        const dist = item['거리(m)'] !== '-' ? `🚶 ${item['도보시간']} · ${item['거리(m)']}m` : '';
-        const price = item['가격'] ? parseInt(item['가격']).toLocaleString() + '원' : '';
+        const dist = item['거리(m)'] !== '-' ? `${item['거리(m)']}m` : '';
+        const walk = item['도보시간'] !== '-' ? `🚶 ${item['도보시간']}` : '';
+        const distText = [walk, dist].filter(Boolean).join(' · ');
+        const saved = bookmarks.includes(item['이름']);
+        const isVisited = visited.includes(item['이름']);
         const photo = item['사진'] || (item['사진목록'] && item['사진목록'][0]);
         const thumbHtml = photo
-          ? `<img src="${photo}" style="width:100%;height:100%;object-fit:cover;border-radius:10px;" loading="lazy" onerror="this.parentElement.innerHTML='${emoji}';">`
+          ? `<img src="${photo}" style="width:100%;height:100%;object-fit:cover;" loading="lazy" onerror="this.parentElement.innerHTML='${emoji}';">`
           : emoji;
         return `
           <div class="restaurant-card" data-idx="${idx}">
-            <div class="card-thumb" style="${photo ? 'background:#eee;overflow:hidden;padding:0;' : ''}">${thumbHtml}</div>
+            <div class="card-thumb">${thumbHtml}</div>
             <div class="card-info">
               <div class="card-name">${item['이름']}</div>
               <div class="card-meta">
                 <div class="tag ${isCafe ? 'cafe' : ''}">${item['대분류'] || item['카테고리']}</div>
-                ${price ? `<div class="tag price">${price}</div>` : ''}
-                ${item['별점'] != null ? `<div class="tag" style="color:#f59e0b;background:#fffbeb">★ ${item['별점']}</div>` : ''}
               </div>
-              <div class="card-addr">📍 ${item['주소'] || '-'}</div>
+              <div class="card-desc">📍 ${item['주소'] || '-'}</div>
               <div class="card-bottom">
-                <div class="card-dist">${dist}</div>
-                <div style="display:flex;gap:4px">
-                  ${mainTab === 'saved' ? `<div class="action-btn move-btn" data-idx="${idx}" title="가본 곳으로 이동">✅</div>` : `<div class="action-btn save-btn" data-idx="${idx}" title="저장한 곳으로 이동">🔖</div>`}
-                  <div class="action-btn remove-btn" data-idx="${idx}">🗑️</div>
+                <div class="card-dist">${distText}</div>
+                <div class="card-actions">
+                  <div class="check-btn ${isVisited ? 'checked static' : ''}" data-idx="${idx}" title="가본 곳">
+                    <svg viewBox="0 0 22 22"><path d="M6 11.5L9.5 15L16 8"/></svg>
+                  </div>
+                  <div class="bookmark-btn" data-idx="${idx}">
+                    <svg viewBox="0 0 21.6667 19.8792" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="${HEART_PATH}" fill="${saved ? '#ff4141' : '#ddd'}"/></svg>
+                  </div>
                 </div>
               </div>
             </div>
@@ -384,44 +784,56 @@
       }).join('');
     }
 
-    function moveToVisited(name) {
-      if (!visited.includes(name)) {
-        visited.push(name);
-        localStorage.setItem('visited', JSON.stringify(visited));
-        pushVisited(visited);
+    /* ── 액션 ── */
+    function toggleBookmarkFor(item, btn) {
+      const name = item['이름'];
+      const i = bookmarks.indexOf(name);
+      const becameSaved = i === -1;
+      if (becameSaved) bookmarks.push(name);
+      else bookmarks.splice(i, 1);
+      localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+      pushBookmarks(bookmarks);
+
+      btn.querySelector('svg path').setAttribute('fill', becameSaved ? '#ff4141' : '#ddd');
+      btn.classList.remove('bump');
+      void btn.offsetWidth;
+      btn.classList.add('bump');
+
+      // 저장한 곳 탭에서 하트를 해제하면 목록에서 제거
+      if (mainTab === 'saved' && !becameSaved) {
+        setTimeout(render, 450);
       }
-      removeBookmark(name);
     }
 
-    function moveToSaved(name) {
-      if (!bookmarks.includes(name)) {
-        bookmarks.push(name);
-        localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
-        pushBookmarks(bookmarks);
+    function toggleVisitedFor(item, btn) {
+      const name = item['이름'];
+      const i = visited.indexOf(name);
+      const becameVisited = i === -1;
+      if (becameVisited) visited.push(name);
+      else visited.splice(i, 1);
+      localStorage.setItem('visited', JSON.stringify(visited));
+      pushVisited(visited);
+
+      btn.classList.remove('static');
+      btn.classList.toggle('checked', becameVisited);
+
+      // 가본 곳 탭에서 체크를 해제하면 목록에서 제거
+      if (mainTab === 'visited' && !becameVisited) {
+        setTimeout(render, 350);
       }
-      removeVisited(name);
     }
 
     document.getElementById('listScroll').addEventListener('click', e => {
-      const moveBtn = e.target.closest('.move-btn');
-      if (moveBtn) {
-        const item = window._mylistItems?.[parseInt(moveBtn.dataset.idx)];
-        if (item) moveToVisited(item['이름']);
+      const checkBtn = e.target.closest('.check-btn');
+      if (checkBtn) {
+        const item = window._mylistItems?.[parseInt(checkBtn.dataset.idx)];
+        if (item) toggleVisitedFor(item, checkBtn);
         return;
       }
-      const saveBtn = e.target.closest('.save-btn');
-      if (saveBtn) {
-        const item = window._mylistItems?.[parseInt(saveBtn.dataset.idx)];
-        if (item) moveToSaved(item['이름']);
-        return;
-      }
-      const removeBtn = e.target.closest('.remove-btn');
-      if (removeBtn) {
-        const item = window._mylistItems?.[parseInt(removeBtn.dataset.idx)];
-        if (item) {
-          if (mainTab === 'visited') removeVisited(item['이름']);
-          else removeBookmark(item['이름']);
-        }
+      const heartBtn = e.target.closest('.bookmark-btn');
+      if (heartBtn) {
+        const item = window._mylistItems?.[parseInt(heartBtn.dataset.idx)];
+        if (item) toggleBookmarkFor(item, heartBtn);
         return;
       }
       const card = e.target.closest('.restaurant-card');

@@ -38,7 +38,7 @@
     "출처": "카카오",
     "대분류": "양식",
     "가격": "13400",
-    "별점": null,
+    "별점": 4.0,
     "리뷰수": 356,
     "사진목록": [
       "https://lh3.googleusercontent.com/place-photos/AJRVUZNFR7eIWTZDpkw1gHvhW_AEQArisPaX6Twk1pBCgPcwBx-HVxTyd01vs9neJTAR7ep6_9evEqEmnC3rNUqE_QnPOx2wjRrI-U8ScRBjWunxLaEl2-lx3WofTz0mUqFYOwt3LtPugg3SMCks5g=s1600-w800",
@@ -275,7 +275,7 @@
     "출처": "카카오",
     "대분류": "한식",
     "가격": "13000",
-    "별점": null,
+    "별점": 5.0,
     "리뷰수": 153,
     "사진목록": [
       "https://lh3.googleusercontent.com/place-photos/AJRVUZOS2hmBKJOr9NIjWjE5aoezVAvZtF9Us99-rL3D5NRLzJzvHcb65NldW29gAPh60PnA0jfav-VgQj6DEFxHfWktZVgx3GeyLaedO_zsFpSI-nNmHamhAXYG5aOY1fJuGI4-w7UyCjDHTU3OlLBYJ74igQ=s1600-w800",
@@ -284,7 +284,7 @@
     "사진": "https://lh3.googleusercontent.com/place-photos/AJRVUZOS2hmBKJOr9NIjWjE5aoezVAvZtF9Us99-rL3D5NRLzJzvHcb65NldW29gAPh60PnA0jfav-VgQj6DEFxHfWktZVgx3GeyLaedO_zsFpSI-nNmHamhAXYG5aOY1fJuGI4-w7UyCjDHTU3OlLBYJ74igQ=s1600-w800",
     "lat": 35.2324776,
     "lng": 129.0844689,
-    "전화번호": null,
+    "전화번호": "507-1415-1269",
     "운영시간": [
       "월요일: 11:00 ~ 22:00",
       "화요일: 11:00 ~ 22:00",
@@ -303,12 +303,12 @@
     "출처": "카카오",
     "대분류": "양식",
     "가격": "13000",
-    "별점": null,
+    "별점": 4.6,
     "리뷰수": 369,
     "사진목록": [],
     "lat": 35.2320121646897,
     "lng": 129.085097190641,
-    "전화번호": null,
+    "전화번호": "0507-1399-3481",
     "운영시간": []
   },
   {
@@ -320,7 +320,7 @@
     "출처": "카카오",
     "대분류": "한식",
     "가격": "9000",
-    "별점": null,
+    "별점": 2.6,
     "리뷰수": 254,
     "사진목록": [
       "https://lh3.googleusercontent.com/place-photos/AJRVUZM6sXZsujuH5ztjljRj0i2WtEntaNQmYYE8PGo_5JaSgsvLaPbgNw77q4zK0mJ7PnfCKGopSHIN978L-xnwzxDZyybQVAQ2dtBpLEuSgnhx73pjPTZQDttGi-rH1DAJ5JH6LXIl7tHjT_GcOGHI0TOonQ=s1600-w800",
@@ -437,7 +437,7 @@
     "출처": "카카오",
     "대분류": "중식",
     "가격": "11000",
-    "별점": null,
+    "별점": 3.5,
     "리뷰수": 248,
     "사진목록": [
       "https://lh3.googleusercontent.com/place-photos/AJRVUZPH_TAeU2DLHJPxBC6KszwPlTIT0DJWSKzfFg4TMBvf2bAtQ1HINjVBHrsE1lmmXuHyEPzlvWPUXQjWbnUnkFhLMI6YpRkxYK86t9_20ikFE8EvkH22EJ3pHRZ6b9jQNBKd0-n1x0dI9XqwkDB5N45ntQ=s1600-w800",
@@ -493,12 +493,12 @@
     "출처": "카카오",
     "대분류": "한식",
     "가격": "26900",
-    "별점": null,
+    "별점": 4.0,
     "리뷰수": 511,
     "사진목록": [],
     "lat": 35.2311682,
     "lng": 129.0877205,
-    "전화번호": null,
+    "전화번호": "0507-1302-1875",
     "운영시간": [
       "월요일: 오전 11:00 ~ 오전 12:00",
       "화요일: 오전 11:00 ~ 오전 12:00",
@@ -518,7 +518,7 @@
     "출처": "카카오",
     "대분류": "기타",
     "가격": "19900",
-    "별점": null,
+    "별점": 5.0,
     "리뷰수": 828,
     "사진목록": [
       "https://lh3.googleusercontent.com/place-photos/AJRVUZP-16VZCn0uaqEiGIXPWQ83X_sJ97BA6V4mnaFex4G03nxeFO0AQYYyyiAFHCdMdvtM84i_2HtuWzaOsk-ia059AaiBnRA8adxePlDGgSrl4KLsQ2Qjqjz6jrCz9mI20bs7Ju4qAzaJ0Hjo3ToXr3b5Cw=s1600-w800",
@@ -714,7 +714,7 @@
     "사진": "https://lh3.googleusercontent.com/place-photos/AJRVUZMWXkTMrQMqy5ChIF4j-2Q0SsHuglztR6NRdvC7RqR4O0KqfVzDW-uAHZ8FZHjC3ljTe_AM0kY-p2jYt0O4_Jkm0S9VSPijlbxgDKGv6NPKZIBnt8JWw7qAiysX7Ab5CzXMilV49xV9yaQ9eo8=s1600-w800",
     "lat": 35.23275581417305,
     "lng": 129.08534687166738,
-    "전화번호": null,
+    "전화번호": "0507-1335-8730",
     "운영시간": [
       "월요일: 11:00 ~ 20:00",
       "화요일: 11:00 ~ 20:00",
@@ -842,7 +842,7 @@
     "출처": "카카오",
     "대분류": "한식",
     "가격": "6000",
-    "별점": null,
+    "별점": 3.6,
     "리뷰수": 52,
     "사진목록": [
       "https://lh3.googleusercontent.com/place-photos/AJRVUZOTLel9boup74TI10EimUoos83VqLt5P4CS-FnCNiwnrWdVsp3zILVSkcCrLRH_yMcS6gGQpDLVF8m3ptOlLxi3kMpEmEQi-kZI-4W_80HdL_ELTS4BB4ESHho3Ak2zz4xpACjsYnpNd6_HtA=s1600-w800"
@@ -904,7 +904,7 @@
     "사진": "https://lh3.googleusercontent.com/place-photos/AJRVUZOmcgCDHNgRSHzWWPskx0YhHAkz3kTF0IGxedcLr_Uq7Lh_E1NfC8XdPE_N1kxh88tuDzRporhWLXEzxY2j0RtVQgjTfdy0tYMRU2kIs_U5b-ivnltTvBt2n-K8KHuV-uh3MmdFudhfaFeDnsb8jHxA=s1600-w800",
     "lat": 35.233947,
     "lng": 129.086621,
-    "전화번호": null,
+    "전화번호": "0507-1362-0060",
     "운영시간": []
   },
   {
@@ -1036,7 +1036,7 @@
     "출처": "카카오",
     "대분류": "한식",
     "가격": "40000",
-    "별점": null,
+    "별점": 5.0,
     "리뷰수": 36,
     "사진목록": [
       "https://lh3.googleusercontent.com/place-photos/AJRVUZNbdzHHO7pZ1E_Nbu_P2X3mkYw201LkKmOLfd0KKfhjcTscqZ5s_qq1j-qVCU53J5s3cppgXjvK68o58Phhrxfuy6zqeycqecpErhBnmPRJc9PUMpU8Jqqo029YMESIhM0ZnUwvuTSs28QjklR97P5atg=s1600-w800",
@@ -1093,7 +1093,7 @@
     "출처": "카카오",
     "대분류": "한식",
     "가격": "9500",
-    "별점": null,
+    "별점": 4.5,
     "리뷰수": 767,
     "사진목록": [
       "https://lh3.googleusercontent.com/place-photos/AJRVUZNSONjOYB6uT2WZEoEnNXKCJDQvBvWRhw_pYas6gV2v-ua-AIrX1JJ0MMC5oLfIK5cEir1d889Iek5YNPQThywfa-Gn0QufAFvEGNOepMDrapKhvfWfQlbGaFDc6jyC0pRvHmKMDMsKSBI5lcoB3qrVXA=s1600-w800",
@@ -1178,12 +1178,12 @@
     "출처": "카카오",
     "대분류": "한식",
     "가격": "33000",
-    "별점": null,
+    "별점": 4.2,
     "리뷰수": 153,
     "사진목록": [],
     "lat": 35.233947,
     "lng": 129.086621,
-    "전화번호": null,
+    "전화번호": "051-364-3737",
     "운영시간": []
   },
   {
@@ -1195,12 +1195,12 @@
     "출처": "카카오",
     "대분류": "한식",
     "가격": "18000",
-    "별점": null,
+    "별점": 5.0,
     "리뷰수": 657,
     "사진목록": [],
     "lat": 35.233947,
     "lng": 129.086621,
-    "전화번호": null,
+    "전화번호": "0507-1374-5891",
     "운영시간": []
   },
   {
@@ -1286,7 +1286,7 @@
     "사진": "https://lh3.googleusercontent.com/place-photos/AJRVUZNCqihBPi-JE1mo9AocY4qk9r296xfjFnoJm3AiRYgEBKURYAuHSFY-D_Zildx-S6UvqJqHvRdtlLVYPR61mrN5mZtDQsTpDlncImRw2rSuOL090ku2_uP9FamM1JQRJgCsmhEVix9ajubRXMtF-c2JxA=s1600-w800",
     "lat": 35.2342136,
     "lng": 129.0830414,
-    "전화번호": null,
+    "전화번호": "051-999-9433",
     "운영시간": [
       "월요일: 11:00 ~ 20:00",
       "화요일: 11:00 ~ 20:00",
@@ -1305,7 +1305,7 @@
     "출처": "카카오",
     "대분류": "한식",
     "가격": "18000",
-    "별점": null,
+    "별점": 4.3,
     "리뷰수": 1657,
     "사진목록": [],
     "lat": 35.233947,
@@ -1330,12 +1330,12 @@
     "출처": "카카오",
     "대분류": "한식",
     "가격": "16000",
-    "별점": null,
+    "별점": 5.0,
     "리뷰수": 82,
     "사진목록": [],
     "lat": 35.233947,
     "lng": 129.086621,
-    "전화번호": null,
+    "전화번호": "0507-1462-1774",
     "운영시간": [
       "월요일: 16:00 ~ 01:00",
       "화요일: 16:00 ~ 01:00",
@@ -1387,7 +1387,7 @@
     "출처": "카카오",
     "대분류": "한식",
     "가격": "11000",
-    "별점": null,
+    "별점": 4.0,
     "리뷰수": 18,
     "사진목록": [],
     "lat": 35.232927,
@@ -1532,7 +1532,7 @@
     "출처": "카카오",
     "대분류": "돈까스·회",
     "가격": "9000",
-    "별점": null,
+    "별점": 4.3,
     "리뷰수": 465,
     "사진목록": [
       "https://lh3.googleusercontent.com/place-photos/AJRVUZMkt-KJ12xPdfvHn16_wMOvSxfY8vpE_owwMuBKBKOSYnxitK1nF45X929a1B5l-Sgbn1iRS0GzVg3IGkkuMUtKU5uE4vF8_Gd04hGjGX2wts0IIOUzVXn6Gp0mCpL6Ei6sm1BzifHIUNXbXK1KpPtCig=s1600-w800",
@@ -1684,7 +1684,7 @@
     "출처": "카카오",
     "대분류": "돈까스·회",
     "가격": "10000",
-    "별점": null,
+    "별점": 4.3,
     "리뷰수": 186,
     "사진목록": [
       "https://lh3.googleusercontent.com/place-photos/AJRVUZPW9kiDnnTT_VgduefdOts4sTFC7Q_CCmanz7SviMvl4J0fIMPWLkUpYdppVYB4iiPGek7y3aAySqszxZwfc_E0_K9llssHJWWpaCdpEmWg8rAovPnDOh5Y-RATHscOpAkZcdqjiwYBKywauQ=s1600-w800",
@@ -1824,7 +1824,7 @@
     "출처": "카카오",
     "대분류": "돈까스·회",
     "가격": "16500",
-    "별점": null,
+    "별점": 4.7,
     "리뷰수": 214,
     "사진목록": [
       "https://lh3.googleusercontent.com/place-photos/AJRVUZNzye8-SLT9InTlFOlfWVMcJXZXxwoGh13UiCxbaB-5okb6hHfCBuAIz6SsWVVZ5z5rOOatMyvR592Mb0uktHxxv6ADz7g5tQGgOUlD0mmLyJdQF7In-lJHHUbTcTo--gSYKWTGsAIWcdXo0Q=s1600-w800"
@@ -1832,7 +1832,7 @@
     "사진": "https://lh3.googleusercontent.com/place-photos/AJRVUZNzye8-SLT9InTlFOlfWVMcJXZXxwoGh13UiCxbaB-5okb6hHfCBuAIz6SsWVVZ5z5rOOatMyvR592Mb0uktHxxv6ADz7g5tQGgOUlD0mmLyJdQF7In-lJHHUbTcTo--gSYKWTGsAIWcdXo0Q=s1600-w800",
     "lat": 35.233947,
     "lng": 129.086621,
-    "전화번호": null,
+    "전화번호": "0507-1338-4691",
     "운영시간": [
       "화요일: 18:00 ~ 01:00",
       "수요일: 18:00 ~ 01:00",
@@ -1863,7 +1863,7 @@
     "사진": "https://lh3.googleusercontent.com/place-photos/AJRVUZNeURLDzpZOdig0jXv6OHavOXspxIJV4C-VU_RYDWfHa9j3h7AMAOm8VJRjOsrBi_oaBDddZgqRRPZqNjk3jncD4lWAVwBgmIdyO0LH0mmYQfwwoBp-mIaD1EcAXP1gZMriO-jMqYLlrH8qTw=s1600-w800",
     "lat": 35.2311682,
     "lng": 129.0877205,
-    "전화번호": null,
+    "전화번호": "051-515-1126",
     "운영시간": [
       "월요일: 오전 11:30 ~ 오후 9:00",
       "화요일: 오전 11:30 ~ 오후 9:00",
@@ -1883,7 +1883,7 @@
     "출처": "카카오",
     "대분류": "돈까스·회",
     "가격": "15800",
-    "별점": null,
+    "별점": 3.6,
     "리뷰수": 11619,
     "사진목록": [
       "https://lh3.googleusercontent.com/place-photos/AJRVUZOsBK1VBBLlI1xGB2mQyxhwPorwf0zS_sgcwObiTPRi15okQyWoYfMzDh27f9nSk-j9_kYXhShOfZI_f5eLuhnG8sbSgHaGA9-DolScfjhi4cuxrJz-mkvLLeiKtmma7K_Wfvb-hTUx-sk59A=s1600-w800",
@@ -1939,7 +1939,7 @@
     "출처": "카카오",
     "대분류": "돈까스·회",
     "가격": "15000",
-    "별점": null,
+    "별점": 4.6,
     "리뷰수": 2148,
     "사진목록": [
       "https://lh3.googleusercontent.com/place-photos/AJRVUZMl1DGlefC67g8FE8qTSwXXsC1eUrCE4TX6fE1z4BVdwIyN3pk2jjNC84oeHya7VBMzYQZLbKFNdmPqiAyaIyujvruspE75G0_Qz7uKiqTHMMgFstxu0Ji09hSHA2MaBKC9OBQDMcaVUXpP84QNBV7M=s1600-w800",
@@ -2003,7 +2003,7 @@
     "출처": "카카오",
     "대분류": "돈까스·회",
     "가격": "6900",
-    "별점": null,
+    "별점": 3.4,
     "리뷰수": 13,
     "사진목록": [
       "https://lh3.googleusercontent.com/place-photos/AJRVUZO5E5FkYMOpA-gJ5w1dDGj6pJ691yqpnTriUF4BUpdI0uHC25ILyqJ7f96VaWo3Y2DrQACMJUZWFtmagJCPvxWFDyRL7hc5QDP4tfIm7QffatlGQRvV6TUzcUZ4L4yvkZDOYgr6TLSDJ3gMAId9pckH=s1600-w800",
@@ -2066,7 +2066,7 @@
     "출처": "카카오",
     "대분류": "돈까스·회",
     "가격": "12900",
-    "별점": null,
+    "별점": 4.7,
     "리뷰수": 1556,
     "사진목록": [
       "https://lh3.googleusercontent.com/place-photos/AJRVUZPT9j10qFLinDON6uzZKPVxNloBp2eWvwnaVdC04UmXy741_BiAXszf3W7VH_sRYnguD64aUAzHMEIJLxe_3rX19s9Tn0Q7HWb_I5zLe8rrSe7ug2KEIJh3mCWMIm-hixtVIQ48csF3bSu2RHniLYjepA=s1600-w800",
@@ -2090,12 +2090,12 @@
     "출처": "카카오",
     "대분류": "돈까스·회",
     "가격": "15000",
-    "별점": null,
+    "별점": 3.8,
     "리뷰수": 633,
     "사진목록": [],
     "lat": 35.2424761,
     "lng": 129.0889306,
-    "전화번호": null,
+    "전화번호": "0507-1485-8691",
     "운영시간": []
   },
   {
@@ -2514,7 +2514,7 @@
     "출처": "카카오",
     "대분류": "양식",
     "가격": "14500",
-    "별점": null,
+    "별점": 4.1,
     "리뷰수": 3887,
     "사진목록": [
       "https://lh3.googleusercontent.com/place-photos/AJRVUZMsV8C2EruWJEhgjWPUwy-lTE8lP_MSnY9r1ij-rOzLCGP3g42i97Z5IazJtG-r4OHqpKeDVHJjoJ1e8JZZwQhvIux1vqlbSxkThmKPd1_L9a32rfLNoEMuXqQJhemWwQUKX5RlBRWE5tbdcw=s1600-w800",
@@ -2782,7 +2782,7 @@
     "출처": "카카오",
     "대분류": "양식",
     "가격": "24900",
-    "별점": null,
+    "별점": 5.0,
     "리뷰수": 3,
     "사진목록": [
       "https://lh3.googleusercontent.com/place-photos/AJRVUZMyqYfhzW7dM-74i3fBN7zG_J-S15HtCQOOb07JRb8XmPfmowLHtQ9zywHjBQjLEGELezmStGK2ka8l6tVxEs4cxs02dwak_c9etx0dZeXnFA8mk2jIQKQOCQLwjn3x9Yae50H2xbTSRWcDmXgty7vqpg=s1600-w800",
@@ -2843,11 +2843,11 @@
     "출처": "카카오",
     "대분류": "양식",
     "가격": "16500",
-    "별점": null,
+    "별점": 4.0,
     "리뷰수": 3124,
     "사진목록": [],
-    "lat": null,
-    "lng": null,
+    "lat": 35.2309,
+    "lng": 129.0868,
     "전화번호": "070-7774-9589",
     "운영시간": [
       "월요일: 10:00 ~ 20:00",
@@ -2902,8 +2902,8 @@
       "https://lh3.googleusercontent.com/place-photos/AJRVUZMEEouSm9x9Kk44rBsftGBW8Bj-rJKFS-mTDfg1zLTPMsWNQ-mwu0mgO0rDUCM7aPYbxoudAY-OpOsZTts7GsmI0phy7qgBeSoOjUzxeqg-9L2oLT14jDWss6pO-pUJhNY129lzE_YmoOoFmg=s1600-w800"
     ],
     "사진": "https://lh3.googleusercontent.com/place-photos/AJRVUZMBlPb7JHnx22Ec6hJ-fni0HYGexmU9vsXYGo0w-igEjOsinLZwn2QQvFMudSrLg_6IqxmAE-0UG50bjd02lTNzRQ_Navas8vmSZIfSrKVr8gCP4f3xvSjBoOtq3lGXHSoS1Rcd9RkaCdSwo68=s1600-w800",
-    "lat": null,
-    "lng": null,
+    "lat": 35.228944,
+    "lng": 129.087179,
     "전화번호": "010-9839-7790",
     "운영시간": [
       "월요일: 휴무일",
@@ -3103,7 +3103,7 @@
     "출처": "카카오",
     "대분류": "아시안",
     "가격": "8500",
-    "별점": null,
+    "별점": 3.9,
     "리뷰수": 1589,
     "사진목록": [
       "https://lh3.googleusercontent.com/place-photos/AJRVUZPo-9sfJQmQCavPQ4LH7x8nk5yuTH884YXvcgFk2LEFKwns1_utfDKwT4hJQFvn1PzjZ6DMhagnNuKYQpda-DdiUKA7QNZcknXOfKX-IUWulj7WfF1v9TnQq5ibBk-hkaPeR8_r79Z8ZqT-=s1600-w800",
@@ -3165,7 +3165,7 @@
     "출처": "카카오",
     "대분류": "분식",
     "가격": "11900",
-    "별점": null,
+    "별점": 5.0,
     "리뷰수": 53,
     "사진목록": [],
     "lat": 35.2324382,
@@ -3329,7 +3329,7 @@
     "출처": "카카오",
     "대분류": "분식",
     "가격": "4500",
-    "별점": null,
+    "별점": 3.0,
     "리뷰수": 21,
     "사진목록": [],
     "lat": 35.23249224275254,
@@ -3353,12 +3353,12 @@
     "출처": "카카오",
     "대분류": "분식",
     "가격": "11000",
-    "별점": null,
-    "리뷰수": null,
+    "별점": 4.0,
+    "리뷰수": 13,
     "사진목록": [],
     "lat": 35.2324776,
     "lng": 129.0844689,
-    "전화번호": null,
+    "전화번호": "010-6383-2255",
     "운영시간": [
       "월요일: 16:00 ~ 23:00",
       "화요일: 16:00 ~ 23:00",
@@ -3380,8 +3380,8 @@
     "별점": 4.63,
     "리뷰수": 124,
     "사진목록": [],
-    "lat": null,
-    "lng": null,
+    "lat": 35.23338,
+    "lng": 129.07985,
     "전화번호": "070-7372-7374",
     "운영시간": []
   },
@@ -3546,7 +3546,7 @@
     "출처": "카카오",
     "대분류": "분식",
     "가격": "4200",
-    "별점": null,
+    "별점": 4.9,
     "리뷰수": 98,
     "사진목록": [],
     "lat": 35.235366,
@@ -3851,7 +3851,7 @@
     "사진": "https://lh3.googleusercontent.com/place-photos/AJRVUZNgvT9_ZMknobhUBCAf-fvBj_J0Omzf8vzhnTit0pCqnaOyxa64RZb6djkz_I6GhM6ydmg-ba4sorCVU8x_Sf99aIXjJ0L2qn0z3SECWK3FOHeus3R09ac5kdNrgjAPoYk4LOXx7z8ikQAzgfS1yKRC=s1600-w800",
     "lat": 35.23844,
     "lng": 129.0830311,
-    "전화번호": null,
+    "전화번호": "051-581-9510",
     "운영시간": [
       "월요일: 오전 11:00 ~ 오후 8:30",
       "화요일: 오전 11:00 ~ 오후 8:30",
@@ -3976,8 +3976,8 @@
     "출처": "카카오",
     "대분류": "한식",
     "가격": "16500",
-    "별점": null,
-    "리뷰수": null,
+    "별점": 0,
+    "리뷰수": 1,
     "사진목록": [],
     "lat": 35.2424761,
     "lng": 129.0889306,
@@ -4141,7 +4141,7 @@
     "출처": "카카오",
     "대분류": "한식",
     "가격": "30000",
-    "별점": null,
+    "별점": 4.7,
     "리뷰수": 431,
     "사진목록": [
       "https://lh3.googleusercontent.com/place-photos/AJRVUZP5_59AWbVxHCH5372sJrDW1OkWOxgeGE5yWVhBUq4lMcDnf3AA_-2JmwI-ZUmlUivzedr42w8nM-CXJFstCRbPOF93B32u9-K21CuV1U3NJT2wwsEPZ5poSKQqeENgOizYeCBNfuNmZrrFcg=s1600-w800",
@@ -4322,12 +4322,12 @@
     "출처": "카카오",
     "대분류": "한식",
     "가격": "17000",
-    "별점": null,
-    "리뷰수": null,
+    "별점": 0,
+    "리뷰수": 1,
     "사진목록": [],
     "lat": 35.2310287,
     "lng": 129.0903932,
-    "전화번호": null,
+    "전화번호": "0507-1330-4427",
     "운영시간": [
       "월요일: 16:30 ~ 23:00",
       "화요일: 16:30 ~ 23:00",
@@ -4401,7 +4401,7 @@
     "출처": "카카오",
     "대분류": "아시안",
     "가격": "10500",
-    "별점": null,
+    "별점": 4.7,
     "리뷰수": 483,
     "사진목록": [
       "https://lh3.googleusercontent.com/place-photos/AJRVUZOxM2YIO3vFbIuWWnAgtltNzygwgh9VNVKYp-RQYNT9KoPcLpghbTv2yIXfPWOGwsqZwVeoVCMGlSK-xAfQJjh-2Rgk5K16p-8CKRP01BOt96FfdUmZYqpX3YwRojjDr3WS63kUgt1dl_fAA3w=s1600-w800",
@@ -4499,9 +4499,9 @@
       "https://lh3.googleusercontent.com/place-photos/AJRVUZPXPfwO9sobXi9lS3iIiwlgOr7IsIYpV8ve_llR0L-Pe7qzdznXXTp5BNUUNid2R4rXj6Tj_dIKtoYW_2F9GB0Olo9pu53IlGUTMNdZrq4bOBVU2H3qO_dazAJWBprgGd_w0Z5Etn9PvyOTRQ=s1600-w800"
     ],
     "사진": "https://lh3.googleusercontent.com/place-photos/AJRVUZPg9X4J1-UnytZy84d3Noe6hnNZ7zENxSua8BySYnTw-ZLxY1zwalD7jUcZFuhQ5jgqeXsz42i0nERwAw7h8pbWhfUZNij432cdP7veG_7JSz-860uDVAqPwb4D-AcjTT8OvuwhONkRvz8fYw=s1600-w800",
-    "lat": null,
-    "lng": null,
-    "전화번호": null,
+    "lat": 35.228843689957,
+    "lng": 129.0887295767,
+    "전화번호": "0507-1385-3887",
     "운영시간": [
       "월요일: 오후 4:30 ~ 오전 2:00",
       "화요일: 오후 4:30 ~ 오전 2:00",
@@ -4836,8 +4836,8 @@
       "https://lh3.googleusercontent.com/place-photos/AJRVUZPY6Y6FnmBo8LfDGmEjrTZlRUc7lFvy_5zxbS8SUpo120RZ1OHzx_8Ua5Vq9YzyOaCl2duR4ZVG25hDv03Zp_mrwv9waK04_9MDhFC3KJL3SWov3Cow6uO_RCjeAMe6Qjg6gr93sreIw02G2dKxGbHtpw=s1600-w800"
     ],
     "사진": "https://lh3.googleusercontent.com/place-photos/AJRVUZMU4GSGN5adwZhYB9nFTN7F1AsWYzZk-Sa3-3USrxZHJHCTpflxscKRbWDTQkPXv2b8yg4z5nrtD2cLsLitV4lK-1Nbw8twjVm4xuXIbA1p5DI6laAx5v4F1d7fnbXgYJTQkdXawwdobZwPeQ=s1600-w800",
-    "lat": null,
-    "lng": null,
+    "lat": 35.2308,
+    "lng": 129.086,
     "전화번호": "051-582-3339",
     "운영시간": [
       "월요일: 오전 11:00 ~ 오후 10:00",
@@ -4858,7 +4858,7 @@
     "출처": "네이버",
     "대분류": "아시안",
     "가격": "10500",
-    "별점": null,
+    "별점": 4.5,
     "리뷰수": 7775,
     "사진목록": [
       "https://lh3.googleusercontent.com/place-photos/AJRVUZPGR2D1Cv63NA70dwerhUTGV-B17Ouj1iMQrLX1QEE-jbXzJVDyAjUxDSuKr2LxKqUoLAGZLRu_ieL2OSynltkc2TE0YTHlPLbtm6C0qbQBHFlhBzSBdj_Oaz54zYHilw8pEoM_ngg7_Za5rJCdgVIwTQ=s1600-w800",
@@ -4900,8 +4900,8 @@
       "https://lh3.googleusercontent.com/place-photos/AJRVUZPW0d6yysjTwKxfRB5ByIDwWtkwXx-uLqguE6lyZNzzbVurxnfMrq67geZ_IsRyiKLBIEuGgi284o4-MzeJlMl9r3HoC_tpVEWYqMhbyCtoM_Ee5IRcCy0dgPjiIS_-wYUVXXCcKq0W727EOXSRCSukCQ=s1600-w800"
     ],
     "사진": "https://lh3.googleusercontent.com/place-photos/AJRVUZO9p6JwmMiPufqGTZ9TDdg5jJAtGUygCkSn-ySxYX0f8kFqt3kzVRd8abRi87_32TmWR0HUrfcaTdt0lVN0ZHnFQsnXPUzE8sLfTRuQq2P1nerWESZubQCur-yGXv6GCRDfobXsCPLQ2K4dg30JT2MQkw=s1600-w800",
-    "lat": null,
-    "lng": null,
+    "lat": 35.2258,
+    "lng": 129.0866,
     "전화번호": "051-583-3005",
     "운영시간": [
       "월요일: 오후 4:00 ~ 오전 2:00",
@@ -4932,8 +4932,8 @@
       "https://lh3.googleusercontent.com/place-photos/AJRVUZMMVcRgPQUbsGLiV_wTVypymcT-B9YHjF5pNS1q_4lYkEd3xTcxpnPXOT3kWLz0ng1fF1FGny84Qu4UXpzI-wJXKQ-R8GtClB2EmYOyzuUFYrJrSQBqr0mw_O7OhkNY5xnnYJHR5vIe54rAvg=s1600-w800"
     ],
     "사진": "https://lh3.googleusercontent.com/place-photos/AJRVUZNWe_gIqN1U75A30-3gy4FQL4qKGGupZRvo4-1fngCgQrPtfNDgIfvOPzEyaywcYQRHg7rJ9ySkwfPVmXZbhdMaCRhoyJAzzwJJBc29Wjn1yff09Z4LS5IzSRgy5uEh0PClE3wkYGfyzFTKww=s1600-w800",
-    "lat": null,
-    "lng": null,
+    "lat": 35.231443,
+    "lng": 129.088659,
     "전화번호": "051-512-8289",
     "운영시간": [
       "월요일: 오전 11:00 ~ 오후 10:00",
@@ -4964,8 +4964,8 @@
       "https://lh3.googleusercontent.com/place-photos/AJRVUZPzG5Vt_gVuKp7hj-Zot5tFFsCN1rWnALgL6XPIYcAR4GAFKBvRFDYC6cOm2QSMR6dlXK_RSja3ZbNPzGg77x-xF-bppK4MMy1rdup7KvXXAvYhtqphIqRIX15uA0SrIPGayaN6ru0fx65JOvke4-3S=s1600-w800"
     ],
     "사진": "https://lh3.googleusercontent.com/place-photos/AJRVUZOgTWh7cMHzcYSJet_LXRgZGinYcY0qDzI0DOxOH_hr6SSJ9JN2sI6CgBB0LzYpEdaxGaYcs_b8gswiTZA4eea7rA7nUDKVUpacc6yBE7h5F7FEx0exqrBL8rwA-LcS9ratzHAOP6RHZCqQczWvdqnIZg=s1600-w800",
-    "lat": null,
-    "lng": null,
+    "lat": 35.237651,
+    "lng": 129.092646,
     "전화번호": "051-515-4920",
     "운영시간": []
   },
@@ -4988,8 +4988,8 @@
       "https://lh3.googleusercontent.com/place-photos/AJRVUZO53GoRnsrfKdiYSPkABrJmhrcznt3r--rRzh__EYakLgefA5pto3xhDgQc-j89agQPtUMhguSrPOd0zfz0coUKAEFKqwuGFlrJzFALHRUUIItmR16FAmg4uQ0q-E_XsUEpd-IHC4GA61SLSw=s1600-w800"
     ],
     "사진": "https://lh3.googleusercontent.com/place-photos/AJRVUZPxoVWBqAvysN4xBaS3bpeu2yjp3OzPqShyyT_Ccu9w7bqJNpSGcUVl61Tb4Iis8KHF3-A4yDBX0XLT3Slv5x8GJTG_x1Ai82xjFgEWUSFLYvzSgcIqrlSj_4JNMjpTolJmkvXwEPUnSBZa=s1600-w800",
-    "lat": null,
-    "lng": null,
+    "lat": 35.2307,
+    "lng": 129.0848,
     "전화번호": "010-5234-8876",
     "운영시간": [
       "월요일: 오전 11:00 ~ 오후 9:00",
@@ -5020,8 +5020,8 @@
       "https://lh3.googleusercontent.com/place-photos/AJRVUZMLzglsnBuytozi08EO-YW08mTT9I7rGBx8lmbdJVcXBCYN0rpm1EMUp7MoCTa7cynrv73qyzyIRS4NO0rAgCK7dB_71HhmxWP36sC0-1gGACUVYRrMUbXaBZt_cr-Jktq5rUSuUPE-Zf-djiw83IN8cg=s1600-w800"
     ],
     "사진": "https://lh3.googleusercontent.com/place-photos/AJRVUZMm0E9Ht5zhXXAZRDQnwGhII1sdlCxUZL-1rV7WO2zSFPFI-O67me9kewRw0jwFg-tp44LzjEDnqfLWQpwJ954UJgpp3bk_MFB9vNkY4pP-r5nmhz21_CA6QROSOF4aSGSi_nVFrOgd-KhdP0o=s1600-w800",
-    "lat": null,
-    "lng": null,
+    "lat": 35.229082,
+    "lng": 129.087595,
     "전화번호": "050-71351-8725",
     "운영시간": [
       "월요일: 오전 11:30 ~ 오후 2:30, 오후 5:00~8:30",
@@ -5054,7 +5054,7 @@
     "사진": "https://lh3.googleusercontent.com/place-photos/AJRVUZOVYVNwqdgTLckI2-TcjUEbs-AIOyyNrSOAmX0B8kX39ORM9elIG-52ZKYujgEySPlsti-Q5_axz4psUTODiZdvHVibRLxYLzvUJW1OznSoD2gz6ne9ITPlsGTRd0r3DyQkNhkk3yptVJuEitk=s1600-w800",
     "lat": 35.2494029,
     "lng": 129.0849863,
-    "전화번호": null,
+    "전화번호": "070-7779-1931",
     "운영시간": [
       "월요일: 오전 11:00 ~ 오후 8:00",
       "화요일: 오전 11:00 ~ 오후 8:00",
@@ -5084,8 +5084,8 @@
       "https://lh3.googleusercontent.com/place-photos/AJRVUZNFvgCtrjSPnncNXO2ufTf5FBVLak5iUpgGBrj_k-je_nfJArZWwwz29wf1QyGQPrloGN7aaQZUH6e1hijUcB8PYOVBkzP8Z43WzYgVoo9UoB6EgAgZg5of0exFkG_-Hww6N2B28fU_hJ0KVQ=s1600-w800"
     ],
     "사진": "https://lh3.googleusercontent.com/place-photos/AJRVUZPtzHCb8koT6k2d3Px2WGfrpYpYphxRZps_YKyJZ9jvo7QHrKNO4Fg3mIgQH-7G_cmwiMGjt0ihr1AEcd18KFkvrvbxTbZS_Or7XmUnTgutyla-lVfB75UCDTbpNG21tywzni7nISP2JmTb-rc=s1600-w800",
-    "lat": null,
-    "lng": null,
+    "lat": 35.2329,
+    "lng": 129.0871,
     "전화번호": "051-513-3287",
     "운영시간": [
       "월요일: 오전 11:00 ~ 오후 11:00",
@@ -5116,9 +5116,9 @@
       "https://lh3.googleusercontent.com/place-photos/AJRVUZPPlpujyYUdBByA-hi15KWHip5m7_jRpsHgAoXp-97kcw0K2gLPpguDBLcRQNTKtEkqT9dcogp4ZGg7b0fHIyRl2mqd2hnpFMvP3FyGfBmGllITMUBdJ4ekx9d1Vms9YV03HNyQUBDsfNAZX7XafOIPOQ=s1600-w800"
     ],
     "사진": "https://lh3.googleusercontent.com/place-photos/AJRVUZM1yCf6NRlfL435lUlwWo27HPnzn68h9U4XICVp9yLiWQR_l-Pk-34fF1SYBLFM2Xhrw9GyGw2dbcP6O_j7f4YWEyqeP0rqM2rUExdqZjvCnHhytOSTrN-rJxkIJHFy3PuowmXxON1oPyTImRkXLiW38w=s1600-w800",
-    "lat": null,
-    "lng": null,
-    "전화번호": null,
+    "lat": 35.23095,
+    "lng": 129.08495,
+    "전화번호": "0507-1390-5297",
     "운영시간": [
       "월요일: 11:00 ~ 20:30",
       "화요일: 11:00 ~ 20:30",
@@ -5148,8 +5148,8 @@
       "https://lh3.googleusercontent.com/place-photos/AJRVUZPgJDQC8JKFiGDIiSaIbO8siibDelkndw9p2qjIWSGpt-SpJRBnTnc7bn5k8GBox1iAhsrZrRNkOj_wnlt6lO7PA2fRpKCN5KVxudvY_7D2OopoGNeIPPJqvAs_nj8OyuSKvEumeK7wpAjXo6sBZRw7Jg=s1600-w800"
     ],
     "사진": "https://lh3.googleusercontent.com/place-photos/AJRVUZMCkJWhEukEoW_s4IF73lvicH903urG90A3RDDZ78Acjnam47BOVUvLY8T9IPfCYG2RPX_ZT1ZdaMYFPafnCv7sloUVxcDhgn8Sdy3HiE_oUmpAKHjD_47o0MEMpNKoohEBr6VJYvCjjLu1-g=s1600-w800",
-    "lat": null,
-    "lng": null,
+    "lat": 35.23206,
+    "lng": 129.08708,
     "전화번호": "051-512-8673",
     "운영시간": [
       "월요일: 오후 5:00 ~ 오전 1:00",
@@ -5182,7 +5182,7 @@
     "사진": "https://lh3.googleusercontent.com/place-photos/AJRVUZP88Lq1nX0tsGV5C95CSZWJF_z3WsiU5oHEhh2jEel7QbQsxRGnSsLGP_P1reV4q4G-3ZrtEHgmnzhfOoINHVuwg48wrXuwrje4m-iF53bRA_jt76zypXS1ib2EHVQ-ecBn13w2UvWyAoHrO0xZ4PyIIQ=s1600-w602",
     "lat": 35.2290664,
     "lng": 129.0879957,
-    "전화번호": null,
+    "전화번호": "051-984-9292",
     "운영시간": []
   },
   {
@@ -5236,8 +5236,8 @@
       "https://lh3.googleusercontent.com/place-photos/AJRVUZMP6-d0m1JIS8uvcnGTccV11hrLtmKqrOJB76sjncd2KUI3Uz2XDnBy7--esPyHBeqJF1w6Jt0YzxzegL2c3h_T7z6wkCXe0K1ZXBKZfQ6NVWlMfbZ1wdkD9wY1Sa2nT58JXV4D9qET6TuEaA=s1600-w800"
     ],
     "사진": "https://lh3.googleusercontent.com/place-photos/AJRVUZPLP2DhyFZCIkQ5E7n_TRdCikrhINyXZgajc5Qoq90FogybrZ32YD1gElpHnzmTsvHrNa-ruNYPDX34wVTtAdEXrXyUPYC-RVxo3sthOtUkNvaIdrtexrC1kcX2acGTSB8j7IjHnPBp9Ead=s1600-w766",
-    "lat": null,
-    "lng": null,
+    "lat": 35.23338,
+    "lng": 129.079845,
     "전화번호": "050-71406-7360",
     "운영시간": [
       "월요일: 오전 11:00 ~ 오후 3:00, 오후 5:00~9:00",
@@ -5300,8 +5300,8 @@
       "https://lh3.googleusercontent.com/place-photos/AJRVUZOFY_67SuV906qfy6zIPHq21_t4tyNwpuup4yUm5PTDH4cMmDCPj3Svf3djctIHsfNUfTKNwnV6erFBg6GL6R_bm3PXo9LGIL_RgAI6h9IBoxUCP1IMsq26fXAfBbjWGVJ5DkDbjivLfIHt=s1600-w800"
     ],
     "사진": "https://lh3.googleusercontent.com/place-photos/AJRVUZOp_ae1FblrgP22bfcnM8Zr5M-iZTvMNEwVpHwWNXs4w9vHDeFPLo9HM_ATxzouUIZfBlDgnsYGzwiLBr_1mmuw4fNTe7rMm9HzO4nPiIL8u-3R-y6glacqJv-IXoRlZgPMzjyCJ4G2nIJWGg=s1600-w800",
-    "lat": null,
-    "lng": null,
+    "lat": 35.229235,
+    "lng": 129.087731,
     "전화번호": "050-71354-5103",
     "운영시간": [
       "월요일: 오후 3:00 ~ 오전 12:00",
@@ -5332,8 +5332,8 @@
       "https://lh3.googleusercontent.com/place-photos/AJRVUZMqRDyAWFrjMVfbJ1oHxrCBhEKoK7UTTpO8vHgRaJnn_XuBv8cFEWBpOUWcQIJOWhcYigb-bcDAauyCJ9ov4uoDhjVPuxATqwr0EqokpcxFU8tFqJaHD9nbIgfew218ZIm7Xg4YrJ3BGMuRTo2jpSyxQw=s1600-w800"
     ],
     "사진": "https://lh3.googleusercontent.com/place-photos/AJRVUZPR0lBmbYVXNtt9eJ9NDQSf8iTAvvKjDOJN-87CgsgnPC3SGo4qMeWuyUrwdYpJjKBpRk9zsRlha4-l2FAAQ8OrQ_iLP_T7yNOp6J3-sR57KuLSsTMu5jG7undPCUjW4uxbwmS8UcV2tlWZ32H_RJ5t1w=s1600-w800",
-    "lat": null,
-    "lng": null,
+    "lat": 35.229235,
+    "lng": 129.087731,
     "전화번호": "051-516-1611",
     "운영시간": [
       "화요일: 16:00 ~ 24:00",
@@ -5363,8 +5363,8 @@
       "https://lh3.googleusercontent.com/place-photos/AJRVUZNZqmY9oPyetlWbjfbVImnQ7wXjRp94ZDZJHIUOCwm3CV7PFUSizmOdSZtx1tf40ddgYNG4HuawupHxD-qyXavnNbzts5jWq-SWObs-ZVZmy4aTa6Kst7AVshPCFtfrZe0VxcDTbm2kYwpbUZK5E880=s1600-w800"
     ],
     "사진": "https://lh3.googleusercontent.com/place-photos/AJRVUZMQtms4M4vgaTut1YlVyVxg7mPSkJoLlBaGMjOZ38nG2aJJpm1vVTgCgS2h3Uyo8JUO4KY2H3a05YTUtTk1dmdRtN-spSeS6PGO7aYHaQcv36uc8FEN6AjrZr_j6bhSog7fTzvsQaC_ooKmCJEV7wf50w=s1600-w800",
-    "lat": null,
-    "lng": null,
+    "lat": 35.2313,
+    "lng": 129.0862,
     "전화번호": "051-515-9337",
     "운영시간": [
       "월요일: 11:00 ~ 20:30",
@@ -5395,9 +5395,9 @@
       "https://lh3.googleusercontent.com/place-photos/AJRVUZPULvQ4Bdqybz-RvVTaPTXcOEXiYSEy8nv-Lwd-83N-AVqIyCMp2FIOymDSTDvnCzLI9j1ZcH_NOr67SN3BdVMdIJKHFLDwflZXkS2XqdK99h31s8FTXOjjZIBXxsa3Rioq9UePZ9UZRYxyYxDV9XFCmw=s1600-w800"
     ],
     "사진": "https://lh3.googleusercontent.com/place-photos/AJRVUZNx98xQrifRQny-HVYNWpm61hkq-o13UcljPJsMroLF-NqLfuFLof7nc_ogdJ3lFlYkde7I7A-tfiNyZe-kNuJc1OT51j7IvzAyQOihkjJyM4XOOthfkVfFjd9FPvdboXXieXdjra6kVgvPdWiHOBBCAg=s1600-w800",
-    "lat": null,
-    "lng": null,
-    "전화번호": null,
+    "lat": 35.232432,
+    "lng": 129.088344,
+    "전화번호": "0507-1387-4749",
     "운영시간": [
       "월요일: 11:00 ~ 21:00",
       "수요일: 11:00 ~ 21:00",

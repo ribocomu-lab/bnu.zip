@@ -49,13 +49,8 @@
       justify-content: space-between;
       padding-bottom: 16px;
     }
-    .logo-bnu {
-      font-family: 'Inter', sans-serif;
-      font-size: 24px;
-      font-weight: 700;
-      letter-spacing: -0.96px;
-    }
-    .logo-bnu .blue { color: #005ba9; }
+    .logo-bnu { display: block; line-height: 0; }
+    .logo-bnu img { height: 24px; width: auto; display: block; }
     .header-sub {
       font-family: 'Poppins', sans-serif;
       font-size: 11.52px;
@@ -589,7 +584,7 @@
   <!-- ── 헤더 ── -->
   <div class="header">
     <div class="header-top">
-      <div class="logo-bnu"><span class="blue">B</span>NU</div>
+      <a class="logo-bnu" href="/home"><img src="/static/images/logo-bnu.svg" alt="BNU"></a>
       <div class="header-sub" onclick="location.href='/static/home.html'" style="cursor:pointer">
         <div>
           <span class="bab-slot">
