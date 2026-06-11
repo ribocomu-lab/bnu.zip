@@ -313,14 +313,10 @@
       line-height: 1;
     }
 
-    /* 지도 하단 리스트 */
+    /* 지도 하단 리스트 (상단 2개만 표시) */
     .map-list {
-      height: 220px;
-      overflow-y: auto;
-      scrollbar-width: none;
       flex-shrink: 0;
     }
-    .map-list::-webkit-scrollbar { display: none; }
     .map-card {
       display: flex;
       align-items: center;
@@ -501,12 +497,32 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 4px;
       cursor: pointer;
-      font-size: 16px;
-      transition: transform 0.15s;
+      position: relative;
     }
-    .bookmark-btn:active { transform: scale(1.2); }
+    .bookmark-btn svg { width: 19px; height: 17px; }
+    .bookmark-btn svg path { transition: fill 0.15s; }
+    .bookmark-btn.bump { animation: heartBump 0.45s ease; }
+    @keyframes heartBump {
+      0% { transform: scale(1); }
+      30% { transform: scale(1.4); }
+      55% { transform: scale(0.9); }
+      100% { transform: scale(1); }
+    }
+    .particle {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #ff4141;
+      pointer-events: none;
+      z-index: 4;
+      animation: particleBurst 0.7s ease-out forwards;
+    }
+    @keyframes particleBurst {
+      0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+      100% { transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0); opacity: 0; }
+    }
 
     /* ── 빈 상태 ── */
     .empty-state {
@@ -681,8 +697,8 @@
       <div class="view-btn" id="listViewBtn" onclick="switchView('list')">리스트뷰</div>
     </div>
 
-    <!-- ── 결과 바 ── -->
-    <div class="result-bar" id="resultBar">
+    <!-- ── 결과 바 (리스트뷰 전용) ── -->
+    <div class="result-bar" id="resultBar" style="display:none">
       <div class="result-count">총 <span id="resultCount">-</span> 개</div>
       <div class="sort-row">
         <div class="sort-btn active" data-sort="거리순" onclick="setSort('거리순')">거리순</div>
@@ -796,8 +812,19 @@
     const catEmoji = {
       '돈까스·회': '🍱', '한식': '🍚', '치킨': '🍗', '피자·버거': '🍔',
       '분식': '🥢', '중식': '🥡', '일식': '🍣', '양식': '🍝',
-      '고기·구이': '🥩', '카페·디저트': '☕', '패스트푸드': '🍔', '아시아': '🍜', '기타': '🍽'
+      '고기': '🥩', '고기·구이': '🥩', '카페·디저트': '☕', '패스트푸드': '🍔', '아시아': '🍜', '기타': '🍽'
     };
+
+    // 카테고리 칩 (피그마 순서 고정)
+    const CATEGORIES = ['전체', '한식', '중식', '일식', '양식', '아시아', '분식', '패스트푸드', '카페', '치킨', '기타'];
+    const MAIN_CATS = ['한식', '중식', '일식', '양식', '아시아', '분식', '패스트푸드', '치킨'];
+
+    function matchCategory(item, cat) {
+      if (cat === '전체') return true;
+      if (cat === '카페') return item._type === 'cafe';
+      if (cat === '기타') return item._type !== 'cafe' && !MAIN_CATS.includes(item['대분류']);
+      return item['대분류'] === cat;
+    }
 
     function getEmoji(item) {
       return catEmoji[item['대분류']] || (item._type === 'cafe' ? '☕' : '🍽');
@@ -841,7 +868,7 @@
       }
 
       if (currentCategory !== '전체') {
-        items = items.filter(i => i['대분류'] === currentCategory);
+        items = items.filter(i => matchCategory(i, currentCategory));
       }
 
       if (filterType === 'food') items = items.filter(i => i._type === 'food');
@@ -865,12 +892,10 @@
       return items;
     }
 
-    // ── 카테고리 탭 ──
+    // ── 카테고리 탭 (피그마 순서) ──
     function renderCategories() {
-      const raw = [...new Set(allItems.map(i => i['대분류']).filter(Boolean))].sort();
-      const cats = [...raw.filter(c => c !== '기타'), ...(raw.includes('기타') ? ['기타'] : [])];
       const scroll = document.getElementById('categoryScroll');
-      scroll.innerHTML = ['전체', ...cats].map(c => `
+      scroll.innerHTML = CATEGORIES.map(c => `
         <div class="cat-tab ${c === currentCategory ? 'active' : ''}" onclick="selectCategory('${c}')">${c}</div>
       `).join('');
     }
@@ -902,6 +927,7 @@
       document.getElementById('mapViewBtn').classList.toggle('active', view === 'map');
       document.getElementById('listView').style.display = view === 'list' ? 'block' : 'none';
       document.getElementById('mapView').style.display = view === 'map' ? 'flex' : 'none';
+      document.getElementById('resultBar').style.display = view === 'list' ? 'flex' : 'none';
 
       if (view === 'map') {
         renderMap();
@@ -955,7 +981,9 @@
               <div class="card-desc">📍 ${item['주소'] || '-'}</div>
               <div class="card-bottom">
                 <div class="card-dist">${distText}</div>
-                <div class="bookmark-btn" data-idx="${idx}">${saved ? '🔖' : '🤍'}</div>
+                <div class="bookmark-btn" data-idx="${idx}">
+                  <svg viewBox="0 0 21.6667 19.8792" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.8333 19.8792L9.2625 18.4708C7.43889 16.8278 5.93125 15.4104 4.73958 14.2188C3.54792 13.0271 2.6 11.9573 1.89583 11.0094C1.19167 10.0615 0.699653 9.19028 0.419792 8.39583C0.139931 7.60139 0 6.78889 0 5.95833C0 4.26111 0.56875 2.84375 1.70625 1.70625C2.84375 0.56875 4.26111 0 5.95833 0C6.89722 0 7.79097 0.198611 8.63958 0.595833C9.48819 0.993056 10.2194 1.55278 10.8333 2.275C11.4472 1.55278 12.1785 0.993056 13.0271 0.595833C13.8757 0.198611 14.7694 0 15.7083 0C17.4056 0 18.8229 0.56875 19.9604 1.70625C21.0979 2.84375 21.6667 4.26111 21.6667 5.95833C21.6667 6.78889 21.5267 7.60139 21.2469 8.39583C20.967 9.19028 20.475 10.0615 19.7708 11.0094C19.0667 11.9573 18.1187 13.0271 16.9271 14.2188C15.7354 15.4104 14.2278 16.8278 12.4042 18.4708L10.8333 19.8792Z" fill="${saved ? '#ff4141' : '#ddd'}"/></svg>
+                </div>
               </div>
             </div>
           </div>`;
@@ -1113,7 +1141,7 @@
     }
 
     function renderMapList(items) {
-      document.getElementById('mapList').innerHTML = items.map((item, idx) => {
+      document.getElementById('mapList').innerHTML = items.slice(0, 2).map((item, idx) => {
         const dist = item['거리(m)'] !== '-' ? item['거리(m)'] + 'm' : '';
         const walk = item['도보시간'] !== '-' ? item['도보시간'] : '';
         const meta = [walk, dist, item['대분류']].filter(Boolean).join(' · ');
@@ -1153,8 +1181,7 @@
 
     // ── 필터 바텀시트 ──
     function renderFilterCatChips() {
-      const cats = ['전체', ...new Set(allItems.map(i => i['대분류']).filter(Boolean))].sort();
-      const chips = cats.map(c => `
+      const chips = CATEGORIES.map(c => `
         <div class="chip ${c === '전체' ? 'active' : ''}" data-cat="${c}" onclick="selectCatChip(this)">${c}</div>
       `).join('');
       document.getElementById('catChips').innerHTML = chips;
@@ -1207,6 +1234,22 @@
       render();
     });
 
+    // 하트 파티클 (detail과 동일)
+    function spawnHeartParticles(container) {
+      const colors = ['#ff4141', '#ff7a7a', '#ffb3b3', '#ffd6d6'];
+      for (let i = 0; i < 10; i++) {
+        const p = document.createElement('span');
+        p.className = 'particle';
+        const angle = (Math.PI * 2 * i) / 10 + Math.random() * 0.4;
+        const dist = 22 + Math.random() * 16;
+        p.style.setProperty('--dx', `${Math.cos(angle) * dist}px`);
+        p.style.setProperty('--dy', `${Math.sin(angle) * dist}px`);
+        p.style.background = colors[i % colors.length];
+        container.appendChild(p);
+        p.addEventListener('animationend', () => p.remove());
+      }
+    }
+
     document.getElementById('listView').addEventListener('click', e => {
       const btn = e.target.closest('.bookmark-btn');
       if (btn) {
@@ -1215,11 +1258,16 @@
         if (!item) return;
         const name = item['이름'];
         const i = bookmarks.indexOf(name);
-        if (i === -1) bookmarks.push(name);
+        const becameSaved = i === -1;
+        if (becameSaved) bookmarks.push(name);
         else bookmarks.splice(i, 1);
         localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
         pushBookmarks(bookmarks);
-        btn.textContent = bookmarks.includes(name) ? '🔖' : '🤍';
+        btn.querySelector('svg path').setAttribute('fill', becameSaved ? '#ff4141' : '#ddd');
+        btn.classList.remove('bump');
+        void btn.offsetWidth;
+        btn.classList.add('bump');
+        if (becameSaved) spawnHeartParticles(btn);
         return;
       }
       const card = e.target.closest('.restaurant-card');
