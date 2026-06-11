@@ -154,6 +154,12 @@
     .star-rating .review-cnt { font-size: 11px; font-weight: 500; color: #999; margin-left: 3px; }
     .star-rating.empty .star-ico { color: #ccc; }
     .star-rating.empty #starValue { color: #ccc; }
+    /* 리뷰 평균 별점 (파란색, 노란 별점 옆 병기) */
+    .rv-top { display: none; align-items: center; gap: 1px; margin-left: 10px; }
+    .rv-top.show { display: flex; }
+    .rv-top .star-ico { color: #005ba9; }
+    .rv-top .rv-top-value { font-size: 16px; font-weight: 700; color: #005ba9; letter-spacing: -0.16px; }
+    .rv-top .review-cnt { color: #5888b2; }
     .detail-row {
       display: flex; align-items: center;
       gap: 6px; margin-bottom: 8px;
@@ -261,11 +267,11 @@
       display: flex; align-items: baseline; gap: 8px;
       margin-bottom: 14px;
     }
-    .rv-summary .rv-avg { font-size: 20px; font-weight: 700; color: #111; }
+    .rv-summary .rv-avg { font-size: 20px; font-weight: 700; color: #005ba9; }
     .rv-summary .rv-count { font-size: 13px; color: #666; }
     .rv-form { margin-bottom: 14px; }
     .rv-stars { display: flex; gap: 4px; font-size: 26px; color: #ddd; cursor: pointer; margin-bottom: 10px; user-select: none; }
-    .rv-stars span.active { color: #f5b400; }
+    .rv-stars span.active { color: #005ba9; }
     .rv-textarea {
       width: 100%; min-height: 64px; border: 1px solid #e0e0e0; border-radius: 12px;
       padding: 10px 12px; font-size: 13px; resize: none; font-family: inherit;
@@ -290,7 +296,7 @@
     .rv-item.rv-hidden { display: none; }
     .rv-item-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
     .rv-item-name { font-size: 12px; font-weight: 700; color: #333; }
-    .rv-item-stars { color: #f5b400; font-size: 12px; letter-spacing: 1px; }
+    .rv-item-stars { color: #005ba9; font-size: 12px; letter-spacing: 1px; }
     .rv-item-text { font-size: 13px; color: #444; line-height: 1.6; margin-bottom: 4px; white-space: pre-wrap; }
     .rv-item-foot { display: flex; align-items: center; justify-content: space-between; }
     .rv-item-date { font-size: 11px; color: #aaa; }
@@ -472,6 +478,11 @@
           <span class="star-ico">★</span>
           <span id="starValue">-</span>
           <span class="review-cnt" id="reviewCntInline"></span>
+          <span class="rv-top" id="rvTopRating">
+            <span class="star-ico">★</span>
+            <span class="rv-top-value" id="rvTopValue">0</span>
+            <span class="review-cnt" id="rvTopCnt"></span>
+          </span>
         </div>
         <div id="infoRows"></div>
       </div>
@@ -1005,6 +1016,15 @@
       return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
     }
 
+    // 익명 닉네임: 이메일 해시 기반이라 같은 사람은 항상 같은 닉네임
+    const NICK_ADJ = ['배고픈','행복한','졸린','수줍은','씩씩한','느긋한','야무진','용감한','신난','과제하는','밥약하는','지각한'];
+    const NICK_NOUN = ['산지니','금정산다람쥐','넉터비둘기','효원이','웅비탑지킴이','새벽벌요정','문창회관단골','미리내오리','부엉이','곰두리'];
+    function anonNick(email) {
+      let h = 0;
+      for (const ch of String(email || '')) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+      return NICK_ADJ[h % NICK_ADJ.length] + ' ' + NICK_NOUN[Math.floor(h / 7) % NICK_NOUN.length];
+    }
+
     function rvUpdateStars() {
       document.querySelectorAll('#reviewStars span').forEach(s => {
         s.classList.toggle('active', parseInt(s.dataset.v) <= rvSelectedStars);
@@ -1045,6 +1065,16 @@
         ? `<span class="rv-avg">★ ${average}</span><span class="rv-count">(${count}개 리뷰)</span>`
         : `<span style="color:#aaa;font-size:13px">아직 리뷰가 없어요</span>`;
 
+      // 상단 노란 별점 옆에 리뷰 평균(파란색) 병기
+      const topEl = document.getElementById('rvTopRating');
+      if (count) {
+        document.getElementById('rvTopValue').textContent = average;
+        document.getElementById('rvTopCnt').textContent = `(${count})`;
+        topEl.classList.add('show');
+      } else {
+        topEl.classList.remove('show');
+      }
+
       const user = getUser();
       const list = document.getElementById('reviewList');
       const empty = document.getElementById('reviewEmpty');
@@ -1065,7 +1095,7 @@
         return `
           <div class="rv-item${i >= RV_PREVIEW_COUNT ? ' rv-hidden' : ''}">
             <div class="rv-item-head">
-              <span class="rv-item-name">${escapeHtml(r.user_name)}</span>
+              <span class="rv-item-name">${escapeHtml(anonNick(r.user_email))}</span>
               <span class="rv-item-stars">${stars}</span>
             </div>
             <div class="rv-item-text">${escapeHtml(r.text)}</div>

@@ -17,6 +17,11 @@ def list_reviews(restaurant: str = Query(...)):
     return review_service.get_reviews(restaurant)
 
 
+@router.get("/mine")
+def my_reviews(user=Depends(get_current_user)):
+    return review_service.get_user_reviews(user["email"])
+
+
 @router.post("")
 def create_review(body: ReviewBody, user=Depends(get_current_user)):
     text = body.text.strip()

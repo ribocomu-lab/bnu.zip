@@ -28,6 +28,12 @@ def get_reviews(restaurant: str) -> dict:
     return {"reviews": reviews, "average": average, "count": count}
 
 
+def get_user_reviews(user_email: str) -> list[dict]:
+    reviews = [r for r in _load() if r["user_email"] == user_email]
+    reviews.sort(key=lambda r: r["created_at"], reverse=True)
+    return reviews
+
+
 def add_review(restaurant: str, user_email: str, user_name: str, rating: int, text: str) -> dict:
     reviews = _load()
     review = {
