@@ -12,6 +12,9 @@
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Bab 밥 in PNU" />
   <meta name="twitter:description" content="Bab 밥 Navigation for U — 부산대 맛집·카페 길잡이" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Poppins:wght@500;700&display=swap" rel="stylesheet" />
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -20,7 +23,7 @@
       justify-content: center;
       align-items: flex-start;
       min-height: 100vh;
-      font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      font-family: 'Inter', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
     }
     .phone {
       width: 430px;
@@ -55,34 +58,32 @@
     .hero-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0) 43.75%, rgba(38,78,113,0) 71.635%, rgba(75,156,225,0.55) 100%);
+      background: linear-gradient(180deg, rgb(0,0,0) 0%, rgba(0,0,0,0) 43.75%, rgba(38,78,113,0) 71.635%, rgb(75,156,225) 100%);
       z-index: 1;
     }
     .hero-back, .hero-save { z-index: 3; }
     #heroEmoji { z-index: 2; position: relative; }
     .hero-back {
       position: absolute;
-      top: 18px; left: 16px;
+      top: 39px; left: 24px;
       width: 36px; height: 36px;
-      background: rgba(0,0,0,0.3);
+      background: none;
       border: none;
-      border-radius: 50%;
       color: #fff;
       cursor: pointer;
       display: flex; align-items: center; justify-content: center;
     }
-    .hero-back svg { width: 11px; height: 18px; }
+    .hero-back svg { width: 12px; height: 20px; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.35)); }
     .hero-save {
       position: absolute;
-      top: 18px; right: 16px;
+      top: 39px; right: 24px;
       width: 38px; height: 38px;
-      background: rgba(0,0,0,0.3);
+      background: none;
       border: none;
-      border-radius: 50%;
       cursor: pointer;
       display: flex; align-items: center; justify-content: center;
     }
-    .hero-save svg { width: 19px; height: 17px; transition: fill 0.15s; }
+    .hero-save svg { width: 23px; height: 21px; transition: fill 0.15s; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.35)); }
     .hero-save.bump { animation: heartBump 0.45s ease; }
     @keyframes heartBump {
       0% { transform: scale(1); }
@@ -114,13 +115,57 @@
       position: relative;
       z-index: 2;
       box-shadow: 0 0 6px rgba(0,0,0,0.25);
+      padding-top: 33px;
     }
-    .card-handle {
-      width: 36px; height: 4px;
-      background: #eee;
-      border-radius: 2px;
-      margin: 10px auto 2px;
+
+    /* 기본 정보 */
+    .info-section {
+      padding: 0 30px;
     }
+    .name-row {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 8px;
+    }
+    .rest-name {
+      font-family: 'Poppins', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      font-size: 24px; font-weight: 700; color: #050505;
+      letter-spacing: -0.24px;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0;
+    }
+    .cat-badge {
+      display: inline-block;
+      font-size: 12px; font-weight: 500; color: #005ba9;
+      background: #fff;
+      border: 1px solid #5888b2;
+      border-radius: 22px;
+      padding: 8px 15px 9px;
+      letter-spacing: -0.48px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .star-rating {
+      display: flex; align-items: center; gap: 1px;
+      margin-top: 4px; margin-bottom: 16px;
+    }
+    .star-rating .star-ico { color: #f5b400; font-size: 26px; line-height: 1; }
+    .star-rating #starValue { font-size: 16px; font-weight: 700; color: #ffbe0c; letter-spacing: -0.16px; }
+    .star-rating .review-cnt { font-size: 11px; font-weight: 500; color: #999; margin-left: 3px; }
+    .detail-row {
+      display: flex; align-items: center;
+      gap: 6px; margin-bottom: 8px;
+    }
+    .detail-icon {
+      flex-shrink: 0; width: 16px; height: 16px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .detail-icon svg { width: 100%; height: 100%; }
+    .detail-text { font-size: 12px; color: #050505; letter-spacing: -0.12px; }
+    .detail-dist { font-weight: 700; }
+    .detail-addr { font-weight: 500; margin-left: 5px; }
+    .detail-copy { font-weight: 500; color: #005ba9; text-decoration: underline; margin-left: 5px; cursor: pointer; }
+    .detail-copy:active { opacity: 0.6; }
+    .detail-phone { font-weight: 500; color: #050505; text-decoration: none; }
+    .detail-hours { font-size: 13px; letter-spacing: 0; }
 
     /* 사진 갤러리 */
     .photo-strip {
@@ -129,7 +174,8 @@
       overflow-x: auto;
       scrollbar-width: none;
       -webkit-overflow-scrolling: touch;
-      padding: 10px 0;
+      padding: 10px 16px;
+      margin-top: 4px;
       flex-shrink: 0;
     }
     .photo-strip::-webkit-scrollbar { display: none; }
@@ -185,62 +231,26 @@
       font-size: 13px; margin-top: 8px;
     }
 
-    /* 기본 정보 */
-    .info-section {
-      padding: 0 30px 14px;
-      border-bottom: 1px solid #eee;
-    }
-    .cat-badge {
-      display: inline-block;
-      font-size: 12px; font-weight: 500; color: #005ba9;
-      background: #fff;
-      border: 1px solid #5888b2;
-      border-radius: 22px;
-      padding: 8px 15px 9px;
-      letter-spacing: -0.48px;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-    .name-row {
+    /* 섹션 공통 (피그마: 제목 + 전체보기 ► + 구분선) */
+    .section { padding: 14px 30px; }
+    .section-head {
       display: flex; align-items: center; justify-content: space-between;
-      gap: 8px; margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #c1c1c1;
+      margin-bottom: 12px;
     }
-    .name-rating-group {
-      display: flex; align-items: baseline; gap: 8px;
-      min-width: 0;
+    .section-title {
+      font-family: 'Poppins', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      font-size: 14px; font-weight: 700; color: #191919;
+      letter-spacing: -0.14px;
     }
-    .rest-name {
-      font-size: 24px; font-weight: 700; color: #050505;
-      letter-spacing: -0.24px;
-      overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0;
+    .section-more {
+      font-size: 12px; font-weight: 500; color: #5888b2;
+      letter-spacing: -0.48px;
+      background: none; border: none; cursor: pointer;
+      padding: 0;
     }
-    .star-rating {
-      display: flex; align-items: baseline; gap: 1px;
-      flex-shrink: 0;
-    }
-    .star-rating .star-ico { color: #f5b400; font-size: 26px; }
-    .star-rating #starValue { font-size: 16px; font-weight: 700; color: #ffbe0c; letter-spacing: -0.16px; }
-    .star-rating .review-cnt { font-size: 11px; font-weight: 500; color: #999; margin-left: 2px; }
-    .detail-row {
-      display: flex; align-items: center;
-      gap: 8px; margin-bottom: 8px;
-    }
-    .detail-icon {
-      flex-shrink: 0; width: 16px; height: 16px;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .detail-icon svg { width: 100%; height: 100%; }
-    .detail-text { font-size: 12px; color: #050505; }
-    .detail-dist { font-weight: 700; }
-    .detail-addr { font-weight: 500; margin-left: 5px; }
-    .detail-copy { font-weight: 500; color: #005ba9; text-decoration: underline; margin-left: 5px; cursor: pointer; }
-    .detail-copy:active { opacity: 0.6; }
-    .detail-phone { font-weight: 500; color: #050505; text-decoration: none; }
-    .detail-hours { font-size: 13px; }
-
-    /* 섹션 공통 */
-    .section { padding: 14px 30px; border-bottom: 1px solid #eee; }
-    .section-title { font-size: 14px; font-weight: 700; color: #111; margin-bottom: 10px; }
+    .section-more:active { opacity: 0.6; }
 
     /* 리뷰 */
     .rv-summary {
@@ -258,6 +268,7 @@
       margin-bottom: 8px; outline: none;
       background: linear-gradient(180deg, #fff 35.096%, #fff4d5 100%);
     }
+    .rv-textarea::placeholder { color: #aaa; }
     .rv-textarea:focus { border-color: #005ba9; }
     .rv-submit {
       width: 100%; height: 42px; background: #005ba9; color: #fff;
@@ -270,8 +281,9 @@
       background: #fafafa; border-radius: 8px; margin-bottom: 14px;
     }
     .rv-login-prompt a { color: #005ba9; font-weight: 600; text-decoration: none; }
-    .rv-item { padding: 10px 0; border-bottom: 1px solid #f2f2f2; }
+    .rv-item { padding: 10px 0; border-bottom: 1px solid #eee; }
     .rv-item:last-child { border-bottom: none; }
+    .rv-item.rv-hidden { display: none; }
     .rv-item-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
     .rv-item-name { font-size: 12px; font-weight: 700; color: #333; }
     .rv-item-stars { color: #f5b400; font-size: 12px; letter-spacing: 1px; }
@@ -284,10 +296,10 @@
     /* 지도 */
     #detailMap {
       width: 100%;
-      height: 140px;
-      border-radius: 8px;
+      height: 164px;
+      border-radius: 12px;
       overflow: hidden;
-      background: #eee;
+      background: #f0f0f0;
     }
 
     /* 비슷한 밥.zip / 가까운 커피.zip */
@@ -321,7 +333,7 @@
       padding: 15px 16px;
       display: flex;
       gap: 12px;
-      border-top: 1px solid #eee;
+      align-items: center;
       background: #fff;
       flex-shrink: 0;
     }
@@ -331,7 +343,7 @@
       background: #fff; cursor: pointer;
       display: flex; align-items: center; justify-content: center;
     }
-    .cta-share svg { width: 20px; height: 20px; }
+    .cta-share svg { width: 24px; height: 24px; }
     .cta-share:active { background: #f8f8f8; }
     .cta-primary {
       flex: 1; height: 56px;
@@ -340,6 +352,7 @@
       font-size: 16px; font-weight: 700; color: #000;
       letter-spacing: -0.64px;
       cursor: pointer;
+      font-family: inherit;
     }
     .cta-primary:active { opacity: 0.85; }
 
@@ -435,42 +448,38 @@
   <div class="phone">
 
     <div class="hero" id="hero">
-      <button class="hero-back" onclick="history.back()">
+      <button class="hero-back" onclick="history.back()" aria-label="뒤로가기">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 22L0 12L10 2L11.775 3.775L3.55 12L11.775 20.225L10 22Z" fill="white"/></svg>
       </button>
       <div id="heroEmoji">🍽</div>
-      <button class="hero-save" id="heroSaveBtn" onclick="toggleBookmark()">
+      <button class="hero-save" id="heroSaveBtn" onclick="toggleBookmark()" aria-label="저장">
         <svg viewBox="0 0 21.6667 19.8792" fill="none" xmlns="http://www.w3.org/2000/svg"><path id="heroHeartPath" d="M10.8333 19.8792L9.2625 18.4708C7.43889 16.8278 5.93125 15.4104 4.73958 14.2188C3.54792 13.0271 2.6 11.9573 1.89583 11.0094C1.19167 10.0615 0.699653 9.19028 0.419792 8.39583C0.139931 7.60139 0 6.78889 0 5.95833C0 4.26111 0.56875 2.84375 1.70625 1.70625C2.84375 0.56875 4.26111 0 5.95833 0C6.89722 0 7.79097 0.198611 8.63958 0.595833C9.48819 0.993056 10.2194 1.55278 10.8333 2.275C11.4472 1.55278 12.1785 0.993056 13.0271 0.595833C13.8757 0.198611 14.7694 0 15.7083 0C17.4056 0 18.8229 0.56875 19.9604 1.70625C21.0979 2.84375 21.6667 4.26111 21.6667 5.95833C21.6667 6.78889 21.5267 7.60139 21.2469 8.39583C20.967 9.19028 20.475 10.0615 19.7708 11.0094C19.0667 11.9573 18.1187 13.0271 16.9271 14.2188C15.7354 15.4104 14.2278 16.8278 12.4042 18.4708L10.8333 19.8792Z" fill="white"/></svg>
       </button>
     </div>
 
     <div class="scroll-body">
-      <div class="card-handle"></div>
 
       <div class="info-section">
         <div class="name-row">
-          <div class="name-rating-group">
-            <div class="rest-name" id="restName">-</div>
-            <div class="star-rating" id="starRating" style="display:none">
-              <span class="star-ico">★</span>
-              <span id="starValue">-</span>
-              <span class="review-cnt" id="reviewCntInline"></span>
-            </div>
-          </div>
+          <div class="rest-name" id="restName">-</div>
           <div class="cat-badge" id="catBadge"></div>
         </div>
+        <div class="star-rating" id="starRating" style="display:none">
+          <span class="star-ico">★</span>
+          <span id="starValue">-</span>
+          <span class="review-cnt" id="reviewCntInline"></span>
+        </div>
         <div id="infoRows"></div>
-        <!-- 사진 갤러리 (스크립트에서 동적 생성) -->
-        <div class="photo-strip" id="photoStrip" style="display:none"></div>
       </div>
 
-      <div class="section">
-        <div class="section-title">위치</div>
-        <div id="detailMap"></div>
-      </div>
+      <!-- 사진 갤러리 (스크립트에서 동적 생성) -->
+      <div class="photo-strip" id="photoStrip" style="display:none"></div>
 
       <div class="section">
-        <div class="section-title">부산대생의 생생한 리뷰</div>
+        <div class="section-head">
+          <div class="section-title">리뷰</div>
+          <button class="section-more" id="reviewMoreBtn" onclick="showAllReviews()" style="display:none">전체보기 ►</button>
+        </div>
         <div class="rv-summary" id="reviewSummary"></div>
 
         <div id="reviewForm" class="rv-form" style="display:none">
@@ -492,14 +501,27 @@
       </div>
 
       <div class="section">
-        <div class="section-title">비슷한 밥.zip</div>
+        <div class="section-head">
+          <div class="section-title">위치</div>
+        </div>
+        <div id="detailMap"></div>
+      </div>
+
+      <div class="section">
+        <div class="section-head">
+          <div class="section-title">비슷한 밥.zip</div>
+          <button class="section-more" onclick="location.href='/search'">전체보기 ►</button>
+        </div>
         <div class="similar-scroll" id="similarScroll">
           <div style="font-size:13px;color:#aaa">불러오는 중...</div>
         </div>
       </div>
 
       <div class="section">
-        <div class="section-title">☕ 가까운 커피.zip</div>
+        <div class="section-head">
+          <div class="section-title">가까운 커피.zip</div>
+          <button class="section-more" onclick="location.href='/search'">전체보기 ►</button>
+        </div>
         <div class="similar-scroll" id="nearbyCafeScroll">
           <div style="font-size:13px;color:#aaa">불러오는 중...</div>
         </div>
@@ -631,7 +653,7 @@
       document.getElementById('restName').textContent = item['이름'];
       document.getElementById('catBadge').textContent = '#' + cat;
 
-      // 별점 (이름 옆)
+      // 별점 (이름 아래)
       if (item['별점'] != null) {
         document.getElementById('starRating').style.display = 'flex';
         document.getElementById('starValue').textContent = item['별점'];
@@ -963,6 +985,7 @@
 
     /* ── 리뷰 (서버 API 기반) ── */
     let rvSelectedStars = 5;
+    const RV_PREVIEW_COUNT = 3;
 
     function escapeHtml(s) {
       return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -1011,19 +1034,22 @@
       const user = getUser();
       const list = document.getElementById('reviewList');
       const empty = document.getElementById('reviewEmpty');
+      const moreBtn = document.getElementById('reviewMoreBtn');
 
       if (!reviews.length) {
         list.innerHTML = '';
         empty.style.display = 'block';
+        moreBtn.style.display = 'none';
         return;
       }
       empty.style.display = 'none';
+      moreBtn.style.display = reviews.length > RV_PREVIEW_COUNT ? 'block' : 'none';
 
-      list.innerHTML = reviews.map(r => {
+      list.innerHTML = reviews.map((r, i) => {
         const stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
         const canDelete = user && user.email === r.user_email;
         return `
-          <div class="rv-item">
+          <div class="rv-item${i >= RV_PREVIEW_COUNT ? ' rv-hidden' : ''}">
             <div class="rv-item-head">
               <span class="rv-item-name">${escapeHtml(r.user_name)}</span>
               <span class="rv-item-stars">${stars}</span>
@@ -1035,6 +1061,11 @@
             </div>
           </div>`;
       }).join('');
+    }
+
+    function showAllReviews() {
+      document.querySelectorAll('#reviewList .rv-item.rv-hidden').forEach(el => el.classList.remove('rv-hidden'));
+      document.getElementById('reviewMoreBtn').style.display = 'none';
     }
 
     async function submitReview() {
