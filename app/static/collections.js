@@ -11,6 +11,8 @@
   }
   function saveCollections(cols) {
     localStorage.setItem(KEY, JSON.stringify(cols));
+    // 로그인 상태면 유저 정보(서버)에도 저장
+    if (typeof pushCollections === 'function') pushCollections(cols);
   }
   function addToCollection(colName, itemName) {
     const cols = getCollections();

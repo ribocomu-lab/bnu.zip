@@ -694,6 +694,7 @@
       }
       myCollections.push({ name, items: [] });
       localStorage.setItem('myCollections', JSON.stringify(myCollections));
+      pushCollections(myCollections);
       currentCol = 'col:' + name;
       closeColModal();
       render();
@@ -851,7 +852,7 @@
 
     load();
     renderUserBadge('authArea');
-    Promise.all([syncBookmarks(), syncVisited()]).then(() => {
+    Promise.all([syncBookmarks(), syncVisited(), syncCollections()]).then(() => {
       bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
       visited = JSON.parse(localStorage.getItem('visited') || '[]');
       render();

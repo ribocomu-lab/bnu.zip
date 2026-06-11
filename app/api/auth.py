@@ -39,6 +39,10 @@ class VisitedRequest(BaseModel):
     visited: list[str]
 
 
+class CollectionsRequest(BaseModel):
+    collections: list[dict]  # [{name: str, items: list[str]}]
+
+
 def create_jwt(email: str) -> str:
     expire = datetime.utcnow() + timedelta(days=JWT_EXPIRE_DAYS)
     return jwt.encode({"sub": email, "exp": expire}, JWT_SECRET, algorithm=JWT_ALGORITHM)
@@ -103,6 +107,16 @@ def get_visited_list(user=Depends(get_current_user)):
 @router.post("/visited")
 def save_visited(body: VisitedRequest, user=Depends(get_current_user)):
     return user_service.set_visited(user["email"], body.visited)
+
+
+@router.get("/collections")
+def get_collections(user=Depends(get_current_user)):
+    return user_service.get_collections(user["email"])
+
+
+@router.post("/collections")
+def save_collections(body: CollectionsRequest, user=Depends(get_current_user)):
+    return user_service.set_collections(user["email"], body.collections)
 
 
 @router.get("/google/url")

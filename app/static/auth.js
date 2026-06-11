@@ -10,6 +10,7 @@ function logout() {
   localStorage.removeItem('user');
   localStorage.removeItem('bookmarks');
   localStorage.removeItem('visited');
+  localStorage.removeItem('myCollections');
   location.href = '/login';
 }
 
@@ -24,6 +25,7 @@ function renderUserBadge(containerId) {
       <div id="userMenu" style="display:none;position:absolute;top:52px;right:16px;background:#fff;border:1px solid #eee;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,0.1);z-index:200;padding:8px 0;min-width:150px">
         <div style="padding:10px 16px;font-size:13px;color:#888;border-bottom:1px solid #f0f0f0">${user.email}</div>
         <div onclick="openMyReviews()" style="padding:10px 16px;font-size:13px;color:#333;cursor:pointer;border-bottom:1px solid #f0f0f0">내가 쓴 댓글</div>
+        <div onclick="openMyCollections()" style="padding:10px 16px;font-size:13px;color:#333;cursor:pointer;border-bottom:1px solid #f0f0f0">내 컬렉션</div>
         <div onclick="logout()" style="padding:10px 16px;font-size:13px;color:#e74c3c;cursor:pointer">로그아웃</div>
       </div>`;
   } else {
@@ -198,4 +200,111 @@ async function pushVisited(visited) {
       body: JSON.stringify({ visited }),
     });
   } catch {}
+}
+
+// 내 컬렉션 — 유저 정보(users.json)에 저장, 브라우저가 달라도 유지
+async function syncCollections() {
+  const token = getToken();
+  if (!token) return;
+  try {
+    const res = await fetch('/api/auth/collections', {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (res.ok) {
+      const serverCols = await res.json();
+      localStorage.setItem('myCollections', JSON.stringify(serverCols));
+    }
+  } catch {}
+}
+
+async function pushCollections(collections) {
+  const token = getToken();
+  if (!token) return;
+  try {
+    await fetch('/api/auth/collections', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+      body: JSON.stringify({ collections }),
+    });
+  } catch {}
+}
+
+/* ── 내 컬렉션 관리 팝업 (삭제 가능) ── */
+const MC_CSS = `
+  .mc-overlay { display:none; position:fixed; inset:0; background:rgba(0,30,60,0.45); z-index:1300; align-items:center; justify-content:center; }
+  .mc-overlay.open { display:flex; }
+  .mc-sheet { width:340px; max-height:75vh; display:flex; flex-direction:column; background:#fff; border-radius:24px; padding:26px 22px 18px; position:relative; box-shadow:0 12px 40px rgba(0,40,80,0.25); animation:mrPop .4s cubic-bezier(.34,1.56,.64,1); }
+  .mc-close { position:absolute; top:14px; right:14px; width:28px; height:28px; border:none; border-radius:50%; background:#f4f4f4; color:#999; font-size:13px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .mc-close:active { background:#e8e8e8; }
+  .mc-title { font-family:'Poppins','Apple SD Gothic Neo',sans-serif; font-size:17px; font-weight:700; color:#005ba9; text-align:center; letter-spacing:-0.3px; margin-bottom:14px; }
+  .mc-list { overflow-y:auto; scrollbar-width:none; min-height:60px; }
+  .mc-list::-webkit-scrollbar { display:none; }
+  .mc-item { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:12px 2px; border-bottom:1px solid #eee; }
+  .mc-item:last-child { border-bottom:none; }
+  .mc-item-name { font-family:'Poppins','Apple SD Gothic Neo',sans-serif; font-size:13px; font-weight:700; color:#191919; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .mc-item-count { font-family:'Inter',sans-serif; font-size:11px; color:#5888b2; margin-left:6px; font-weight:500; }
+  .mc-item-del { font-family:'Inter','Apple SD Gothic Neo',sans-serif; font-size:11px; color:#d6453d; background:#fff; border:1px solid #f3c9c6; border-radius:14px; padding:4px 12px; cursor:pointer; flex-shrink:0; }
+  .mc-item-del:active { background:#fdf0ef; }
+  .mc-empty { font-family:'Inter','Apple SD Gothic Neo',sans-serif; font-size:12px; color:#aaa; text-align:center; padding:30px 0; line-height:1.6; }
+`;
+
+let _mcBuilt = false;
+function _mcBuild() {
+  if (_mcBuilt) return;
+  _mcBuilt = true;
+  const style = document.createElement('style');
+  style.textContent = MC_CSS;
+  document.head.appendChild(style);
+  const overlay = document.createElement('div');
+  overlay.className = 'mc-overlay';
+  overlay.id = 'mcOverlay';
+  overlay.innerHTML = `
+    <div class="mc-sheet" onclick="event.stopPropagation()">
+      <button class="mc-close" onclick="closeMyCollections()" aria-label="닫기">✕</button>
+      <div class="mc-title">내 컬렉션</div>
+      <div class="mc-list" id="mcList"></div>
+    </div>`;
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeMyCollections(); });
+  document.body.appendChild(overlay);
+}
+
+function _mcRender() {
+  const cols = JSON.parse(localStorage.getItem('myCollections') || '[]');
+  const list = document.getElementById('mcList');
+  if (!cols.length) {
+    list.innerHTML = '<div class="mc-empty">아직 만든 컬렉션이 없어요.<br>내 목록이나 저장 팝업에서 만들 수 있어요!</div>';
+    return;
+  }
+  list.innerHTML = cols.map(c => `
+    <div class="mc-item">
+      <div style="min-width:0">
+        <span class="mc-item-name">${c.name.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</span>
+        <span class="mc-item-count">${(c.items || []).length}곳</span>
+      </div>
+      <button class="mc-item-del" onclick="deleteMyCollection('${c.name.replace(/'/g, "\\'")}')">삭제</button>
+    </div>`).join('');
+}
+
+function openMyCollections() {
+  const menu = document.getElementById('userMenu');
+  if (menu) menu.style.display = 'none';
+  _mcBuild();
+  document.getElementById('mcOverlay').classList.add('open');
+  // 서버 최신본 동기화 후 렌더
+  _mcRender();
+  syncCollections().then(_mcRender);
+}
+
+function closeMyCollections() {
+  document.getElementById('mcOverlay')?.classList.remove('open');
+}
+
+function deleteMyCollection(name) {
+  if (!confirm(`'${name}' 컬렉션을 삭제할까요?`)) return;
+  const cols = JSON.parse(localStorage.getItem('myCollections') || '[]').filter(c => c.name !== name);
+  localStorage.setItem('myCollections', JSON.stringify(cols));
+  pushCollections(cols);
+  _mcRender();
+  // 내 목록 페이지가 열려 있으면 칩 갱신
+  if (typeof render === 'function') { try { render(); } catch {} }
 }

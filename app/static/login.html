@@ -425,11 +425,14 @@
       const headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` };
       const localBookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
       const localVisited = JSON.parse(localStorage.getItem('visited') || '[]');
+      const localCollections = JSON.parse(localStorage.getItem('myCollections') || '[]');
       const uploads = [];
       if (localBookmarks.length > 0)
         uploads.push(fetch('/api/auth/bookmarks', { method: 'POST', headers, body: JSON.stringify({ bookmarks: localBookmarks }) }));
       if (localVisited.length > 0)
         uploads.push(fetch('/api/auth/visited', { method: 'POST', headers, body: JSON.stringify({ visited: localVisited }) }));
+      if (localCollections.length > 0)
+        uploads.push(fetch('/api/auth/collections', { method: 'POST', headers, body: JSON.stringify({ collections: localCollections }) }));
 
       await Promise.allSettled(uploads);
       location.href = REDIRECT;

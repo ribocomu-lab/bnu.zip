@@ -1204,18 +1204,21 @@
 
         // 서버 데이터로 덮어쓰기 (계정별 독립)
         const headers = { 'Authorization': `Bearer ${kt}` };
-        const [serverBM, serverVI] = await Promise.all([
-          fetch('/api/auth/bookmarks', { headers }).then(r => r.ok ? r.json() : []),
-          fetch('/api/auth/visited',   { headers }).then(r => r.ok ? r.json() : []),
+        const [serverBM, serverVI, serverCol] = await Promise.all([
+          fetch('/api/auth/bookmarks',   { headers }).then(r => r.ok ? r.json() : []),
+          fetch('/api/auth/visited',     { headers }).then(r => r.ok ? r.json() : []),
+          fetch('/api/auth/collections', { headers }).then(r => r.ok ? r.json() : []),
         ]);
-        localStorage.setItem('bookmarks', JSON.stringify(serverBM));
-        localStorage.setItem('visited',   JSON.stringify(serverVI));
+        localStorage.setItem('bookmarks',     JSON.stringify(serverBM));
+        localStorage.setItem('visited',       JSON.stringify(serverVI));
+        localStorage.setItem('myCollections', JSON.stringify(serverCol));
       } catch {}
     }
 
     load();
     if (typeof renderUserBadge === 'function') renderUserBadge('authArea');
     if (typeof syncBookmarks === 'function') syncBookmarks();
+    if (typeof syncCollections === 'function') syncCollections();
   })();
 </script>
 </body>

@@ -1184,7 +1184,7 @@
     }
 
     loadItem();
-    Promise.all([syncBookmarks(), syncVisited()]).then(() => {
+    Promise.all([syncBookmarks(), syncVisited(), syncCollections()]).then(() => {
       bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
       visited = JSON.parse(localStorage.getItem('visited') || '[]');
       updateSaveIcon();

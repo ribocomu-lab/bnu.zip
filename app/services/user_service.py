@@ -20,12 +20,14 @@ def _save(data: dict):
 def upsert_user(email: str, name: str, picture: str) -> dict:
     users = _load()
     if email not in users:
-        users[email] = {"email": email, "name": name, "picture": picture, "bookmarks": [], "visited": []}
+        users[email] = {"email": email, "name": name, "picture": picture, "bookmarks": [], "visited": [], "collections": []}
     else:
         users[email]["name"] = name
         users[email]["picture"] = picture
         if "visited" not in users[email]:
             users[email]["visited"] = []
+        if "collections" not in users[email]:
+            users[email]["collections"] = []
     _save(users)
     return users[email]
 
@@ -45,6 +47,19 @@ def set_bookmarks(email: str, bookmarks: list) -> list:
         users[email]["bookmarks"] = bookmarks
         _save(users)
     return bookmarks
+
+
+def get_collections(email: str) -> list:
+    user = get_user(email)
+    return user.get("collections", []) if user else []
+
+
+def set_collections(email: str, collections: list) -> list:
+    users = _load()
+    if email in users:
+        users[email]["collections"] = collections
+        _save(users)
+    return collections
 
 
 def add_review_ref(email: str, review: dict):
