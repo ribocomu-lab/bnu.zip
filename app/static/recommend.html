@@ -717,7 +717,23 @@
     categories: [],
     foodData: [],
     cafeData: [],
+    surveyData: {},   // 설문 집계: { 정규화식당명: {언급수, 예비율, 수용인원} }
   };
+
+  /* ── 상황 → 인원수/가성비 모드 매핑 ── */
+  // value: true = 선배1:후배2 3인 약속 → 가격(가성비) 가중치 강화
+  const SIT_INFO = {
+    '선후배 1:1': { people: 2 },
+    '선후배 1:2': { people: 3, value: true },
+    '선후배 2:2': { people: 4 },
+    '단체모임':   { people: 5 },
+  };
+
+  /* ── 식당명 정규화 (백엔드 scripts/build_survey.py와 동일 규칙) ── */
+  function normalizeName(name) {
+    let s = (name || '').replace(/\(.*?\)/g, '').replace(/\s+/g, '');
+    return s.replace(/(부산대본점|부산대점|본점|전문점)$/, '');
+  }
 
   /* ── 두 좌표 사이 거리(m) ── */
   function haversineM(lat1, lng1, lat2, lng2) {
@@ -886,8 +902,19 @@
       </div>`;
   }
 
-  /* ── 점수 계산 ── */
+  /* ── 점수 계산 ──
+     최종점수 = 0.60×기본점수 B + 0.25×설문가산점 S + 0.15×수용적합도 C
+       S = 예비율 × min(언급수/3, 1)            (설문 미등재 0)
+       C = 수용인원 ≥ 인원수 → 1 / 미만 → 0 / 설문 정보 없음 → 0.3 (후순위)
+       B 가중치: 기본 거리.35/가격.25/별점.25/신뢰.15
+                선후배 1:2(3인, 가성비) 거리.20/가격.40/별점.25/신뢰.15
+     백엔드 app/services/data_service.py의 _score()와 동일 수식 */
   function calcScore(item) {
+    const info = SIT_INFO[state.situation] || {};
+    const w = info.value
+      ? { d: 0.20, p: 0.40, r: 0.25, t: 0.15 }   // 가성비 모드
+      : { d: 0.35, p: 0.25, r: 0.25, t: 0.15 };
+
     const dist  = parseInt(item['거리(m)']);
     const distScore  = isNaN(dist)  ? 0.5 : Math.max(0, 1 - dist / 1000);
     const price = parseInt(item['가격']);
@@ -896,8 +923,17 @@
     const ratingScore= rating != null ? Math.max(0, (rating - 2.5) / 2.5) : 0.5;
     const reviews = item['리뷰수'];
     const trust  = reviews != null ? Math.min(reviews / 100, 1) : 0.3;
-    const total  = (distScore*0.35)+(priceScore*0.25)+(ratingScore*0.25)+(trust*0.15);
-    return { total, distScore, priceScore, ratingScore, trust };
+    const base = (distScore*w.d)+(priceScore*w.p)+(ratingScore*w.r)+(trust*w.t);
+
+    const entry = state.surveyData[normalizeName(item['이름'])];
+    const surveyScore = entry ? entry['예비율'] * Math.min(entry['언급수'] / 3, 1) : 0;
+    let capFit;
+    if (!entry)                      capFit = 0.3;
+    else if (info.people == null)    capFit = 1.0;
+    else                             capFit = entry['수용인원'] >= info.people ? 1.0 : 0.0;
+
+    const total = base*0.60 + surveyScore*0.25 + capFit*0.15;
+    return { total, distScore, priceScore, ratingScore, trust, surveyScore, capFit };
   }
 
   /* ── 스텝 4: 결과 (식당 2개 + 가장 가까운 카페 세트) ── */
@@ -1095,12 +1131,14 @@
 
   async function init() {
     try {
-      const [food, cafe] = await Promise.all([
+      const [food, cafe, survey] = await Promise.all([
         fetch('/api/food').then(r => r.json()),
         fetch('/api/cafe').then(r => r.json()),
+        fetch('/api/survey').then(r => r.json()).catch(() => ({})),
       ]);
       state.foodData = food;
       state.cafeData = cafe;
+      state.surveyData = survey || {};
     } catch {}
     render();
   }

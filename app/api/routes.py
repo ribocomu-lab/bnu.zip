@@ -21,8 +21,18 @@ async def cafe(
 
 
 @router.get("/recommend")
-async def recommend():
-    return data_service.get_recommend()
+async def recommend(
+    people: int | None = Query(None, description="약속 인원수"),
+    seniors: int | None = Query(None, description="선배 수"),
+    juniors: int | None = Query(None, description="후배 수"),
+):
+    return data_service.get_recommend(people=people, seniors=seniors, juniors=juniors)
+
+
+@router.get("/survey")
+async def survey():
+    """설문 집계 데이터 (식당별 언급수·예비율·수용인원)"""
+    return data_service.get_survey()
 
 
 @router.get("/config")
