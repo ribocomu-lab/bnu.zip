@@ -1041,7 +1041,7 @@
       return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
     }
 
-    // 익명 닉네임: 이메일 해시 기반이라 같은 사람은 항상 같은 닉네임
+    // 익명 닉네임: 서버가 댓글마다 랜덤 생성(anon_name). 아래는 옛 리뷰 폴백용
     const NICK_ADJ = ['배고픈','행복한','졸린','수줍은','씩씩한','느긋한','야무진','용감한','신난','과제하는','밥약하는','지각한'];
     const NICK_NOUN = ['산지니','금정산다람쥐','넉터비둘기','효원이','웅비탑지킴이','새벽벌요정','문창회관단골','미리내오리','부엉이','곰두리'];
     function anonNick(email) {
@@ -1130,7 +1130,7 @@
         return `
           <div class="rv-item">
             <div class="rv-item-head">
-              <span class="rv-item-name">${escapeHtml(anonNick(r.user_email))}${r.tag ? `<span class="rv-item-tag">${escapeHtml(r.tag)}</span>` : ''}</span>
+              <span class="rv-item-name">${escapeHtml(r.anon_name || anonNick(r.user_email))}${r.tag ? `<span class="rv-item-tag">${escapeHtml(r.tag)}</span>` : ''}</span>
               <span class="rv-item-stars">${stars}</span>
             </div>
             <div class="rv-item-text">${escapeHtml(r.text)}</div>

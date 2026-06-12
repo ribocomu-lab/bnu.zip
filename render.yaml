@@ -8,3 +8,7 @@ services:
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.0
+      # 미설정 시 서버 재시작마다 시크릿이 새로 생성돼 기존 로그인 토큰이 전부
+      # 무효화되고 users.json 저장 요청이 401로 조용히 실패함 → 고정 시크릿 필수
+      - key: JWT_SECRET
+        generateValue: true

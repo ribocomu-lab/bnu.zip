@@ -22,6 +22,14 @@
       saveCollections(cols);
     }
   }
+  function removeFromCollection(colName, itemName) {
+    const cols = getCollections();
+    const col = cols.find(c => c.name === colName);
+    if (col) {
+      const i = col.items.indexOf(itemName);
+      if (i !== -1) { col.items.splice(i, 1); saveCollections(cols); }
+    }
+  }
   function removeFromAll(itemName) {
     const cols = getCollections();
     let changed = false;
@@ -108,6 +116,8 @@
       text-overflow: ellipsis;
     }
     .cp-option:active { background: #ddf0ff; border-color: #005ba9; }
+    .cp-option.added { background: #ddf0ff; border-color: #005ba9; color: #005ba9; font-weight: 700; }
+    .cp-option .cp-check { float: right; color: #005ba9; font-weight: 700; }
     .cp-new-toggle {
       width: 100%;
       height: 44px;
@@ -222,15 +232,25 @@
 
   function renderOptions() {
     const list = document.getElementById('cpList');
-    list.innerHTML = getCollections().map(c =>
-      `<button class="cp-option" data-name="${c.name.replace(/"/g, '&quot;')}">${c.name}</button>`
-    ).join('');
+    list.innerHTML = getCollections().map(c => {
+      const added = (c.items || []).includes(currentItem);
+      return `<button class="cp-option${added ? ' added' : ''}" data-name="${c.name.replace(/"/g, '&quot;')}">${c.name}<span class="cp-check">${added ? ' ✓' : ''}</span></button>`;
+    }).join('');
+    // 여러 컬렉션에 중복 추가 가능 — 누를 때마다 담기/빼기 토글, 팝업은 유지
     list.querySelectorAll('.cp-option').forEach(btn => {
       btn.addEventListener('click', () => {
-        addToCollection(btn.dataset.name, currentItem);
-        finish(btn.dataset.name);
+        const name = btn.dataset.name;
+        const col = getCollections().find(c => c.name === name);
+        if (col && col.items.includes(currentItem)) removeFromCollection(name, currentItem);
+        else addToCollection(name, currentItem);
+        renderOptions();
       });
     });
+    const skip = document.getElementById('cpSkip');
+    if (skip) {
+      const anyAdded = getCollections().some(c => (c.items || []).includes(currentItem));
+      skip.textContent = anyAdded ? '완료' : '따로 분류 안 할래요';
+    }
   }
 
   function createAndPick() {
@@ -252,7 +272,12 @@
     cols.push({ name, items: [] });
     saveCollections(cols);
     addToCollection(name, currentItem);
-    finish(name);
+    // 새 컬렉션에 담은 뒤에도 팝업을 유지해 다른 리스트에 중복 추가 가능
+    input.value = '';
+    error.classList.remove('show');
+    document.getElementById('cpNewRow').classList.remove('show');
+    document.getElementById('cpNewToggle').style.display = 'block';
+    renderOptions();
   }
 
   function finish(colName) {
@@ -272,7 +297,7 @@
     build();
     currentItem = itemName;
     onDoneCb = onDone || null;
-    document.getElementById('cpDesc').innerHTML = `<b>${itemName}</b> 을(를) 컬렉션에 담아보세요`;
+    document.getElementById('cpDesc').innerHTML = `<b>${itemName}</b> 을(를) 여러 컬렉션에 담을 수 있어요`;
     document.getElementById('cpError').classList.remove('show');
     document.getElementById('cpNewRow').classList.remove('show');
     document.getElementById('cpNewToggle').style.display = 'block';

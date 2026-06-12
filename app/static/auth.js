@@ -149,6 +149,17 @@ document.addEventListener('click', e => {
   if (menu && !e.target.closest('#authArea')) menu.style.display = 'none';
 });
 
+// 토큰 만료/무효(401) 시 세션 정리 — 로그인된 척하며 서버 저장만 조용히 실패하는 상태 방지
+function handleAuthExpired(res) {
+  if (res && res.status === 401) {
+    localStorage.removeItem('jwt');
+    localStorage.removeItem('user');
+    if (typeof renderUserBadge === 'function') renderUserBadge('authArea');
+    return true;
+  }
+  return false;
+}
+
 // 서버 → 로컬 덮어쓰기 (계정별 독립)
 async function syncBookmarks() {
   const token = getToken();
@@ -157,6 +168,7 @@ async function syncBookmarks() {
     const res = await fetch('/api/auth/bookmarks', {
       headers: { 'Authorization': `Bearer ${token}` }
     });
+    if (handleAuthExpired(res)) return;
     if (res.ok) {
       const serverBookmarks = await res.json();
       localStorage.setItem('bookmarks', JSON.stringify(serverBookmarks));
@@ -168,11 +180,12 @@ async function pushBookmarks(bookmarks) {
   const token = getToken();
   if (!token) return;
   try {
-    await fetch('/api/auth/bookmarks', {
+    const res = await fetch('/api/auth/bookmarks', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
       body: JSON.stringify({ bookmarks }),
     });
+    handleAuthExpired(res);
   } catch {}
 }
 
@@ -183,6 +196,7 @@ async function syncVisited() {
     const res = await fetch('/api/auth/visited', {
       headers: { 'Authorization': `Bearer ${token}` }
     });
+    if (handleAuthExpired(res)) return;
     if (res.ok) {
       const serverVisited = await res.json();
       localStorage.setItem('visited', JSON.stringify(serverVisited));
@@ -194,11 +208,12 @@ async function pushVisited(visited) {
   const token = getToken();
   if (!token) return;
   try {
-    await fetch('/api/auth/visited', {
+    const res = await fetch('/api/auth/visited', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
       body: JSON.stringify({ visited }),
     });
+    handleAuthExpired(res);
   } catch {}
 }
 
@@ -210,6 +225,7 @@ async function syncCollections() {
     const res = await fetch('/api/auth/collections', {
       headers: { 'Authorization': `Bearer ${token}` }
     });
+    if (handleAuthExpired(res)) return;
     if (res.ok) {
       const serverCols = await res.json();
       localStorage.setItem('myCollections', JSON.stringify(serverCols));
@@ -221,11 +237,12 @@ async function pushCollections(collections) {
   const token = getToken();
   if (!token) return;
   try {
-    await fetch('/api/auth/collections', {
+    const res = await fetch('/api/auth/collections', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
       body: JSON.stringify({ collections }),
     });
+    handleAuthExpired(res);
   } catch {}
 }
 
